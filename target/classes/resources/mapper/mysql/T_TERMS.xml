@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.TermsDao">
+
+	<select id="list" parameterType="TermsVo" resultType="TermsVo">
+		
+	</select>
+	 
+	<select id="view" parameterType="TermsVo" resultType="TermsVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="TermsVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="TermsVo" >
+	 	
+	 </insert>
+	 
+	 <update id="update" parameterType="TermsVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="TermsVo">
+	  
+	 </delete>
+	 
+</mapper>	

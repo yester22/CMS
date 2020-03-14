@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.SchduleDao">
+
+	<select id="list" parameterType="ScheduleVo" resultType="ScheduleVo">
+		
+	</select>
+	 
+	<select id="view" parameterType="ScheduleVo" resultType="ScheduleVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="ScheduleVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="ScheduleVo" >
+	 	
+	 </insert>
+	 
+	 <update id="update" parameterType="ScheduleVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="ScheduleVo">
+	  
+	 </delete>
+	 
+</mapper>	

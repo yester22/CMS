@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exceptPageList>
+	<!-- 인터셉트에서 허용하는 URL -->
+	<accessList>
+		<page>
+			<name>로그인 페이지</name>
+			<url>/login</url>
+		</page>
+		
+		<page>
+			<name>템플릿 페이지</name>
+			<url>/default</url>
+		</page>
+		
+		<page>
+			<name>로그아웃</name>
+			<url>/logout</url>
+		</page>
+		
+	</accessList>
+	
+	<deniedList>
+		
+	</deniedList>
+	
+</exceptPageList>

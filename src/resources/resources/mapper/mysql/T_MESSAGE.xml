@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.MessageDao">
+
+	<select id="list" parameterType="MessageVo" resultType="MessageVo">
+		/** kr.kyoungjin.dataobject.dao.MessageDao.list */
+		SELECT 	  msg_key
+      			, nation_code
+      			, msg_type
+      			, message
+  		  FROM  T_MESSAGE
+ 		 <where>
+ 		 	<if test="msgKey != null and msgKey != ''">
+ 		 		AND msg_key = #{msgKey}
+ 		 	</if>
+ 		 	<if test="msgType != null and msgType != ''">
+ 		 		AND msg_type = #{msgType}
+ 		 	</if>
+ 		 </where>
+ 		 ORDER BY msg_key 
+	</select>
+	 
+	 <select id="count" parameterType="MessageVo" resultType="Integer">
+	 	/** kr.kyoungjin.dataobject.dao.MessageDao.count */
+	 	SELECT 	COUNT(1) CNT
+  		  FROM  T_MESSAGE
+ 		 <where>
+ 		 	<if test="msgKey != null and msgKey != ''">
+ 		 		AND msg_key = #{msgKey}
+ 		 	</if>
+ 		 	<if test="msgType != null and msgType != ''">
+ 		 		AND msg_type = #{msgType}
+ 		 	</if>
+ 		 </where>
+	 </select>
+	 
+	 
+	 <select id="view" parameterType="MessageVo" resultType="MessageVo">
+	 	/** kr.kyoungjin.dataobject.dao.MessageDao.view */
+		SELECT 	  msg_key
+      			, nation_code
+      			, msg_type
+      			, message
+  		  FROM  T_MESSAGE
+ 		 <where>
+ 		 	<if test="msgKey != null and msgKey != ''">
+ 		 		AND msg_key = #{msgKey}
+ 		 	</if>
+ 		 	<if test="nationCode != null and nationCode != ''">
+ 		 		AND nation_code = #{nationCode}
+ 		 	</if>
+ 		 </where>
+	</select>
+	 
+	 
+	 <insert id="insert" parameterType="MessageVo">
+	 	/** kr.kyoungjin.dataobject.dao.MessageDao.insert */
+	 	INSERT INTO T_MESSAGE 
+		(
+			msg_key, 
+			nation_code, 
+			msg_type, 
+			message
+		)
+		VALUES
+		(
+			#{msg_key}, 
+			#{nation_code}, 
+			#{msg_type}, 
+			#{message}
+		)
+	 </insert>
+	 
+	 
+	 <update id="update" parameterType="MessageVo">
+	 	/** kr.kyoungjin.dataobject.dao.MessageDao.update */
+	 	UPDATE T_MESSAGE
+	 	   SET nation_code = #{nationCode}
+	 	     , msg_type = #{msgType}
+	 	     , message = #{message}
+	 	 WHERE msg_key = #{msgKey} 
+	 </update>
+	 
+	 
+	 <delete id="delete"  parameterType="MessageVo">
+	 	/** kr.kyoungjin.dataobject.dao.MessageDao.delete */
+	 	DELETE FROM T_MESSAGE
+	 	 WHERE msg_key = #{msgKey} 
+	 </delete>
+	 
+</mapper>	

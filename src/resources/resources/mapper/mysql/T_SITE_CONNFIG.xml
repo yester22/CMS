@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.SiteConfigDao">
+
+	<select id="list" parameterType="SiteConfigVo" resultType="SiteConfigVo">
+		
+	</select>
+	 
+	<select id="view" parameterType="SiteConfigVo" resultType="SiteConfigVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="SiteConfigVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="SiteConfigVo" >
+	 	
+	 </insert>
+	 
+	 <update id="update" parameterType="SiteConfigVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="SiteConfigVo">
+	  
+	 </delete>
+	 
+</mapper>	

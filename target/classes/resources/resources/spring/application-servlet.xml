@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:component-scan base-package="kr.kyoungjin"></context:component-scan>
+	<mvc:annotation-driven />
+
+
+	<!-- 메세지 리소스 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="classpath:/resources/messages/messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- <property name="cacheSeconds" value="360" /> -->
+		<property name="cacheSeconds" value="60" />
+	</bean>
+
+	<!-- 로케일 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+    	<property name="defaultLocale" value="kr" />
+	</bean>
+
+	<!-- 로거인터셋트 -->
+	<mvc:interceptors>
+		<!-- logging interceptor -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/resource/**"/>
+			<mvc:exclude-mapping path="/message/**"/>
+			<mvc:exclude-mapping path="/login/**"/>
+			<mvc:exclude-mapping path="/logout/**"/>
+			<mvc:exclude-mapping path="/errors/**"/>
+			<mvc:exclude-mapping path="/template/**"/>
+			
+			<bean id="loggerInterceptor" class="kr.kyoungjin.common.interceptor.LoggerInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/resource/**"/>
+			<mvc:exclude-mapping path="/message/**"/>
+			<mvc:exclude-mapping path="/login/**"/>
+			<mvc:exclude-mapping path="/logout/**"/>
+			<mvc:exclude-mapping path="/errors/**"/>
+			<mvc:exclude-mapping path="/template/**"/>
+			
+			<bean id="sessionInterceptor" class="kr.kyoungjin.common.interceptor.SessionInterceptor"></bean>
+		</mvc:interceptor> 
+		
+	</mvc:interceptors>
+
+
+	<!-- global properties -->
+	<util:properties id="config" 	location="classpath:/resources/properties/global.properties" />
+
+	 <bean 	class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.tutorialspoint.SpringException">	ExceptionPage</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="error" />
+	</bean>
+
+	
+</beans>

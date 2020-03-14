@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.MenuDao">
+
+	<select id="list" parameterType="MenuVo" resultType="MenuVo">
+		
+	</select>
+	 
+	<select id="view" parameterType="MenuVo" resultType="MenuVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="MenuVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="MenuVo" >
+	 	
+	 </insert>
+	 
+	 <update id="update" parameterType="MenuVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="MenuVo">
+	  
+	 </delete>
+	 
+	 
+</mapper>	

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.CodeDao">
+	
+	<select id="list" parameterType="CodeVo" resultType="CodeVo">
+		
+	</select>
+	 
+	<select id="view" parameterType="CodeVo" resultType="CodeVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="CodeVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="CodeVo" >
+	 	
+	 </insert>
+	 
+	 
+	 <update id="update" parameterType="CodeVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="CodeVo">
+	  
+	 </delete>
+	 
+</mapper>	

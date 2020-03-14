@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.MemberDao">
+
+	<select id="list" parameterType="MemberVo" resultType="MemberVo">
+		/** kr.kyoungjin.dataobject.dao.MemberDao.list() */
+		SELECT  member_id 
+			  , member_type 			  
+			  , member_nm 
+			  , pwd	
+			  , last_login_dt
+			  , last_logout_dt
+			  , chk_id_code
+			  , chk_pw_code
+			  , IFNULL(login_fail_cnt, 0) login_fail_cnt
+   		  FROM  T_MEMBER
+ 		 <where>
+ 		 	<if test="memberType != null and memberType != ''">
+ 		 		AND member_type = #{memberType}
+ 		 	</if>
+ 		 </where> 
+	</select>
+	 
+	 
+	 <select id="view" parameterType="MemberVo" resultType="MemberVo">
+		/** kr.kyoungjin.dataobject.dao.MemberDao.view() */
+		SELECT  member_id 
+			  , member_type 
+			  , member_nm
+			  , pwd
+			  , last_login_dt
+			  , last_logout_dt
+			  , chk_id_code
+			  , chk_pw_code
+			  , IFNULL(login_fail_cnt, 0) login_fail_cnt
+   		  FROM  T_MEMBER
+ 		 WHERE  member_id = #{memberId}
+ 		  
+	</select>
+	 
+	  
+	 <select id="count"  parameterType="MemberVo"  resultType="Integer">
+	 	/** kr.kyoungjin.dataobject.dao.MemberDao.count() */
+	 	SELECT COUNT(1) CNT
+   		  FROM  T_MEMBER
+ 		 WHERE  member_id = #{memberId}
+	 </select>
+	 
+	 <insert id="insert" parameterType="MemberVo" >
+	 	/** kr.kyoungjin.dataobject.dao.MemberDao.insert() */
+	 	INSERT INTO T_MEMBER 
+		(
+			member_id, 
+			member_type, 
+			member_nm, 
+			pwd, 
+			last_login_dt, 
+			last_logout_dt, 
+			login_fail_cnt,
+			chk_id_code, 
+			chk_pw_code, 
+			reg_id, 
+			reg_date
+		)
+		VALUES
+		(
+			#{memberId}, 
+			#{memberType}, 
+			#{memberNm}, 
+			#{pwd}, 
+			#{lastLoginDt}, 
+			#{lastLogoutDt}, 
+			0 ,
+			#{chkIdCode}, 
+			#{chkPwCode}, 
+			#{regId}, 
+			NOW()
+		);
+	 	
+	 </insert>
+	 
+	 <update id="update" parameterType="MemberVo">
+	   /** kr.kyoungjin.dataobject.dao.MemberDao.update() */
+	   UPDATE 	T_MEMBER 
+		  SET 	upt_date = NOW()	
+			    <if test="uptId != null and uptId != ''">, upt_id = #{uptId}</if>  
+				<if test="memberType != null and memberType != ''">, member_type =  #{memberType}</if>
+				<if test="memberNm != null and memberNm != ''">, member_nm =  #{memberNm}</if>
+				<if test="pwd != null and pwd != ''">, pwd =  #{pwd}</if>
+				<if test="lastLoginDt != null and lastLoginDt != ''">, last_login_dt = NOW() </if>  
+				<if test="lastLogoutDt != null and lastLogoutDt != ''">, last_logout_dt =  NOW() </if>
+				<if test="chkIdCode != null and chkIdCode != ''">, chk_id_code = #{chkIdCode} </if>
+				<if test="chkPwCode != null and chkPwCode != ''">, chk_pw_code = #{chkPwCode}  </if>
+				<if test="loginFailCnt > -1">, login_fail_cnt = ${loginFailCnt}  </if>
+		  WHERE member_id = #{memberId}
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="MemberVo">
+	  	/** kr.kyoungjin.dataobject.dao.MemberDao.delete() */
+	  	DELETE FROM T_MEMBER
+	  	 WHERE member_id = #{memberId} 
+	 </delete>
+	 
+	 
+	 <update id="updateFailCount" parameterType="MemberVo">
+	 	/** kr.kyoungjin.dataobject.dao.MemberDao.updateFailCount() */
+	  	UPDATE 	T_MEMBER 
+		   SET 	login_fail_cnt = IFNULL(login_fail_cnt, 0) + 1 
+		 WHERE  member_id = #{memberId}
+	 </update>
+	 
+</mapper>	

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.AttachDao">
+
+	<select id="list" parameterType="AttachVo" resultType="AttachVo">
+		/** kr.kyoungjin.dataobject.dao.AttachDao.list */
+		SELECT 	FILE_SEQ, 
+				FILE_TYPE, 
+				ORD_SEQ, 
+				BOARD_SEQ, 
+				ORIGIN_NM, 
+				SAVE_NM, 
+				SAVE_PATH, 
+				FILE_SIZE, 
+				REG_DATE, 
+				REG_ID
+		  FROM 
+				T_ATTACH
+			<where>
+				<if test="fileSeq != null and fileSeq != '' "> AND FILE_SEQ = #{fileSeq} </if>
+				<if test="boardSeq != null and boardSeq != '' "> AND BOARD_SEQ = #{boardSeq} </if>
+			</where>
+			
+			ORDER BY ORD_SEQ DESC
+			
+	</select>
+	 
+	<select id="view" parameterType="AttachVo" resultType="AttachVo">
+		/** kr.kyoungjin.dataobject.dao.AttachDao.list */
+		SELECT 	FILE_SEQ, 
+				FILE_TYPE, 
+				ORD_SEQ, 
+				BOARD_SEQ, 
+				ORIGIN_NM, 
+				SAVE_NM, 
+				SAVE_PATH, 
+				FILE_SIZE, 
+				REG_DATE, 
+				REG_ID
+		  FROM 
+				T_ATTACH
+		 WHERE
+		 		FILE_SEQ = #{fileSeq}
+	</select>
+	 
+	 <select id="count"  parameterType="AttachVo"  resultType="Integer">
+	 	/** kr.kyoungjin.dataobject.dao.AttachDao.list */
+		SELECT 	FILE_SEQ, 
+				FILE_TYPE, 
+				ORD_SEQ, 
+				BOARD_SEQ, 
+				ORIGIN_NM, 
+				SAVE_NM, 
+				SAVE_PATH, 
+				FILE_SIZE, 
+				REG_DATE, 
+				REG_ID
+		  FROM 
+				T_ATTACH
+		 	
+		 	<where>
+				<if test="fileSeq != null and fileSeq != '' "> AND FILE_SEQ = #{fileSeq} </if>
+				<if test="boardSeq != null and boardSeq != '' "> AND BOARD_SEQ = #{boardSeq} </if>
+			</where>
+			
+	 </select>
+	 
+	 <insert id="insert" parameterType="AttachVo" >
+	 	/** kr.kyoungjin.dataobject.dao.AttachDao.insert */
+	 	INSERT INTO T_ATTACH 
+		(
+			FILE_TYPE, 
+			ORD_SEQ, 
+			BOARD_SEQ, 
+			ORIGIN_NM, 
+			SAVE_NM, 
+			SAVE_PATH, 
+			FILE_SIZE, 
+			REG_DATE, 
+			REG_ID
+		) VALUES 
+		(
+			 #{fileType}
+			,#{ordSeq}
+			,#{boardSeq}
+			,#{originNm}
+			,#{saveNm}
+			,#{savePath}
+			,#{fileSize}
+			,#{regDate}
+			,#{regId}
+		)
+		
+		<selectKey keyProperty="id" resultType="String" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	 </insert>
+	 
+	 
+	 <delete id="delete" parameterType="AttachVo">
+	  	/** kr.kyoungjin.dataobject.dao.AttachDao.delete */
+	  	DELETE FROM T_ATTACH
+	  	 WHERE 1=1
+	  	   <if test="fileSeq != null and fileSeq != '' "> AND FILE_SEQ = #{fileSeq} </if>
+	  	   <if test="boardSeq != null and boardSeq != '' "> AND BOARD_SEQ = #{boardSeq} </if>
+	 </delete>
+	 
+	
+	 
+</mapper>	

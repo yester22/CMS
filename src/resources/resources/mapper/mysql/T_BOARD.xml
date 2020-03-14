@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.BoardDao">
+
+	<select id="list" parameterType="BoardVo" resultType="BoardVo">
+		
+	</select>
+	 
+	<select id="view" parameterType="BoardVo" resultType="BoardVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="BoardVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="BoardVo" >
+	 	
+	 </insert>
+	 
+	 
+	 <update id="update" parameterType="BoardVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="BoardVo">
+	  
+	 </delete>
+	 
+</mapper>	

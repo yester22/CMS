@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.BoardMngDao">
+
+	<select id="list" parameterType="BoardMngVo" resultType="BoardMngVo">
+		SELECT 	BOARD_CD, 
+				BOARD_NM, 
+				LIST_ROW_CNT, 
+				LIST_BLOCK_CNT, 
+				TITLE_SPLIT_LEN, 
+				CONTENTS_SPLIT_LEN, 
+				LATEST_NOTICE_CNT, 
+				USE_YN, 
+				REG_DATE, 
+				REG_ID, 
+				UPT_DATE, 
+				UPT_ID
+		  FROM 
+				T_BOARD_MNG
+		 <where>
+		 
+		 </where>
+		 
+		 LIMIT #{pagingSize}, 
+		    
+	</select>
+	 
+	<select id="view" parameterType="BoardMngVo" resultType="BoardMngVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="BoardMngVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="BoardMngVo" >
+	 	
+	 </insert>
+	 
+	 
+	 <update id="update" parameterType="BoardMngVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="BoardMngVo">
+	  
+	 </delete>
+	 
+	 
+</mapper>	

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.LoginTryDao">
+
+	<select id="list" parameterType="LoginTryVo" resultType="LoginTryVo">
+		
+	</select>
+	 
+	<select id="view" parameterType="LoginTryVo" resultType="LoginTryVo">
+		
+	</select>
+	 
+	 <select id="count"  parameterType="LoginTryVo"  resultType="Integer">
+	 
+	 </select>
+	 
+	 <insert id="insert" parameterType="LoginTryVo" >
+	 	INSERT INTO T_LOGIN_TRY (
+	 		LOGIN_DATE
+	 		, IP_ADDR
+	 		, NIC_ADDR
+	 		, MEMBER_ID
+	 		, LOGIN_PW
+	 		, SUCCESS_YN
+	 	)
+	 	VALUES (
+	 		NOW(),
+			#{ipAddr},   
+			#{nicAddr},  
+			#{memberId}, 
+			#{loginPw},  
+			#{successYn}
+	 	)
+	 </insert>
+	 
+	 <update id="update" parameterType="LoginTryVo">
+	   
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="LoginTryVo">
+	  
+	 </delete>
+	 
+</mapper>	

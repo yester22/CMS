@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.BatchResultDao">
+
+	<select id="list" parameterType="BatchResultVo" resultType="BatchResultVo">
+		/** kr.kyoungjin.dataobject.dao.BatchResultDao.list */
+		SELECT 	RESULT_SEQ, 
+				BATCH_SEQ, 
+				START_TIME, 
+				END_TIME, 
+				SUCCESS_YN, 
+				RESULT_MSG, 
+				ADMIN_SEND_DATE, 
+				ADMIN_SEND_MAIL
+		  FROM 
+				T_BATCH_RESULT 
+		 	<where>
+		 		<if test="batchSeq != null and batchSeq != ''"> AND BATCH_SEQ = #{batchSeq}</if>
+		 	</where>
+	</select>
+	 
+	<select id="view" parameterType="BatchResultVo" resultType="BatchResultVo">
+		/** kr.kyoungjin.dataobject.dao.BatchResultDao.view */
+		SELECT 	RESULT_SEQ, 
+				BATCH_SEQ, 
+				START_TIME, 
+				END_TIME, 
+				SUCCESS_YN, 
+				RESULT_MSG, 
+				ADMIN_SEND_DATE, 
+				ADMIN_SEND_MAIL
+		  FROM 
+				T_BATCH_RESULT 
+		 WHERE  RESULT_SEQ = #{batchSeq}
+	</select>
+	 
+	 <select id="count"  parameterType="BatchResultVo"  resultType="Integer">
+	 	/** kr.kyoungjin.dataobject.dao.BatchResultDao.count */
+		SELECT 	COUNT(1) CNT
+		  FROM 
+				T_BATCH_RESULT 
+		 	<where>
+		 		<if test="batchSeq != null and batchSeq != ''"> AND BATCH_SEQ = #{batchSeq}</if>
+		 	</where>
+	 </select>
+	 
+	 <insert id="insert" parameterType="BatchResultVo" >
+	 	/** kr.kyoungjin.dataobject.dao.BatchResultDao.insert */
+	 	INSERT INTO T_BATCH_RESULT 
+		(
+			BATCH_SEQ, 
+			START_TIME, 
+			END_TIME, 
+			SUCCESS_YN, 
+			RESULT_MSG, 
+			ADMIN_SEND_DATE, 
+			ADMIN_SEND_MAIL
+		)
+		VALUES
+		(
+			 #{batchSeq}      
+			,#{startTime}     
+			,#{endTime}       
+			,#{successYn}     
+			,#{resultMsg}     
+			,#{adminSendDate} 
+			,#{adminSendMail} 
+		)
+		
+		<selectKey keyProperty="id" resultType="String" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		
+		
+	 </insert>
+	 
+	 
+	 <update id="update" parameterType="BatchResultVo">
+	   	/** kr.kyoungjin.dataobject.dao.BatchResultDao.update */
+	   	UPDATE 	T_BATCH_RESULT
+	   	   SET 	BATCH_SEQ = 'BATCH_SEQ' , 
+				START_TIME = #{startTime}  , 
+				END_TIME =   #{endTime}    , 
+				SUCCESS_YN = #{successYn}  , 
+				RESULT_MSG = #{resultMsg}  , 
+				ADMIN_SEND_DATE = #{adminSendDate}  , 
+				ADMIN_SEND_MAIL = #{adminSendMail}
+	   	 WHERE 	RESULT_SEQ = #{resultSeq}
+	 </update>
+	 
+	 
+	 <delete id="delete" parameterType="BatchResultVo">
+	  	/** kr.kyoungjin.dataobject.dao.BatchResultDao.delete */
+	  	DELETE FROM T_BATCH_RESULT 
+		 WHERE RESULT_SEQ = #{resultSeq} 
+	 </delete>
+	 
+	 
+</mapper>	

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="25" />
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+
+
+	<typeAliases>
+		<typeAlias alias="AttachVo" type="kr.kyoungjin.dataobject.vo.AttachVo" />
+		<typeAlias alias="BatchVo" type="kr.kyoungjin.dataobject.vo.BatchVo" />
+		<typeAlias alias="BatchResultVo" type="kr.kyoungjin.dataobject.vo.BatchResultVo" />
+		<typeAlias alias="BoardMngVo" type="kr.kyoungjin.dataobject.vo.BoardMngVo" />
+		<typeAlias alias="BoardVo" type="kr.kyoungjin.dataobject.vo.BoardVo" />
+		<typeAlias alias="CodeVo" type="kr.kyoungjin.dataobject.vo.CodeVo" />
+		<typeAlias alias="GrantMenuVo" type="kr.kyoungjin.dataobject.vo.GrantMenuVo" />
+		<typeAlias alias="GrantVo" type="kr.kyoungjin.dataobject.vo.GrantVo" />
+		<typeAlias alias="LoginTryVo" type="kr.kyoungjin.dataobject.vo.LoginTryVo" />
+		<typeAlias alias="MemberVo" type="kr.kyoungjin.dataobject.vo.MemberVo" />
+		<typeAlias alias="MenuVo" type="kr.kyoungjin.dataobject.vo.MenuVo" />
+		<typeAlias alias="MessageVo" type="kr.kyoungjin.dataobject.vo.MessageVo" />
+		<typeAlias alias="ScheduleVo" type="kr.kyoungjin.dataobject.vo.ScheduleVo" />
+		<typeAlias alias="SiteConfigVo" type="kr.kyoungjin.dataobject.vo.SiteConfigVo" />
+		<typeAlias alias="TermsAgreeVo" type="kr.kyoungjin.dataobject.vo.TermsAgreeVo" />
+		<typeAlias alias="TermsVo" type="kr.kyoungjin.dataobject.vo.TermsVo" />
+	</typeAliases>
+
+
+</configuration>
