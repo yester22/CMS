@@ -14,7 +14,7 @@ public abstract class AbstractController {
 	
 	
 	/**
-	 * this is for ajaxSumit (jquery.form.js)
+	 * this is for ajaxSumit (jquery.form.js) 
 	 * @param binder
 	 * @throws Exception
 	 */

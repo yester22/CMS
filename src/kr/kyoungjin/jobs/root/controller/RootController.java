@@ -27,10 +27,9 @@ public class RootController extends AbstractController {
 	 * @param go
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "go")
-	public ModelAndView go ( @RequestParam("go") String go, HttpServletRequest request ) {
-		ModelAndView mv = new ModelAndView();
-		
+	public String go ( @RequestParam("go") String go, HttpServletRequest request , ModelAndView mv) {
 		logger.debug(this.getClass() + "'s go method go = " + go );
 		
 		try {
@@ -49,19 +48,15 @@ public class RootController extends AbstractController {
 			mv.setViewName("/error/error");
 			mv.addObject("ERROR_MSG", e.getMessage());
 		}
-		return mv;
+		return go;
 	}
 
 
 	@RequestMapping(value = "/main")
 	public String defaultPage ( Model model, HttpServletRequest request ) {
-		return "default";
+		return "dashboard";
 	}
 
-	@RequestMapping(value = "/hello")
-	public String hello ( Model model, HttpServletRequest request ) {
-		return "hello";
-	}
 	
 	@RequestMapping(value = "/login")
 	public String login ( Model model, HttpServletRequest request, HttpServletResponse response ) throws IOException {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
  	
- 	<property name="LOG_DIR" value="/logs/netmix" />
+ 	<property name="LOG_DIR" value="/logs/CMS" />
  	<property name="LOG_PATH_NAME" value="${LOG_DIR}/stdout.log" />
  	<property name="GW_LOG_PATH_NAME" value="${LOG_DIR}/stdout_gw.log" />
  	
@@ -18,7 +18,7 @@
  		<file>${LOG_PATH_NAME}</file>
  		<append>true</append>
  		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedrollingPolicy">
- 			<fileNamePattern>netmix_log_%d{yyyy-mm-dd}.log</fileNamePattern>
+ 			<fileNamePattern>CMS_log_%d{yyyy-mm-dd}.log</fileNamePattern>
  		</rollingPolicy>
  		<encoder>
  			<Pattern>%d{yyyy-mm-dd HH:mm:ss} [%thread] %-5level %logger{35}-%msg%n</Pattern>

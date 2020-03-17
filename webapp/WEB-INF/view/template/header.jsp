@@ -7,7 +7,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="index.html">NETMIX HR v1.0</a>
+		<a class="navbar-brand" href="index.html">CMS</a>
 	</div>
 	<!-- /.navbar-header -->
 

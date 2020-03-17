@@ -17,7 +17,7 @@
 	                                    <input class="form-control" placeholder="<Message:get msgCode="LGN0000005" />" name="memberId" type="email" autofocus>
 	                                </div>
 	                                <div class="form-group">
-	                                    <input class="form-control" placeholder="<Message:get msgCode="LGN0000006" />" name="pwd" type="password" value="">
+	                                    <input class="form-control" placeholder="<Message:get msgCode="LGN0000006" />" name="pwd" id="pwd" type="password" value="">
 	                                </div>
 	                                <div class="checkbox">
 	                                    <label>
@@ -35,4 +35,4 @@
 	    </div>
 	</form>
 	
-	<script type="text/javascript" src="/resources/js/netmix/login.js"></script>
+	<script type="text/javascript" src="/resources/js/cms/login.js"></script>

@@ -108,7 +108,7 @@ public class LoginController extends AbstractController{
 				if ( mv.getLoginFailCnt() > 9 ) {
 					
 				} else {
-					
+					String decodePwd = encriptionService.decode(mv.getPwd());
 					if (  mv.getPwd().equals(encodedPw)) {
 						result.put(JSONResult.RESULT, JSONResult.OK);
 						

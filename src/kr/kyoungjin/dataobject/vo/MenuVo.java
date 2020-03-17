@@ -5,8 +5,11 @@ import kr.kyoungjin.common.abstractObject.AbstractVo;
 public class MenuVo  extends AbstractVo {
 	
 	private String menuCd; 
-	private String menuNm; 
+	private String menuNm;
+	private String upMenuCd;
+	private int    orderSeq;
 	private String programYn; 
+	private String mnuIcon;
 	private String programUrl; 
 	private String displayYn; 
 	private String delYn; 
@@ -46,6 +49,24 @@ public class MenuVo  extends AbstractVo {
 	}
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
+	}
+	public String getUpMenuCd() {
+		return upMenuCd;
+	}
+	public void setUpMenuCd(String upMenuCd) {
+		this.upMenuCd = upMenuCd;
+	}
+	public int getOrderSeq() {
+		return orderSeq;
+	}
+	public void setOrderSeq(int orderSeq) {
+		this.orderSeq = orderSeq;
+	}
+	public String getMnuIcon() {
+		return mnuIcon;
+	}
+	public void setMnuIcon(String mnuIcon) {
+		this.mnuIcon = mnuIcon;
 	}
 	
 	

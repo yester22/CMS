@@ -6,7 +6,8 @@
  */
 $(document).ready(function(){
 	var loginHadderText = Message.getMsg ('LGN0000001');
-	$("#btnLogin").bind("click", Login.btnLoginEvent);	
+	$("#btnLogin").bind("click", Login.btnLoginEvent);
+	$("#pwd").keyup(Login.keyUpPwd);
 	
 });
 
@@ -24,9 +25,6 @@ class Login {
 		var rtnObj = ajaxUtil.ajaxExecute ( url, data );
 		var result = rtnObj.ajaxResult;
 		
-		
-		console.log ( rtnObj );
-		
 		if ( result == 'ERROR' ) {
 			msgBox.alert ( rtnObj.data.MSG );
 			return;
@@ -41,4 +39,14 @@ class Login {
 		}
 		
 	} 
+	
+	/*
+	* e : 이벤트 객체
+	*/ 
+	static keyUpPwd ( e ) {
+		if( e.keyCode == 13 ) {
+			Login.btnLoginEvent(e);
+		}
+	}
+	
 }
