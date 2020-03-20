@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.util.AccessiblePageUtil;
 
 /**
@@ -39,7 +40,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
     	//session에 사용자 정보가 존재하지 않을경우 루트로 redirection
     	boolean isRedirect = false;
     	HttpSession session = request.getSession();
-    	if ( session.getAttribute("USER_INFO") == null  ) isRedirect = true;
+    	if ( session.getAttribute(ConstantNames.SESSION_USER_INFO) == null  ) isRedirect = true;
     	
    /* 	if ( request.getRequestURI().equals("/go") ) {
     		String param = request.getParameter("go");
@@ -61,7 +62,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
     		
     	if ( isRedirect ) {
     		response.sendRedirect("/");
-    	} else if ( session.getAttribute("USER_INFO") != null &&  request.getRequestURI().equals("/login")) {
+    	} else if ( session.getAttribute(ConstantNames.SESSION_USER_INFO) != null &&  request.getRequestURI().equals("/login")) {
     		response.sendRedirect("/main");
     	}
     	

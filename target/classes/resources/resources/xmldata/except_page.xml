@@ -17,6 +17,11 @@
 			<url>/logout</url>
 		</page>
 		
+		<page>
+			<name>엑셀업로드</name>
+			<url>/excelUpload</url>
+		</page>
+		
 	</accessList>
 	
 	<deniedList>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.ExcelUploadDao">
+	
+	<select id="selectNewExcelKey" resultType="string">
+		SELECT ( CASE WHEN B.MAXVAL IS NULL THEN CONCAT(DATE_FORMAT(NOW(), '%Y%m%d%H'), LPAD(1, 5, '0'))
+	    				  ELSE B.MAXVAL + 1  END ) NEWKEY 
+		  FROM (  
+  				SELECT MAX(EXCEL_KEY) MAXVAL FROM T_EXCEL_UPLOAD B
+  				WHERE SUBSTR(B.EXCEL_KEY, 1, 10) = DATE_FORMAT(NOW(), '%Y%m%d%H')
+		 ) B	
+	</select>
+	
+	
+	<insert id="insertExcelUploaInfo" parameterType="ExcelUploadVo">
+		/** kr.kyoungjin.dataobject.dao.ExcelUploadDao.insertExcelUploaInfo */
+		INSERT INTO T_EXCEL_UPLOAD ( 
+			  EXCEL_KEY
+			, TITLE
+			, DATA_COUNT
+			, UPLOADER
+			, LOCATION_CODE
+			, PHYSICAL_PATH
+			, ORIGINAL_FILE_NAME
+			, SAVED_FILE_NAME
+			, USE_YN 
+			, UPLOAD_DT
+		)
+		VALUES(
+			  #{excelKey}
+			, #{title} 
+			, #{dataCount} 
+			, #{uploader} 
+			, #{locationCode}
+			, #{physicalPath}
+			, #{originalFileName}  
+			, #{savedFileName}
+			, #{useYn}
+			, NOW()
+		 )
+	</insert>
+	
+	
+	<insert id="insertExcelDetailInfo" parameterType="ExcelUploadDetailVo">
+		/** kr.kyoungjin.dataobject.dao.ExcelUploadDao.insertExcelDetailInfo */
+		INSERT INTO T_EXCEL_UPLOAD_DATA ( 
+			EXCEL_KEY
+			,DATA_SEQ
+			,SIDO
+			,SIGUNGU
+			,UPMYUNDONG
+			,RI
+			,BUNJI
+			,IS_VALID_YN
+			,IS_TRANS_YN 
+		) VALUES ( 
+			  #{excelKey}  
+			, #{dataSeq}   
+			, #{sido}
+			, #{sigungu}   
+			, #{upmyundong}
+			, #{ri}
+			, #{bunji}     
+			, #{isValidYn} 
+			, #{isTransYn}
+		)
+	</insert>
+	
+	 
+	 
+	 <select id="selectExcelUploaInfo" parameterType="ExcelUploadVo"  resultType="ExcelUploadVo">
+	 	  SELECT EXCEL_KEY
+				, TITLE
+				, DATA_COUNT
+				, UPLOADER
+				, LOCATION_CODE
+				, PHYSICAL_PATH
+				, ORIGINAL_FILE_NAME
+				, SAVED_FILE_NAME
+				, USE_YN 
+				, DATE_FORMAT(UPLOAD_DT, '%Y-%m-%d %H:%i') UPLOAD_DT
+	 	   FROM T_EXCEL_UPLOAD
+	 	   
+	 	   <where>
+				<if test='uploader != null and !"".equals(uploader)'>
+					AND UPLOADER = #{uploader}
+				</if>
+	 	   </where>
+	 </select>
+	 
+	 
+	 <select id="selectExcelUploaData" parameterType="ExcelUploadVo"  resultType="ExcelUploadDetailVo">
+	 	  SELECT  EXCEL_KEY
+				, DATA_SEQ
+				, SIDO
+				, SIGUNGU
+				, UPMYUNDONG
+				, RI
+				, BUNJI
+				, IS_VALID_YN
+				, IS_TRANS_YN 
+		   FROM  T_EXCEL_UPLOAD_DATA
+	 	  WHERE EXCEL_KEY = #{excelKey}
+	 </select>
+	 
+</mapper>	

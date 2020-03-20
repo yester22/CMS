@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kyoungjin.common.abstractObject.AbstractController;
+import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
 import kr.kyoungjin.common.util.ClientInfoUtil;
 import kr.kyoungjin.dataobject.vo.LoginTryVo;
@@ -108,7 +109,6 @@ public class LoginController extends AbstractController{
 				if ( mv.getLoginFailCnt() > 9 ) {
 					
 				} else {
-					String decodePwd = encriptionService.decode(mv.getPwd());
 					if (  mv.getPwd().equals(encodedPw)) {
 						result.put(JSONResult.RESULT, JSONResult.OK);
 						
@@ -120,7 +120,7 @@ public class LoginController extends AbstractController{
 						
 						mv.setPwd("");
 						HttpSession session = request.getSession();
-						session.setAttribute("USER_INFO", mv);
+						session.setAttribute(ConstantNames.SESSION_USER_INFO,  mv);
 						
 					} else { //패스워드가 맞지않을 경우
 						result.put(JSONResult.RESULT, JSONResult.NOT_MATCH);	

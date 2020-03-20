@@ -67,5 +67,8 @@
 		<property name="defaultErrorView" value="error" />
 	</bean>
 
-	
+	<!-- file upload resolver -->
+	<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000"></property>
+	</bean>
 </beans>

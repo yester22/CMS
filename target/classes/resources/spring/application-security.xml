@@ -18,6 +18,7 @@
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/resources/**" access="permitAll" />
         <intercept-url pattern="/login/form"   access="permitAll" />
+        <intercept-url pattern="/excelUpload"  access="permitAll" />
 	    <intercept-url pattern="/admin/**"     access="hasRole('ADMIN')" />
         <intercept-url pattern="/**"           access="hasAnyRole('USER, ADMIN')" />
         
