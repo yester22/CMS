@@ -56,15 +56,16 @@
 
 
 	<!-- global properties -->
-	<util:properties id="config" 	location="classpath:/resources/properties/global.properties" />
+	<util:properties id="config" location="classpath:/resources/properties/global.properties" />
+
 
 	 <bean 	class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="com.tutorialspoint.SpringException">	ExceptionPage</prop>
+				<prop key="kr.kyoungjin.common.exception.GlobalException">/error/error.jsp</prop>
 			</props>
 		</property>
-		<property name="defaultErrorView" value="error" />
+		<property name="defaultErrorView" value="error/error" />
 	</bean>
 
 	<!-- file upload resolver -->

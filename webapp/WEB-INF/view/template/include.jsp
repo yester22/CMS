@@ -10,21 +10,38 @@
 <!-- Custom CSS -->
 <link href="/resources/bootstrap/sb/dist/css/sb-admin-2.css" rel="stylesheet">
 
+<!-- DataTables CSS -->
+<link href="/resources/bootstrap/sb/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="/resources/bootstrap/sb/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
 <!-- Custom Fonts -->
 <link href="/resources/bootstrap/sb/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 <link href="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
+
+ 
 
 <script type="text/javascript" src="/resources/js/lib/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/resources/js/lib/jquery.form.min.js"></script>
 <script src="/resources/bootstrap/sb/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
+
 <!-- Metis Menu Plugin JavaScript -->
 <script src="/resources/bootstrap/sb/vendor/metisMenu/metisMenu.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="/resources/bootstrap/sb/dist/js/sb-admin-2.js"></script>
+
+
+<!-- DataTables JavaScript -->
+<script src="/resources/bootstrap/sb/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/resources/bootstrap/sb/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="/resources/bootstrap/sb/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+
 <!-- //필요한 부분에서만 include 할것
 <script src="/resources/bootstrap/sb/vendor/raphael/raphael.min.js"></script>
 <script src="/resources/bootstrap/sb/vendor/morrisjs/morris.min.js"></script>

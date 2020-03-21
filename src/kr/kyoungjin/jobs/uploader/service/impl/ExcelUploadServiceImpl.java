@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.util.FileUtil;
 import kr.kyoungjin.dataobject.dao.ExcelUploadDao;
 import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
@@ -39,20 +40,22 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 	
 	@Override
 	@Transactional
-	public String excelUpload(MultipartFile uploadfile, String uploaderId) throws Exception {
+	public String excelUpload(Map<String,Object> params , MultipartFile uploadfile, String uploaderId) throws Exception {
 		
 		//새로 생성할 selectKey를 가져온다
 		String sNewExcelKey = excelUploadDao.selectNewExcelKey();
-		
 		
 		Map<String, String> saveFileInfo = FileUtil.uploadFile(uploadfile, FILE_SAVE_PATH);
 		
 		ExcelUploadVo saveExcelUpload = new ExcelUploadVo();
 		saveExcelUpload.setExcelKey(sNewExcelKey);
+		saveExcelUpload.setTitle(params.get("title").toString());
+		saveExcelUpload.setLocationCode(params.get("locationCode").toString());
 		saveExcelUpload.setOriginalFileName(uploadfile.getOriginalFilename());
 		saveExcelUpload.setPhysicalPath(FILE_SAVE_PATH);
 		saveExcelUpload.setSavedFileName(saveFileInfo.get(FileUtil.UPLOAD_FILE_NM).toString());
 		saveExcelUpload.setUploader(uploaderId);
+		saveExcelUpload.setUseYn(ConstantNames.USE_YN_Y);
 		saveExcelUpload.setDataCount(0);
 		
 		

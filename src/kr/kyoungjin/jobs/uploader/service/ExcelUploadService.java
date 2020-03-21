@@ -1,5 +1,7 @@
 package kr.kyoungjin.jobs.uploader.service;
 
+import java.util.Map;
+
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -12,5 +14,5 @@ import org.springframework.web.multipart.MultipartFile;
  * </PRE>
  */
 public interface ExcelUploadService {
-	public String excelUpload( MultipartFile uploadfile, String uploaderId) throws Exception;
+	public String excelUpload( Map<String, Object> params, MultipartFile uploadfile, String uploaderId) throws Exception;
 }

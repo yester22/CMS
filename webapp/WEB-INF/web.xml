@@ -10,6 +10,7 @@
 			/WEB-INF/classes/resources/spring/application-datasource.xml
 			/WEB-INF/classes/resources/spring/application-security.xml
 			/WEB-INF/classes/resources/spring/application-view.xml
+			/WEB-INF/classes/resources/spring/application-cors.xml
 		</param-value>
 	</context-param>
 	<listener>
