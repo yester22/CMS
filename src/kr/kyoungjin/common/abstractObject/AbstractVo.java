@@ -5,6 +5,8 @@ public class AbstractVo {
 	protected String regId;
 	protected String uptDate;
 	protected String uptId;
+	protected long   startNum;
+	protected long   pageSize;
 	
 	public String getRegDate() {
 		return regDate;
@@ -29,6 +31,18 @@ public class AbstractVo {
 	}
 	public void setUptId(String uptId) {
 		this.uptId = uptId;
+	}
+	public long getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(long startNum) {
+		this.startNum = startNum;
+	}
+	public long getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(long pageSize) {
+		this.pageSize = pageSize;
 	}
 	
 	

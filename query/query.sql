@@ -129,3 +129,31 @@ CREATE TABLE T_ADDRESS_ROADNAME (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE T_CODE (
+  `CD_KEY` varchar(20) NOT NULL,
+  `CD_NAME` varchar(50) NOT NULL,
+  `UPPER_CD_KEY` varchar(20) NOT NULL,
+  `USE_YN` varchar(1) NOT NULL DEFAULT 'N',
+  `REG_MEMBER` VARCHAR(30) NOT NULL,
+  `REG_DATE` DATETIME ,
+  PRIMARY KEY (`CD_KEY`,`UPPER_CD_KEY`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO T_CODE VALUES('LOCATION', '지역코드', '#' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('02', '서울특별시', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('031', '경기도', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('032', '인천', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('033', '강원도', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('042','대전광역시', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('043','충청북도', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('044','세종특별자치시', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('051','부산광역시', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('052','울산광역시', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('053','대구광역시', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('054','경상북도', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('055','경상남도', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('061','전라남도', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('062','광주광역시', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('063','전라북도', 'LOCATION' , 'Y', 'system', NOW());
+INSERT INTO T_CODE VALUES('064','제주특별자치도', 'LOCATION' , 'Y', 'system', NOW());
+

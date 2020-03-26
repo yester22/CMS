@@ -23,6 +23,8 @@ public class ExcelUploadDetailVo implements Serializable{
 	private String bunji;
 	private String isValidYn;
 	private String isTransYn;
+	private String bubunji;
+	private long   rownum;
 	
 	public String getExcelKey() {
 		return excelKey;
@@ -77,6 +79,18 @@ public class ExcelUploadDetailVo implements Serializable{
 	}
 	public void setIsTransYn(String isTransYn) {
 		this.isTransYn = isTransYn;
+	}
+	public String getBubunji() {
+		return bubunji;
+	}
+	public void setBubunji(String bubunji) {
+		this.bubunji = bubunji;
+	}
+	public long getRownum() {
+		return rownum;
+	}
+	public void setRownum(long rownum) {
+		this.rownum = rownum;
 	}
 	
 	

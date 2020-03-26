@@ -1,16 +1,13 @@
-package kr.kyoungjin.jobs.uploader.controller;
+package kr.kyoungjin.jobs.excel.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.kyoungjin.common.abstractObject.AbstractController;
 import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
 import kr.kyoungjin.dataobject.vo.MemberVo;
+import kr.kyoungjin.jobs.excel.service.ExcelUploadService;
 import kr.kyoungjin.jobs.system.message.service.IMessageService;
-import kr.kyoungjin.jobs.uploader.service.ExcelUploadService;
 import net.sf.json.JSONObject;
 
 
@@ -39,7 +37,7 @@ import net.sf.json.JSONObject;
  */
 @CrossOrigin("*")
 @RestController
-public class ExcelUploadController {
+public class ExcelUploadController  extends AbstractController {
 	
 	private Log logger = LogFactory.getLog(ExcelUploadController.class);
 	
@@ -66,9 +64,6 @@ public class ExcelUploadController {
 			MemberVo sessionMemberInfo = (MemberVo)request.getSession().getAttribute(ConstantNames.SESSION_USER_INFO);
 			List<String> uploadFilesId = new ArrayList<String>();
 			String excelId = "";
-			//String title  = request.getParameter("title").toString();
-			//String locationCode = request.getParameter("");
-
 			
 			Iterator<String> itr =  request.getFileNames();
 			if(itr.hasNext()) {

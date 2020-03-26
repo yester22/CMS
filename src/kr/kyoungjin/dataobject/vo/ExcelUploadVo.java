@@ -1,7 +1,7 @@
 package kr.kyoungjin.dataobject.vo;
 
 import java.io.Serializable;
-
+import kr.kyoungjin.common.abstractObject.AbstractVo;
 /**
  * @since 2020. 3. 20.
  * @author yester21
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 2020. 3. 20. yester21 : 최초작성
  * </PRE>
  */
-public class ExcelUploadVo implements Serializable {
+public class ExcelUploadVo extends AbstractVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -20,11 +20,13 @@ public class ExcelUploadVo implements Serializable {
 	private int dataCount;
 	private String uploader;
 	private String locationCode;
+	private String locationCodeName;
 	private String physicalPath;
 	private String originalFileName;
 	private String savedFileName;
 	private String useYn;
 	private String uploadDt;
+	private long   rownum;
 	
 	public String getExcelKey() {
 		return excelKey;
@@ -85,6 +87,18 @@ public class ExcelUploadVo implements Serializable {
 	}
 	public void setUploadDt(String uploadDt) {
 		this.uploadDt = uploadDt;
+	}
+	public String getLocationCodeName() {
+		return locationCodeName;
+	}
+	public void setLocationCodeName(String locationCodeName) {
+		this.locationCodeName = locationCodeName;
+	}
+	public long getRownum() {
+		return rownum;
+	}
+	public void setRownum(long rownum) {
+		this.rownum = rownum;
 	}
 
 		

@@ -20,5 +20,9 @@ public class JSONResult {
 	public final static String RESULT = new String("RESULT");
 	
 	public final static String MESSAGE = new String("MSG");
+	
+	public final static String LIST = new String("LIST");
+
+	public static final Object COUNT = new String("COUNT");
 
 }

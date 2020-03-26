@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.kyoungjin.dataobject.dao.ExcelUploadDao">
+<mapper namespace="kr.kyoungjin.dataobject.dao.ExcelDao">
 	
 	<select id="selectNewExcelKey" resultType="string">
 		SELECT ( CASE WHEN B.MAXVAL IS NULL THEN CONCAT(DATE_FORMAT(NOW(), '%Y%m%d%H'), LPAD(1, 5, '0'))
@@ -53,6 +53,7 @@
 			,UPMYUNDONG
 			,RI
 			,BUNJI
+			,BUBUNJI
 			,IS_VALID_YN
 			,IS_TRANS_YN 
 		) VALUES ( 
@@ -62,47 +63,121 @@
 			, #{sigungu}   
 			, #{upmyundong}
 			, #{ri}
-			, #{bunji}     
+			, #{bunji}
+			, #{bubunji}
 			, #{isValidYn} 
 			, #{isTransYn}
 		)
 	</insert>
 	
+	<update id="updateExcelUploaInfo" parameterType="ExcelUploadDetailVo">
+		/** kr.kyoungjin.dataobject.dao.ExcelUploadDao.ExcelUploadDetailVo */
+		UPDATE T_EXCEL_UPLOAD
+		  SET DATA_COUNT = #{dataCount}
+		WHERE EXCEL_KEY = #{excelKey}
+	</update>
+	
 	 
+	<sql id="commonExcelUploadWhere">
+		<where>
+			<if test='searchUploader != null and !"".equals(searchUploader)'>
+				AND a.UPLOADER = #{searchUploader}
+			</if>
+			<if test='searchLocationCode != null and !"".equals(searchLocationCode)'>
+				AND a.LOCATION_CODE = #{searchLocationCode}
+			</if>
+			<if test='searchTitle != null and !"".equals(searchTitle)'>
+				AND a.TITLE LIKE concat('%', concat(#{searchTitle}, '%'))
+			</if>
+			<if test='searchStartDate != null and !"".equals(searchStartDate)'>
+				AND DATE_FORMAT(a.UPLOAD_DT, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate} 
+			</if>
+	 	</where>
+	
+	</sql>
+	
+	
+	<sql id="commonExcelUpload">
+	 	SELECT a.EXCEL_KEY,
+			   a.TITLE,
+			   a.DATA_COUNT,
+			   a.UPLOADER,
+			   a.LOCATION_CODE,
+			   (SELECT CD_NAME FROM T_CODE WHERE UPPER_CD_KEY = 'LOCATION' AND CD_KEY = a.LOCATION_CODE ) LOCATION_CODE_NAME,
+			   a.PHYSICAL_PATH,
+			   a.ORIGINAL_FILE_NAME,
+			   a.SAVED_FILE_NAME,
+			   a.USE_YN,
+				DATE_FORMAT(a.UPLOAD_DT, '%Y-%m-%d %H:%i') UPLOAD_DT
+	 	 FROM T_EXCEL_UPLOAD a
+		<include refid="commonExcelUploadWhere"></include>
+	 </sql>
 	 
-	 <select id="selectExcelUploaInfo" parameterType="ExcelUploadVo"  resultType="ExcelUploadVo">
-	 	  SELECT EXCEL_KEY
-				, TITLE
-				, DATA_COUNT
-				, UPLOADER
-				, LOCATION_CODE
-				, PHYSICAL_PATH
-				, ORIGINAL_FILE_NAME
-				, SAVED_FILE_NAME
-				, USE_YN 
-				, DATE_FORMAT(UPLOAD_DT, '%Y-%m-%d %H:%i') UPLOAD_DT
-	 	   FROM T_EXCEL_UPLOAD
-	 	   
-	 	   <where>
-				<if test='uploader != null and !"".equals(uploader)'>
-					AND UPLOADER = #{uploader}
-				</if>
-	 	   </where>
+	 <select id="selectExcelUploaInfo" parameterType="hashmap"  resultType="ExcelUploadVo">
+	 	/** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaInfo  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonExcelUpload"></include>
+				    )a 
+		) as b
+		LIMIT #{startNum} , #{pageSize}
 	 </select>
 	 
+	 <select id="selectExcelUploaInfoCount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaInfoCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonExcelUpload"></include>
+	      )a 
+	 </select>
 	 
-	 <select id="selectExcelUploaData" parameterType="ExcelUploadVo"  resultType="ExcelUploadDetailVo">
-	 	  SELECT  EXCEL_KEY
+	 <sql id="commonExcelUploadData">
+	 	 SELECT  EXCEL_KEY
 				, DATA_SEQ
 				, SIDO
 				, SIGUNGU
 				, UPMYUNDONG
 				, RI
 				, BUNJI
+				, BUBUNJI
 				, IS_VALID_YN
 				, IS_TRANS_YN 
 		   FROM  T_EXCEL_UPLOAD_DATA
 	 	  WHERE EXCEL_KEY = #{excelKey}
+	 </sql>
+	 
+	 
+	 <select id="selectExcelUploaData" parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+	 	/** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaData  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonExcelUploadData"></include>
+				    )a 
+		) as b
+		LIMIT #{startNum} , #{pageSize}
+	 </select>
+	 
+	 
+	  <select id="selectExcelUploaDataCount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaInfoCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonExcelUploadData"></include>
+	      )a 
 	 </select>
 	 
 </mapper>	

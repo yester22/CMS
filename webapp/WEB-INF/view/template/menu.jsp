@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-	<script type="text/javascript" src="/resources/js/cms/leftMenu.js"></script>	
 	<div class="navbar-default sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
 				<li><a href="#" onclick="javascript:MenuMove.go('dashboard')"><i class="fa fa-dashboard fa-fw"></i>&nbsp;Dashboard</a></li>
-				<li><a href="#" onclick="javascript:MenuMove.go('excelUpload/list')"><i class="fa fa-edit fa-fw"></i>&nbsp;데이터 업로드</a></li>
+				<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>데이터 관리<span class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a href="#" onclick="javascript:pageMove.goPost('excel/excelUpload')">엑셀데이터 업로드</a></li>
+						<li><a href="#" onclick="javascript:pageMove.goPost('excel/excelList')">데이터 조회</a></li>
+					</ul>
+				</li>
 				<!-- 
 				<li class="sidebar-search">
 					<div class="input-group custom-search-form">

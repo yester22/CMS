@@ -45,8 +45,16 @@ class CodeList {
 	}
 	
 	static cbExcelUploadResult ( data ) {
-		console.log("result success");
-		console.log(data);
+		debugger;
+		if ( data != null ) {
+			if ( data.RESULT == "OK" ) {
+				var title = "데이터업로드 성공";
+				var msg = '엑셀 데이터 업로드에 성공 하였습니다<br/>데이터 조회페이지로 이동하시겠습니까?';
+				msgBox.confirm (title, msg, function() {
+					MenuMove.go('excel/excelList');
+				});
+			}
+		}
 	}
 	
 	static cbExcelUploadError( error ) {

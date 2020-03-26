@@ -21,7 +21,9 @@
 
 <link href="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
 
- 
+<!-- Tui Grid -->
+<link href="/resources/tui_grid/tui-grid.min.css" rel="stylesheet">
+<link href="/resources/tui_grid/tui-pagination.css" rel="stylesheet">
 
 <script type="text/javascript" src="/resources/js/lib/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/resources/js/lib/jquery.form.min.js"></script>
@@ -35,12 +37,13 @@
 <!-- Custom Theme JavaScript -->
 <script src="/resources/bootstrap/sb/dist/js/sb-admin-2.js"></script>
 
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/resources/bootstrap/sb/vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- DataTables JavaScript -->
-<script src="/resources/bootstrap/sb/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="/resources/bootstrap/sb/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="/resources/bootstrap/sb/vendor/datatables-responsive/dataTables.responsive.js"></script>
-
+<!-- Tui Grid -->
+<script src="/resources/tui_grid/tui-code-snippet.js"></script>
+<script src="/resources/tui_grid/tui-pagination.js"></script>
+<script src="/resources/tui_grid/tui-grid.min.js"></script>
 
 <!-- //필요한 부분에서만 include 할것
 <script src="/resources/bootstrap/sb/vendor/raphael/raphael.min.js"></script>
@@ -63,6 +66,7 @@
 <script type="text/javascript" src="/resources/js/common/message.js"></script>
 <script type="text/javascript" src="/resources/js/common/pageMove.js"></script>
 <script type="text/javascript" src="/resources/js/common/msgBox.js"></script>
+<script type="text/javascript" src="/resources/js/common/commonUtil.js"></script>
 
 
 <div id="DIV_ABSTRACT_MESSAGE">

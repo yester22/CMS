@@ -7,7 +7,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="index.html">CMS</a>
+		<a class="navbar-brand" href="#" onclick="javascript:MenuMove.go('dashboard')">CMS</a>
 	</div>
 	<!-- /.navbar-header -->
 
