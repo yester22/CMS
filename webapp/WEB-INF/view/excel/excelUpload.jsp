@@ -30,23 +30,23 @@
 									<td>
 										<select name="locationCode" id="locationCode" class="form-control form-control-sm">
 											<option value="">---선택---</option>
-											<option value="02">서울특별시</option>
-											<option value="031">경기도</option>
-											<option value="032">인천광역시</option>
-											<option value="033">강원도</option>
-											<option value="041">충청남도</option>
-											<option value="042">대전광역시</option>
-											<option value="043">충청북도</option>
-											<option value="044">세종특별자치시</option>
-											<option value="051">부산광역시</option>
-											<option value="052">울산광역시</option>
-											<option value="053">대구광역시</option>
-											<option value="054">경상북도</option>
-											<option value="055">경상남도</option>
-											<option value="061">전라남도</option>
-											<option value="062">광주광역시</option>
-											<option value="063">전라북도</option>
-											<option value="064">제주특별자치도</option>
+											<option value="11">서울특별시</option>
+											<option value="26">부산광역시</option>
+											<option value="27">대구광역시</option>
+											<option value="28">인천광역시</option>
+											<option value="29">광주광역시</option>
+											<option value="30">대전광역시</option>
+											<option value="31">울산광역시</option>
+											<option value="36">세종특별자치시</option>
+											<option value="41">경기도</option>
+											<option value="42">강원도</option>
+											<option value="43">충청북도</option>
+											<option value="44">충청남도</option>
+											<option value="45">전라북도</option>
+											<option value="46">전라남도</option>
+											<option value="47">경상북도</option>
+											<option value="48">경상남도</option>
+											<option value="50">제주특별자치도</option>
 										</select>
 									</td>
 									<th  style="text-align:center !important;"><label for="uploadfile">파일</label></th>

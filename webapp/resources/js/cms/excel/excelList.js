@@ -119,13 +119,14 @@ $(document).ready(function(){
 	  console.log( target );
 	});
 	
-	//엑셀키 다시 입력했을시
+	//페이지 버튼 클릭시
 	excelDataGrid.getPagination().on("afterMove", function(ev) {
 		var pageNum = ev.page;
 		if( pageNum == 1 ) ExcelList.dataStartNum = 0;
 		else ExcelList.dataStartNum = (pageNum - 1 ) * ExcelList.dataPageSize ;
 		
-		ExcelList.excelUploadRowClick( ExcelList.excelKey  );
+		//excelDataGrid.data.slice( ExcelList.dataStartNum, ExcelList.dataPageSize );
+		//ExcelList.excelUploadRowClick( ExcelList.excelKey  );
 	});
 	
 	ExcelList.excelDataGrid = excelDataGrid;

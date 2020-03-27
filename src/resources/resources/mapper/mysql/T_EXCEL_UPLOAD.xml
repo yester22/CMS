@@ -127,7 +127,6 @@
 				    	<include refid="commonExcelUpload"></include>
 				    )a 
 		) as b
-		LIMIT #{startNum} , #{pageSize}
 	 </select>
 	 
 	 <select id="selectExcelUploaInfoCount" parameterType="hashmap"  resultType="long">
@@ -168,7 +167,6 @@
 				    	<include refid="commonExcelUploadData"></include>
 				    )a 
 		) as b
-		LIMIT #{startNum} , #{pageSize}
 	 </select>
 	 
 	 
