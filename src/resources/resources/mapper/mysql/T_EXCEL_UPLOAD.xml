@@ -52,10 +52,9 @@
 			,SIGUNGU
 			,UPMYUNDONG
 			,RI
+			,MOUNTAIN_YN
 			,BUNJI
 			,BUBUNJI
-			,IS_VALID_YN
-			,IS_TRANS_YN 
 		) VALUES ( 
 			  #{excelKey}  
 			, #{dataSeq}   
@@ -63,12 +62,12 @@
 			, #{sigungu}   
 			, #{upmyundong}
 			, #{ri}
+			, #{mountainYn}
 			, #{bunji}
 			, #{bubunji}
-			, #{isValidYn} 
-			, #{isTransYn}
 		)
 	</insert>
+	
 	
 	<update id="updateExcelUploaInfo" parameterType="ExcelUploadDetailVo">
 		/** kr.kyoungjin.dataobject.dao.ExcelUploadDao.ExcelUploadDetailVo */
@@ -146,8 +145,8 @@
 				, RI
 				, BUNJI
 				, BUBUNJI
+				, PMU_CD				
 				, IS_VALID_YN
-				, IS_TRANS_YN 
 		   FROM  T_EXCEL_UPLOAD_DATA
 	 	  WHERE EXCEL_KEY = #{excelKey}
 	 </sql>
@@ -177,5 +176,44 @@
 			<include refid="commonExcelUploadData"></include>
 	      )a 
 	 </select>
+	 
+	 
+	 <select id="selectPmuList" parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+	 	SELECT 	x.EXCEL_KEY,
+	   			x.DATA_SEQ, 
+	  			CONCAT( x.COURT_DONG_CODE , x.MNT_NO , x.BUNJI , x.BUBUNJI ) PMU_CD
+		  FROM (
+				SELECT a.EXCEL_KEY,
+				       a.DATA_SEQ,
+				       a.SIDO,
+				       a.SIGUNGU,
+				       a.UPMYUNDONG,
+				       a.RI,
+				       ( CASE WHEN a.MOUNTAIN_YN = 'Y' THEN '2' 
+				         ELSE '1' END ) MNT_NO,
+				       LPAD(a.BUNJI, 4, '0') BUNJI,
+				       LPAD(a.BUBUNJI, 4, '0') BUBUNJI,
+				       a.PMU_CD,
+				       a.IS_VALID_YN,
+				       (   SELECT COURT_DONG_CODE from T_ADDR_JIBUN
+							WHERE sido_nm = a.SIDO
+							  AND SIGUNGU_NM = a.SIGUNGU
+							  AND COURT_UPMYUNDONG_NM = a.UPMYUNDONG
+							  AND COURT_RI_NM = a.RI
+							  LIMIT 1
+					  ) COURT_DONG_CODE
+		  		  FROM t_excel_upload_data a
+				 WHERE a.EXCEL_KEY = #{excelKey}
+			) x
+			ORDER BY DATA_SEQ ASC		
+	 </select>
+	 
+	 
+	<update id="updateExcelDataPmuCd" parameterType="ExcelUploadDetailVo">
+		UPDATE T_EXCEL_UPLOAD_DATA
+		   SET PMU_CD = #{pmuCd}
+	 	 WHERE EXCEL_KEY = #{excelKey}
+	 	   AND DATA_SEQ = #{dataSeq} 
+	</update> 
 	 
 </mapper>	

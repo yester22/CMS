@@ -1,6 +1,7 @@
 package kr.kyoungjin.jobs.excel.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,6 +57,9 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 	private ExcelDao excelUploadDao;
 	
 	
+	/**
+	 *엑셀 업로드 처리
+	 */
 	@Override
 	@Transactional
 	public String excelUpload(Map<String,Object> params , MultipartFile uploadfile, String uploaderId) throws Exception {
@@ -83,15 +87,18 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 		saveExcelUpload = new ExcelUploadVo();
 		saveExcelUpload.setExcelKey(sNewExcelKey);
 		saveExcelUpload.setDataCount(nExcelDataCount);
+		
 		excelUploadDao.updateExcelUploaInfo(saveExcelUpload);
 		
+		//pnu data update
+		this.updatePnuData(sNewExcelKey);
 		
 		return sNewExcelKey;
 	}
 	
 	
 	/**
-	 * @Author : yeste
+	 * @Author : yester21
 	 * @Date : 2020. 3. 23.
 	 * @Method Name : saveExcelData
 	 * @return : int
@@ -125,10 +132,10 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
         	detailVo.setSigungu(this.getCellValue(sheet.getRow(nCrrentRow).getCell(2)));
         	detailVo.setUpmyundong(this.getCellValue(sheet.getRow(nCrrentRow).getCell(3)));
         	detailVo.setRi(this.getCellValue(sheet.getRow(nCrrentRow).getCell(4)));
-        	detailVo.setBunji(this.getCellValue(sheet.getRow(nCrrentRow).getCell(5)));
-        	detailVo.setBubunji(this.getCellValue(sheet.getRow(nCrrentRow).getCell(6)));
+        	detailVo.setMountainYn(this.getCellValue(sheet.getRow(nCrrentRow).getCell(5)));
+        	detailVo.setBunji(this.getCellValue(sheet.getRow(nCrrentRow).getCell(6)));
+        	detailVo.setBubunji(this.getCellValue(sheet.getRow(nCrrentRow).getCell(7)));
         	detailVo.setIsValidYn(ConstantNames.USE_YN_N);
-        	detailVo.setIsTransYn(ConstantNames.USE_YN_N);
         	
         	excelUploadDao.insertExcelDetailInfo(detailVo);
         }
@@ -141,7 +148,9 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 	
 	private String getCellValue(   Cell cell ) {
 		String value = "";
-		if(cell.getCellType() == Cell.CELL_TYPE_BLANK){
+		if( cell == null ) {
+			  value = "";
+		}else if(cell != null && cell.getCellType() == Cell.CELL_TYPE_BLANK){
               value="";
        } else{
           //타입별로 내용 읽기
@@ -150,7 +159,10 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
                   value=cell.getCellFormula();
                   break;
               case Cell.CELL_TYPE_NUMERIC:
-                  value=cell.getNumericCellValue()+"";
+                  value = cell.getNumericCellValue()+"";
+                  if ( value.lastIndexOf(".") > 0 ) {
+                	  value = value.substring(0, value.lastIndexOf("."));
+                  }
                   break;
               case Cell.CELL_TYPE_STRING:
                   value=cell.getStringCellValue()+"";
@@ -165,4 +177,28 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
        	}
 		return value;
 	}
+	
+	
+	/**
+	 * @Author : yeste
+	 * @Date : 2020. 3. 31.
+	 * @Method Name : updatePnuData
+	 * @return : int
+	 * @throws Exception 
+	 */
+	private int updatePnuData (String excelKey) throws Exception {
+		int nRtnCnt = 0;
+		
+		Map<String, Object> param = new HashMap<String,Object>();
+		param.put("excelKey", excelKey);
+		List<ExcelUploadDetailVo> list = excelUploadDao.selectPmuList(param);
+		if ( list != null && list.size() > 0 ) {
+			for ( ExcelUploadDetailVo element : list ) {
+				nRtnCnt = nRtnCnt + excelUploadDao.updateExcelDataPmuCd(element);
+			}
+		}
+		
+		return nRtnCnt;
+	}
+	
 }

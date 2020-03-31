@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="/WEB-INF/tld/Message.tld" prefix="Message" %>  
-
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> 
 <link href="/resources/bootstrap/sb/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- MetisMenu CSS -->
@@ -61,6 +61,11 @@
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+<script src="https://openlayers.org/en/v5.3.0/build/ol.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js" type="text/javascript"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
 
 <script type="text/javascript" src="/resources/js/common/ajax.js"></script>
 <script type="text/javascript" src="/resources/js/common/message.js"></script>

@@ -20,11 +20,14 @@ public class ExcelUploadDetailVo implements Serializable{
 	private String sigungu;
 	private String upmyundong;
 	private String ri;
+	private String mountainYn;
 	private String bunji;
-	private String isValidYn;
-	private String isTransYn;
 	private String bubunji;
+	
+	private String isValidYn;
+	private String pmuCd;
 	private long   rownum;
+	
 	
 	public String getExcelKey() {
 		return excelKey;
@@ -74,12 +77,7 @@ public class ExcelUploadDetailVo implements Serializable{
 	public void setIsValidYn(String isValidYn) {
 		this.isValidYn = isValidYn;
 	}
-	public String getIsTransYn() {
-		return isTransYn;
-	}
-	public void setIsTransYn(String isTransYn) {
-		this.isTransYn = isTransYn;
-	}
+
 	public String getBubunji() {
 		return bubunji;
 	}
@@ -91,6 +89,19 @@ public class ExcelUploadDetailVo implements Serializable{
 	}
 	public void setRownum(long rownum) {
 		this.rownum = rownum;
+	}
+
+	public String getPmuCd() {
+		return pmuCd;
+	}
+	public void setPmuCd(String pmuCd) {
+		this.pmuCd = pmuCd;
+	}
+	public String getMountainYn() {
+		return mountainYn;
+	}
+	public void setMountainYn(String mountainYn) {
+		this.mountainYn = mountainYn;
 	}
 	
 	

@@ -11,6 +11,7 @@
 			/WEB-INF/classes/resources/spring/application-security.xml
 			/WEB-INF/classes/resources/spring/application-view.xml
 			/WEB-INF/classes/resources/spring/application-cors.xml
+			/WEB-INF/classes/resources/spring/application-schedule.xml
 		</param-value>
 	</context-param>
 	<listener>

@@ -97,7 +97,7 @@ $(document).ready(function(){
 	        {  header: 'Seq', 	 name: 'rownum', width:50, },
 	        {  header: '시/도', 	 name: 'sido' },
 	        {  header: '시/군/구', name: 'sigungu' },
-	        {  header: '면/동', 	 name: 'upmyondong' },
+	        {  header: '면/동', 	 name: 'upmyundong' },
 	        {  header: '리', 	 name: 'ri' },
 	        {  header: '번지', 	 name: 'bunji' },
 	        {  header: '부번지', 	 name: 'bubunji' },

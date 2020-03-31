@@ -79,4 +79,21 @@ public interface ExcelDao {
 	 */
 	public Long selectExcelUploaDataCount(Map<String, Object> param) throws Exception;
 	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 3. 31.
+	 * @Method Name : selectPmuList
+	 * @return : List<ExcelUploadDetailVo>
+	 */
+	public List<ExcelUploadDetailVo> selectPmuList(Map<String, Object> param) throws Exception;
+	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 3. 31.
+	 * @Method Name : updateExcelDataPmuCd
+	 * @return : int
+	 */
+	public int updateExcelDataPmuCd(ExcelUploadDetailVo vo) throws Exception;
+	
+	
 }
