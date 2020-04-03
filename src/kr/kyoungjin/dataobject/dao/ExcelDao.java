@@ -96,4 +96,35 @@ public interface ExcelDao {
 	public int updateExcelDataPmuCd(ExcelUploadDetailVo vo) throws Exception;
 	
 	
+	/**
+	 * @Author : yeste
+	 * @Date : 2020. 4. 2.
+	 * @Method Name : selectExcelKeyForStatusConfirm
+	 * @return : String
+	 */
+	public String selectExcelKeyForStatusConfirm(ExcelUploadVo vo)  throws Exception;
+	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 3. 31.
+	 * @Method Name : selectExcelUploaDataAddress
+	 * @return : List<ExcelUploadDetailVo>
+	 */
+	public List<ExcelUploadDetailVo> selectExcelUploaDataAddress(Map<String, Object> param) throws Exception;
+	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 2.
+	 * @Method Name : updateExcelDataForService
+	 * @return : int
+	 */
+	public int updateExcelDataForService(ExcelUploadDetailVo vo) throws Exception;
+
+	/**
+	 * @Author : yeste
+	 * @Date : 2020. 4. 2.
+	 * @Method Name : updateExcelUpoadStatus
+	 * @return : int
+	 */
+	public int updateExcelUpoadStatus(ExcelUploadVo excelUploadVo) throws Exception;
 }

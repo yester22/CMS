@@ -73,6 +73,7 @@
 		/** kr.kyoungjin.dataobject.dao.ExcelUploadDao.ExcelUploadDetailVo */
 		UPDATE T_EXCEL_UPLOAD
 		  SET DATA_COUNT = #{dataCount}
+		    , STATUS_CODE = 'DS_REG'
 		WHERE EXCEL_KEY = #{excelKey}
 	</update>
 	
@@ -215,5 +216,52 @@
 	 	 WHERE EXCEL_KEY = #{excelKey}
 	 	   AND DATA_SEQ = #{dataSeq} 
 	</update> 
+	
+	
+	<select id="selectExcelUploaDataAddress" parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+		SELECT  EXCEL_KEY, DATA_SEQ, 
+				CONCAT(SIDO, ' ' , SIGUNGU, ' ' ,UPMYUNDONG, IF(IFNULL(RI, '') = '', '', CONCAT(' ', RI)), ' ', BUNJI, IF(IFNULL(BUBUNJI,'') = '', '',CONCAT('-', BUBUNJI))) FULL_ADDR
+  		  FROM T_EXCEL_UPLOAD_DATA a
+		 WHERE a.EXCEL_KEY = #{excelKey}
+	</select>
+	
+	
+	
+	<select id="selectExcelKeyForStatusConfirm" parameterType="ExcelUploadVo" resultType="String">
+		SELECT EXCEL_KEY 
+		  FROM ( 
+			SELECT EXCEL_KEY 
+			  FROM T_EXCEL_UPLOAD A
+			 WHERE A.VALID_COMPLETE_YN = #{validCompleteYn}
+			   AND A.USE_YN = #{useYn}
+			   AND STATUS_CODE = #{statusCode}
+			 ORDER BY UPLOAD_DT DESC
+		) A 
+		LIMIT 1
+	</select> 
+	
+	 
+	 <update id="updateExcelDataForService" parameterType="ExcelUploadDetailVo">
+	 	UPDATE T_EXCEL_UPLOAD_DATA
+		
+		<trim prefix="SET" suffixOverrides=",">
+		
+      		<if test="crs != null">  CRS = #{crs},</if>
+      		<if test="xPos != null"> X_POS = #{xPos},</if>
+      		<if test="xPos != null"> Y_POS = #{yPos},</if>
+      		<if test="landWidth != null"> LAND_WIDTH = #{landWidth},</if>
+      		
+   		</trim>
+   		
+	 	 WHERE EXCEL_KEY = #{excelKey}
+	 	   AND DATA_SEQ = #{dataSeq} 
+	 </update>
+	 
+	 
+	<update id="updateExcelUpoadStatus"  parameterType="ExcelUploadVo">
+		UPDATE T_EXCEL_UPLOAD
+  		   SET STATUS_CODE = #{statusCode}
+		 WHERE EXCEL_KEY = #{excelKey} 	
+	</update>
 	 
 </mapper>	

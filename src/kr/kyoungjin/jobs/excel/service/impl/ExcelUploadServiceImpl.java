@@ -87,6 +87,7 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 		saveExcelUpload = new ExcelUploadVo();
 		saveExcelUpload.setExcelKey(sNewExcelKey);
 		saveExcelUpload.setDataCount(nExcelDataCount);
+		saveExcelUpload.setStatusCode("RS_REG");
 		
 		excelUploadDao.updateExcelUploaInfo(saveExcelUpload);
 		

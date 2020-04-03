@@ -28,6 +28,12 @@ public class ExcelUploadDetailVo implements Serializable{
 	private String pmuCd;
 	private long   rownum;
 	
+	private String fullAddr;
+	
+	private String landWidth;
+	private String crs;
+	private String xPos;
+	private String yPos;
 	
 	public String getExcelKey() {
 		return excelKey;
@@ -102,6 +108,36 @@ public class ExcelUploadDetailVo implements Serializable{
 	}
 	public void setMountainYn(String mountainYn) {
 		this.mountainYn = mountainYn;
+	}
+	public String getFullAddr() {
+		return fullAddr;
+	}
+	public void setFullAddr(String fullAddr) {
+		this.fullAddr = fullAddr;
+	}
+	public String getLandWidth() {
+		return landWidth;
+	}
+	public void setLandWidth(String landWidth) {
+		this.landWidth = landWidth;
+	}
+	public String getCrs() {
+		return crs;
+	}
+	public void setCrs(String crs) {
+		this.crs = crs;
+	}
+	public String getxPos() {
+		return xPos;
+	}
+	public void setxPos(String xPos) {
+		this.xPos = xPos;
+	}
+	public String getyPos() {
+		return yPos;
+	}
+	public void setyPos(String yPos) {
+		this.yPos = yPos;
 	}
 	
 	

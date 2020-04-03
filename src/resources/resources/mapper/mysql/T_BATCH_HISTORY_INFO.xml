@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.BatchHistoryInfoDao">
+	
+	<select id="selectBatchKeyGenerate" resultType="String">
+		SELECT ( CASE WHEN B.MAXVAL IS NULL THEN CONCAT(DATE_FORMAT(NOW(), '%Y%m%d%H'), LPAD(1, 5, '0'))
+  				  ELSE B.MAXVAL + 1  END ) NEWKEY 
+		  FROM (  
+  				SELECT MAX(BATCH_KEY) MAXVAL FROM T_BATCH_HISTORY_INFO B
+  				WHERE SUBSTR(B.BATCH_KEY, 1, 10) = DATE_FORMAT(NOW(), '%Y%m%d%H')
+		) B	
+	</select>
+	
+	
+	<insert id="insertBatchHistory" parameterType="BatchHistoryInfoVo">
+		INSERT INTO T_BATCH_HISTORY_INFO (
+			BATCH_KEY,
+			BATCH_TYPE,
+			BATCH_TARGET,
+			BATCH_START
+		) VALUES (
+			  #{batchKey}
+			, #{batchType}
+			, #{batchTarget}
+			, NOW()
+		)
+	</insert>
+	
+	
+	<update id="updateBatchHistory" parameterType="BatchHistoryInfoVo">
+		UPDATE T_BATCH_HISTORY_INFO
+		   SET BATCH_END = NOW()
+		     , SUCCESS_YN = #{successYn}
+		     , DESCRIPT = #{descript}
+		WHERE BATCH_KEY = #{batchKey}
+	</update> 
+	 
+	 
+	
+</mapper>	

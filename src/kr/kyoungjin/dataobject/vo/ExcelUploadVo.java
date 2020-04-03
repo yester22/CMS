@@ -26,6 +26,9 @@ public class ExcelUploadVo extends AbstractVo implements Serializable {
 	private String savedFileName;
 	private String useYn;
 	private String uploadDt;
+	private String validCompleteYn;
+	private String statusCode;
+	
 	private long   rownum;
 	
 	public String getExcelKey() {
@@ -99,6 +102,18 @@ public class ExcelUploadVo extends AbstractVo implements Serializable {
 	}
 	public void setRownum(long rownum) {
 		this.rownum = rownum;
+	}
+	public String getValidCompleteYn() {
+		return validCompleteYn;
+	}
+	public void setValidCompleteYn(String validCompleteYn) {
+		this.validCompleteYn = validCompleteYn;
+	}
+	public String getStatusCode() {
+		return statusCode;
+	}
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
 
 		

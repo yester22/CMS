@@ -147,6 +147,13 @@ INSERT INTO T_CODE VALUES('50', '제주특별자치도', 'LOCATION', 'Y', 'syste
 INSERT INTO T_CODE VALUES('44', '충청남도', 'LOCATION', 'Y', 'system', NOW());
 INSERT INTO T_CODE VALUES('43', '충청북도', 'LOCATION', 'Y', 'system', NOW());
 
+insert into t_code values ('DATA_STATUS', '데이터 상태', '#', 'Y', 'system', NOW()); 
+insert into t_code values ('DS_REG', '등록완료', 'DATA_STATUS', 'Y', 'system', NOW());
+insert into t_code values ('DS_POS_START', '좌표정보 동기화중', 'DATA_STATUS', 'Y', 'system', NOW());
+insert into t_code values ('DS_POS_END', '좌표 동기화 완료', 'DATA_STATUS', 'Y', 'system', NOW());
+insert into t_code values ('DS_INFO_START', '대지정보 동기화 중', 'DATA_STATUS', 'Y', 'system', NOW());
+insert into t_code values ('DS_INFO_END', '대지정보 동기화 완료', 'DATA_STATUS', 'Y', 'system', NOW());
+
 
 CREATE TABLE T_ADDR_JIBUN (
 	MNG_NO varchar(25) not null,
@@ -162,4 +169,38 @@ CREATE TABLE T_ADDR_JIBUN (
 	DELEGATE_YN VARCHAR(1) NULL,
 	PRIMARY KEY PK_ADDR_JIBUN ( MNG_NO, MNG_SEQ ) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+
+
+CREATE TABLE T_BATCH_HISTORY_INFO (
+   BATCH_KEY  VARCHAR(15) NOT NULL, 
+   BATCH_TYPE VARCHAR(10) NOT NULL,
+   BATCH_TARGET VARCHAR(15) NOT NULL,
+   BATCH_START DATETIME NOT NULL,
+   BATCH_END DATETIME NULL,
+   SUCCESS_YN VARCHAR(1) NULL,
+   DESCRIPT VARCHAR(500) NULL,
+   PRIMARY KEY PK_BATCH_HISTORY (BATCH_KEY) 
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_jibun_info_data` (
+  `DATA_KEY` varchar(20) NOT NULL COMMENT '데이터 키',
+  `SIDO` varchar(50) DEFAULT NULL COMMENT '시도명',
+  `SIGUNGU` varchar(50) DEFAULT NULL COMMENT '시군구',
+  `UPMYUNDONG` varchar(50) DEFAULT NULL COMMENT '읍면동',
+  `RI` varchar(50) DEFAULT NULL COMMENT '리',
+  `MOUNTAIN_YN` varchar(1) DEFAULT NULL COMMENT '산여부',
+  `BUNJI` varchar(4) DEFAULT NULL COMMENT '번지',
+  `BUBUNJI` varchar(4) DEFAULT NULL COMMENT '부번지',
+  `PNU` varchar(19) DEFAULT NULL COMMENT 'PNU_CD',
+  `CRS` varchar(20) DEFAULT NULL COMMENT '좌표계',
+  `X_POS` varchar(30) DEFAULT NULL COMMENT 'X 좌표',
+  `Y_POS` varchar(30) DEFAULT NULL COMMENT 'Y 좌표',
+  `LAND_WIDTH` varchar(10) DEFAULT NULL COMMENT '평수',
+  `REG_DT` datetime DEFAULT NULL COMMENT '생성일자',
+  `UPT_DT` datetime DEFAULT NULL COMMENT '수정일자',
+  PRIMARY KEY (`DATA_KEY`),
+  KEY `IDX_JIBUN_INFO` (`SIDO`,`SIGUNGU`,`UPMYUNDONG`,`RI`,`BUNJI`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='지번정보 TABLE';
+
 
