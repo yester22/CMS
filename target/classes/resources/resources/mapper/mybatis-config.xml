@@ -37,6 +37,7 @@
 		<typeAlias alias="TermsVo" type="kr.kyoungjin.dataobject.vo.TermsVo" />
 		<typeAlias alias="ExcelUploadDetailVo" type="kr.kyoungjin.dataobject.vo.ExcelUploadDetailVo" />
 		<typeAlias alias="ExcelUploadVo" type="kr.kyoungjin.dataobject.vo.ExcelUploadVo" />
+		<typeAlias alias="BatchHistoryInfoVo" type="kr.kyoungjin.dataobject.vo.BatchHistoryInfoVo" />
 	</typeAliases>
 
 

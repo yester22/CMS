@@ -1,51 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="/WEB-INF/tld/Message.tld" prefix="Message" %>  
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> 
 
-<link href="/resources/bootstrap/sb/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="/resources/bootstrap/adminite/plugins/fontawesome-free/css/all.min.css">
+<!-- IonIcons -->
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/resources/bootstrap/adminite/dist/css/adminlte.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-<!-- MetisMenu CSS -->
-<link href="/resources/bootstrap/sb/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="/resources/bootstrap/sb/dist/css/sb-admin-2.css" rel="stylesheet">
-
-<!-- DataTables CSS -->
-<link href="/resources/bootstrap/sb/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
-
-<!-- DataTables Responsive CSS -->
-<link href="/resources/bootstrap/sb/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link href="/resources/bootstrap/sb/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-<link href="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
-
-<!-- Tui Grid -->
-<link href="/resources/tui_grid/tui-grid.min.css" rel="stylesheet">
-<link href="/resources/tui_grid/tui-pagination.css" rel="stylesheet">
-
-<script type="text/javascript" src="/resources/js/lib/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/resources/js/lib/jquery.form.min.js"></script>
-<script src="/resources/bootstrap/sb/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<!-- jQuery -->
+<script src="/resources/bootstrap/adminite/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resources/bootstrap/adminite/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-<!-- Metis Menu Plugin JavaScript -->
-<script src="/resources/bootstrap/sb/vendor/metisMenu/metisMenu.min.js"></script>
+<!-- OPTIONAL SCRIPTS -->
+<script src="/resources/bootstrap/adminite/plugins/chart.js/Chart.min.js"></script>
+<script src="/resources/bootstrap/adminite/dist/js/demo.js"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="/resources/bootstrap/sb/dist/js/sb-admin-2.js"></script>
+<!-- add-on -->
+<script src="/resources/bootstrap/adminite/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="/resources/bootstrap/adminite/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="/resources/bootstrap/adminite/plugins/moment/moment.min.js"></script>
+<script src="/resources/bootstrap/adminite/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<script src="/resources/bootstrap/adminite/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<script src="/resources/bootstrap/adminite/plugins/select2/js/select2.full.min.js"></script>
+<script src="/resources/bootstrap/adminite/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 
-<!-- Metis Menu Plugin JavaScript -->
-<script src="/resources/bootstrap/sb/vendor/metisMenu/metisMenu.min.js"></script>
-
-<!-- Tui Grid -->
-<script src="/resources/tui_grid/tui-code-snippet.js"></script>
-<script src="/resources/tui_grid/tui-pagination.js"></script>
-<script src="/resources/tui_grid/tui-grid.min.js"></script>
-
+<!-- AdminLTE -->
+<script src="/resources/bootstrap/adminite/dist/js/adminlte.js"></script>
+<script src="/resources/bootstrap/adminite/dist/js/demo.js"></script>
+<!-- 
+<script src="/resources/bootstrap/adminite/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+ -->
 <!-- //필요한 부분에서만 include 할것
 <script src="/resources/bootstrap/sb/vendor/raphael/raphael.min.js"></script>
 <script src="/resources/bootstrap/sb/vendor/morrisjs/morris.min.js"></script>

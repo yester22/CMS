@@ -4,10 +4,10 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>CMS</title>
+	<title>DRON Management System</title>
 	<tiles:insertAttribute name="include" /> 	
 </head>
-<body>
+<body class="hold-transition login-page">
 	<tiles:insertAttribute name="body" />
 </body>
 </html>

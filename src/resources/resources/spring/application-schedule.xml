@@ -18,8 +18,9 @@
     </bean>
     
     <task:scheduler id="scheduler" pool-size="2"/>
-		<task:scheduled-tasks scheduler="scheduler" >
-    	<task:scheduled ref="BatchVWorldDataSetting" method="doLndpclarJob" cron="0/30 * * * * ?" />
+	
+	<task:scheduled-tasks scheduler="scheduler" >
+    	<task:scheduled ref="BatchVWorldDataSetting" method="doLndpclarJob" cron="0 * * * 1 ?" />
     	<!-- <task:scheduled ref="BatchVWorldDataSetting" method="doDataCrsPostionSynch" cron="0/30 * * * * ?" />  -->
 	</task:scheduled-tasks>  
     

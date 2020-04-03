@@ -1,190 +1,117 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
+<ul class="navbar-nav">
+	<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
+		href="#" role="button"><i class="fas fa-bars"></i></a></li>
+	<li class="nav-item d-none d-sm-inline-block"><a
+		href="index3.html" class="nav-link">Home</a></li>
+	<li class="nav-item d-none d-sm-inline-block"><a href="#"
+		class="nav-link">Contact</a></li>
+</ul>
 
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse"
-			data-target=".navbar-collapse">
-			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
-			<span class="icon-bar"></span> <span class="icon-bar"></span>
-		</button>
-		<a class="navbar-brand" href="#" onclick="javascript:MenuMove.go('dashboard')">CMS</a>
+<!-- SEARCH FORM -->
+<form class="form-inline ml-3">
+	<div class="input-group input-group-sm">
+		<input class="form-control form-control-navbar" type="search"
+			placeholder="Search" aria-label="Search">
+		<div class="input-group-append">
+			<button class="btn btn-navbar" type="submit">
+				<i class="fas fa-search"></i>
+			</button>
+		</div>
 	</div>
-	<!-- /.navbar-header -->
+</form>
 
-	<ul class="nav navbar-top-links navbar-right">
-		<li class="dropdown"><a class="dropdown-toggle"
-			data-toggle="dropdown" href="#"> <i class="fa fa-envelope fa-fw"></i>
-				<i class="fa fa-caret-down"></i>
+<!-- Right navbar links -->
+<ul class="navbar-nav ml-auto">
+	<!-- Messages Dropdown Menu -->
+	<li class="nav-item dropdown">
+		<a class="nav-link" data-toggle="dropdown" href="#"> <i class="far fa-comments"></i> <span
+			class="badge badge-danger navbar-badge">3</span>
 		</a>
-			<ul class="dropdown-menu dropdown-messages">
-				<li><a href="#">
-						<div>
-							<strong>John Smith</strong> <span class="pull-right text-muted">
-								<em>Yesterday</em>
-							</span>
-						</div>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Pellentesque eleifend...</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<strong>John Smith</strong> <span class="pull-right text-muted">
-								<em>Yesterday</em>
-							</span>
-						</div>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Pellentesque eleifend...</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<strong>John Smith</strong> <span class="pull-right text-muted">
-								<em>Yesterday</em>
-							</span>
-						</div>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Pellentesque eleifend...</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a class="text-center" href="#"> <strong>Read
-							All Messages</strong> <i class="fa fa-angle-right"></i>
-				</a></li>
-			</ul> <!-- /.dropdown-messages --></li>
-		<!-- /.dropdown -->
-		<li class="dropdown"><a class="dropdown-toggle"
-			data-toggle="dropdown" href="#"> <i class="fa fa-tasks fa-fw"></i>
-				<i class="fa fa-caret-down"></i>
-		</a>
-			<ul class="dropdown-menu dropdown-tasks">
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 1</strong> <span class="pull-right text-muted">40%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="40" aria-valuemin="0"
-									aria-valuemax="100" style="width: 40%">
-									<span class="sr-only">40% Complete (success)</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 2</strong> <span class="pull-right text-muted">20%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-info" role="progressbar"
-									aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-									style="width: 20%">
-									<span class="sr-only">20% Complete</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 3</strong> <span class="pull-right text-muted">60%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-warning"
-									role="progressbar" aria-valuenow="60" aria-valuemin="0"
-									aria-valuemax="100" style="width: 60%">
-									<span class="sr-only">60% Complete (warning)</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<p>
-								<strong>Task 4</strong> <span class="pull-right text-muted">80%
-									Complete</span>
-							</p>
-							<div class="progress progress-striped active">
-								<div class="progress-bar progress-bar-danger" role="progressbar"
-									aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
-									style="width: 80%">
-									<span class="sr-only">80% Complete (danger)</span>
-								</div>
-							</div>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a class="text-center" href="#"> <strong>See
-							All Tasks</strong> <i class="fa fa-angle-right"></i>
-				</a></li>
-			</ul> <!-- /.dropdown-tasks --></li>
-		<!-- /.dropdown -->
-		<li class="dropdown"><a class="dropdown-toggle"
-			data-toggle="dropdown" href="#"> <i class="fa fa-bell fa-fw"></i>
-				<i class="fa fa-caret-down"></i>
-		</a>
-			<ul class="dropdown-menu dropdown-alerts">
-				<li><a href="#">
-						<div>
-							<i class="fa fa-comment fa-fw"></i> New Comment <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-twitter fa-fw"></i> 3 New Followers <span
-								class="pull-right text-muted small">12 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-envelope fa-fw"></i> Message Sent <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-tasks fa-fw"></i> New Task <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a href="#">
-						<div>
-							<i class="fa fa-upload fa-fw"></i> Server Rebooted <span
-								class="pull-right text-muted small">4 minutes ago</span>
-						</div>
-				</a></li>
-				<li class="divider"></li>
-				<li><a class="text-center" href="#"> <strong>See
-							All Alerts</strong> <i class="fa fa-angle-right"></i>
-				</a></li>
-			</ul> <!-- /.dropdown-alerts --></li>
-		<!-- /.dropdown -->
-		<li class="dropdown"><a class="dropdown-toggle"
-			data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
-				<i class="fa fa-caret-down"></i>
-		</a>
-			<ul class="dropdown-menu dropdown-user">
-				<li><a href="#"><i class="fa fa-user fa-fw"></i> User
-						Profile</a></li>
-				<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
-				<li class="divider"></li>
-				<li><a href="/logout"><i class="fa fa-sign-out fa-fw"></i>
-						Logout</a></li>
-			</ul> <!-- /.dropdown-user --></li>
-		<!-- /.dropdown -->
-	</ul>
-	<!-- /.navbar-top-links -->
-
-
+		<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+			<a href="#" class="dropdown-item"> <!-- Message Start -->
+				<div class="media">
+					<img src="/resources/bootstrap/adminite/dist/img/user1-128x128.jpg"
+						alt="User Avatar" class="img-size-50 mr-3 img-circle">
+					<div class="media-body">
+						<h3 class="dropdown-item-title">
+							Brad Diesel <span class="float-right text-sm text-danger"><i
+								class="fas fa-star"></i></span>
+						</h3>
+						<p class="text-sm">Call me whenever you can...</p>
+						<p class="text-sm text-muted">
+							<i class="far fa-clock mr-1"></i> 4 Hours Ago
+						</p>
+					</div>
+				</div> <!-- Message End -->
+			</a>
+			<div class="dropdown-divider"></div>
+			<a href="#" class="dropdown-item"> <!-- Message Start -->
+				<div class="media">
+					<img src="/resources/bootstrap/adminite/dist/img/user8-128x128.jpg"
+						alt="User Avatar" class="img-size-50 img-circle mr-3">
+					<div class="media-body">
+						<h3 class="dropdown-item-title">
+							John Pierce <span class="float-right text-sm text-muted"><i
+								class="fas fa-star"></i></span>
+						</h3>
+						<p class="text-sm">I got your message bro</p>
+						<p class="text-sm text-muted">
+							<i class="far fa-clock mr-1"></i> 4 Hours Ago
+						</p>
+					</div>
+				</div> <!-- Message End -->
+			</a>
+			<div class="dropdown-divider"></div>
+			<a href="#" class="dropdown-item"> <!-- Message Start -->
+				<div class="media">
+					<img src="/resources/bootstrap/adminite/dist/img/user3-128x128.jpg"
+						alt="User Avatar" class="img-size-50 img-circle mr-3">
+					<div class="media-body">
+						<h3 class="dropdown-item-title">
+							Nora Silvester <span class="float-right text-sm text-warning"><i
+								class="fas fa-star"></i></span>
+						</h3>
+						<p class="text-sm">The subject goes here</p>
+						<p class="text-sm text-muted">
+							<i class="far fa-clock mr-1"></i> 4 Hours Ago
+						</p>
+					</div>
+				</div> <!-- Message End -->
+			</a>
+			<div class="dropdown-divider"></div>
+			<a href="#" class="dropdown-item dropdown-footer">See All
+				Messages</a>
+		</div></li>
+	<!-- Notifications Dropdown Menu -->
+	<li class="nav-item dropdown"><a class="nav-link"
+		data-toggle="dropdown" href="#"> <i class="far fa-bell"></i> <span
+			class="badge badge-warning navbar-badge">15</span>
+	</a>
+		<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+			<span class="dropdown-item dropdown-header">15 Notifications</span>
+			<div class="dropdown-divider"></div>
+			<a href="#" class="dropdown-item"> <i
+				class="fas fa-envelope mr-2"></i> 4 new messages <span
+				class="float-right text-muted text-sm">3 mins</span>
+			</a>
+			<div class="dropdown-divider"></div>
+			<a href="#" class="dropdown-item"> <i class="fas fa-users mr-2"></i>
+				8 friend requests <span class="float-right text-muted text-sm">12
+					hours</span>
+			</a>
+			<div class="dropdown-divider"></div>
+			<a href="#" class="dropdown-item"> <i class="fas fa-file mr-2"></i>
+				3 new reports <span class="float-right text-muted text-sm">2
+					days</span>
+			</a>
+			<div class="dropdown-divider"></div>
+			<a href="#" class="dropdown-item dropdown-footer">See All
+				Notifications</a>
+		</div></li>
+	<li class="nav-item"><a class="nav-link"
+		data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
+			class="fas fa-th-large"></i></a></li>
+</ul>

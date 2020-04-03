@@ -6,12 +6,10 @@
  */
 $(document).ready(function(){
 	$("#btnUpload").bind("click", CodeList.btnExcelUpload);
-	$('#excelUploadGrid').DataTable({
-        responsive: true
-    });
-	$('#excelDataGrid').DataTable({
-		pagingType : "full_numbers",
-		responsive: true
+	$('.my-colorpicker2').colorpicker()
+
+	$('.my-colorpicker2').on('colorpickerChange', function(event) {
+		$('.my-colorpicker2 .fa-square').css('color', event.color.toString());
 	});
 });
 

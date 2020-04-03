@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.kyoungjin.dataobject.dao.ExcelUploadDao">
+<mapper namespace="kr.kyoungjin.dataobject.dao.ExcelDao">
 	
 	<select id="selectNewExcelKey" resultType="string">
 		SELECT ( CASE WHEN B.MAXVAL IS NULL THEN CONCAT(DATE_FORMAT(NOW(), '%Y%m%d%H'), LPAD(1, 5, '0'))
@@ -52,9 +52,9 @@
 			,SIGUNGU
 			,UPMYUNDONG
 			,RI
+			,MOUNTAIN_YN
 			,BUNJI
-			,IS_VALID_YN
-			,IS_TRANS_YN 
+			,BUBUNJI
 		) VALUES ( 
 			  #{excelKey}  
 			, #{dataSeq}   
@@ -62,47 +62,206 @@
 			, #{sigungu}   
 			, #{upmyundong}
 			, #{ri}
-			, #{bunji}     
-			, #{isValidYn} 
-			, #{isTransYn}
+			, #{mountainYn}
+			, #{bunji}
+			, #{bubunji}
 		)
 	</insert>
 	
+	
+	<update id="updateExcelUploaInfo" parameterType="ExcelUploadDetailVo">
+		/** kr.kyoungjin.dataobject.dao.ExcelUploadDao.ExcelUploadDetailVo */
+		UPDATE T_EXCEL_UPLOAD
+		  SET DATA_COUNT = #{dataCount}
+		    , STATUS_CODE = 'DS_REG'
+		WHERE EXCEL_KEY = #{excelKey}
+	</update>
+	
 	 
+	<sql id="commonExcelUploadWhere">
+		<where>
+			<if test='searchUploader != null and !"".equals(searchUploader)'>
+				AND a.UPLOADER = #{searchUploader}
+			</if>
+			<if test='searchLocationCode != null and !"".equals(searchLocationCode)'>
+				AND a.LOCATION_CODE = #{searchLocationCode}
+			</if>
+			<if test='searchTitle != null and !"".equals(searchTitle)'>
+				AND a.TITLE LIKE concat('%', concat(#{searchTitle}, '%'))
+			</if>
+			<if test='searchStartDate != null and !"".equals(searchStartDate)'>
+				AND DATE_FORMAT(a.UPLOAD_DT, '%Y%m%d') BETWEEN #{searchStartDate} AND #{searchEndDate} 
+			</if>
+	 	</where>
+	
+	</sql>
+	
+	
+	<sql id="commonExcelUpload">
+	 	SELECT a.EXCEL_KEY,
+			   a.TITLE,
+			   a.DATA_COUNT,
+			   a.UPLOADER,
+			   a.LOCATION_CODE,
+			   (SELECT CD_NAME FROM T_CODE WHERE UPPER_CD_KEY = 'LOCATION' AND CD_KEY = a.LOCATION_CODE ) LOCATION_CODE_NAME,
+			   a.PHYSICAL_PATH,
+			   a.ORIGINAL_FILE_NAME,
+			   a.SAVED_FILE_NAME,
+			   a.USE_YN,
+				DATE_FORMAT(a.UPLOAD_DT, '%Y-%m-%d %H:%i') UPLOAD_DT
+	 	 FROM T_EXCEL_UPLOAD a
+		<include refid="commonExcelUploadWhere"></include>
+	 </sql>
 	 
-	 <select id="selectExcelUploaInfo" parameterType="ExcelUploadVo"  resultType="ExcelUploadVo">
-	 	  SELECT EXCEL_KEY
-				, TITLE
-				, DATA_COUNT
-				, UPLOADER
-				, LOCATION_CODE
-				, PHYSICAL_PATH
-				, ORIGINAL_FILE_NAME
-				, SAVED_FILE_NAME
-				, USE_YN 
-				, DATE_FORMAT(UPLOAD_DT, '%Y-%m-%d %H:%i') UPLOAD_DT
-	 	   FROM T_EXCEL_UPLOAD
-	 	   
-	 	   <where>
-				<if test='uploader != null and !"".equals(uploader)'>
-					AND UPLOADER = #{uploader}
-				</if>
-	 	   </where>
+	 <select id="selectExcelUploaInfo" parameterType="hashmap"  resultType="ExcelUploadVo">
+	 	/** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaInfo  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonExcelUpload"></include>
+				    )a 
+		) as b
 	 </select>
 	 
+	 <select id="selectExcelUploaInfoCount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaInfoCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonExcelUpload"></include>
+	      )a 
+	 </select>
 	 
-	 <select id="selectExcelUploaData" parameterType="ExcelUploadVo"  resultType="ExcelUploadDetailVo">
-	 	  SELECT  EXCEL_KEY
+	 <sql id="commonExcelUploadData">
+	 	 SELECT  EXCEL_KEY
 				, DATA_SEQ
 				, SIDO
 				, SIGUNGU
 				, UPMYUNDONG
 				, RI
 				, BUNJI
+				, BUBUNJI
+				, PMU_CD				
 				, IS_VALID_YN
-				, IS_TRANS_YN 
 		   FROM  T_EXCEL_UPLOAD_DATA
 	 	  WHERE EXCEL_KEY = #{excelKey}
+	 </sql>
+	 
+	 
+	 <select id="selectExcelUploaData" parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+	 	/** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaData  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonExcelUploadData"></include>
+				    )a 
+		) as b
 	 </select>
+	 
+	 
+	  <select id="selectExcelUploaDataCount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaInfoCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonExcelUploadData"></include>
+	      )a 
+	 </select>
+	 
+	 
+	 <select id="selectPmuList" parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+	 	SELECT 	x.EXCEL_KEY,
+	   			x.DATA_SEQ, 
+	  			CONCAT( x.COURT_DONG_CODE , x.MNT_NO , x.BUNJI , x.BUBUNJI ) PMU_CD
+		  FROM (
+				SELECT a.EXCEL_KEY,
+				       a.DATA_SEQ,
+				       a.SIDO,
+				       a.SIGUNGU,
+				       a.UPMYUNDONG,
+				       a.RI,
+				       ( CASE WHEN a.MOUNTAIN_YN = 'Y' THEN '2' 
+				         ELSE '1' END ) MNT_NO,
+				       LPAD(a.BUNJI, 4, '0') BUNJI,
+				       LPAD(a.BUBUNJI, 4, '0') BUBUNJI,
+				       a.PMU_CD,
+				       a.IS_VALID_YN,
+				       (   SELECT COURT_DONG_CODE from T_ADDR_JIBUN
+							WHERE sido_nm = a.SIDO
+							  AND SIGUNGU_NM = a.SIGUNGU
+							  AND COURT_UPMYUNDONG_NM = a.UPMYUNDONG
+							  AND COURT_RI_NM = a.RI
+							  LIMIT 1
+					  ) COURT_DONG_CODE
+		  		  FROM t_excel_upload_data a
+				 WHERE a.EXCEL_KEY = #{excelKey}
+			) x
+			ORDER BY DATA_SEQ ASC		
+	 </select>
+	 
+	 
+	<update id="updateExcelDataPmuCd" parameterType="ExcelUploadDetailVo">
+		UPDATE T_EXCEL_UPLOAD_DATA
+		   SET PMU_CD = #{pmuCd}
+	 	 WHERE EXCEL_KEY = #{excelKey}
+	 	   AND DATA_SEQ = #{dataSeq} 
+	</update> 
+	
+	
+	<select id="selectExcelUploaDataAddress" parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+		SELECT  EXCEL_KEY, DATA_SEQ, 
+				CONCAT(SIDO, ' ' , SIGUNGU, ' ' ,UPMYUNDONG, IF(IFNULL(RI, '') = '', '', CONCAT(' ', RI)), ' ', BUNJI, IF(IFNULL(BUBUNJI,'') = '', '',CONCAT('-', BUBUNJI))) FULL_ADDR
+  		  FROM T_EXCEL_UPLOAD_DATA a
+		 WHERE a.EXCEL_KEY = #{excelKey}
+	</select>
+	
+	
+	
+	<select id="selectExcelKeyForStatusConfirm" parameterType="ExcelUploadVo" resultType="String">
+		SELECT EXCEL_KEY 
+		  FROM ( 
+			SELECT EXCEL_KEY 
+			  FROM T_EXCEL_UPLOAD A
+			 WHERE A.VALID_COMPLETE_YN = #{validCompleteYn}
+			   AND A.USE_YN = #{useYn}
+			   AND STATUS_CODE = #{statusCode}
+			 ORDER BY UPLOAD_DT DESC
+		) A 
+		LIMIT 1
+	</select> 
+	
+	 
+	 <update id="updateExcelDataForService" parameterType="ExcelUploadDetailVo">
+	 	UPDATE T_EXCEL_UPLOAD_DATA
+		
+		<trim prefix="SET" suffixOverrides=",">
+		
+      		<if test="crs != null">  CRS = #{crs},</if>
+      		<if test="xPos != null"> X_POS = #{xPos},</if>
+      		<if test="xPos != null"> Y_POS = #{yPos},</if>
+      		<if test="landWidth != null"> LAND_WIDTH = #{landWidth},</if>
+      		
+   		</trim>
+   		
+	 	 WHERE EXCEL_KEY = #{excelKey}
+	 	   AND DATA_SEQ = #{dataSeq} 
+	 </update>
+	 
+	 
+	<update id="updateExcelUpoadStatus"  parameterType="ExcelUploadVo">
+		UPDATE T_EXCEL_UPLOAD
+  		   SET STATUS_CODE = #{statusCode}
+		 WHERE EXCEL_KEY = #{excelKey} 	
+	</update>
 	 
 </mapper>	
