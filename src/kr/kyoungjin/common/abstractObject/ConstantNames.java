@@ -16,9 +16,11 @@ public class ConstantNames {
 	public static final String EXCEL_STATUS_DS_DS_POS_END = "DS_POS_END";
 	public static final String EXCEL_STATUS_DS_INFO_START = "DS_INFO_START";
 	public static final String EXCEL_STATUS_DS_INFO_END = "DS_INFO_END";
-	
+	public static final String EXCEL_STATUS_DS_POLYGON_START = "DS_POLYGON_START";
+	public static final String EXCEL_STATUS_DS_POLYGON_END = "DS_POLYGON_END";
 	
 	public static final String BATCH_KEY_VWORLD_SEARCH = "V_SEARCH";
+	public static final String BATCH_KEY_VWORLD_POLYGON = "V_POLYGON";
 	public static final String BATCH_KEY_NSDI_LADFRLLIST = "LADFRLLIST";
 	
 }

@@ -68,7 +68,7 @@
 		                 <div class="form-group row">
 		                    <label for="viewColor" class="col-sm-2 col-form-label">색상 선택</label>
                   			<div class="input-group col-sm-10 my-colorpicker2">
-                    			<input type="text" class="form-control" id="viewColor" name="mapColor" placeHolder="색상을 선택하세요">
+                    			<input type="text" class="form-control my-colorpicker2" id="viewColor" name="mapColor" placeHolder="색상을 선택하세요">
 			                    <div class="input-group-append">
                       				<span class="input-group-text"><i class="fas fa-square"></i></span>
                     			</div>
@@ -76,7 +76,8 @@
 		                 </div>
 					</div><!-- card body end -->
 					<div class="card-footer">
-                  		<button type="button" id="btnUpload" class="btn btn-info float-right">업로드</button>
+                  		<button type="button" id="btnTemplateDownload" class="btn btn-info">양식 다운로드</button>
+                  		<button type="button" id="btnUpload" class="btn btn-primary float-right">업로드</button>
                 	</div><!-- card footer end -->
 				</form>
 			</div>

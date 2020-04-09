@@ -34,6 +34,8 @@ public class ExcelUploadDetailVo implements Serializable{
 	private String crs;
 	private String xPos;
 	private String yPos;
+	private String poligonData;
+	
 	
 	public String getExcelKey() {
 		return excelKey;
@@ -138,6 +140,12 @@ public class ExcelUploadDetailVo implements Serializable{
 	}
 	public void setyPos(String yPos) {
 		this.yPos = yPos;
+	}
+	public String getPoligonData() {
+		return poligonData;
+	}
+	public void setPoligonData(String poligonData) {
+		this.poligonData = poligonData;
 	}
 	
 	

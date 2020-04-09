@@ -27,6 +27,7 @@
 			, SAVED_FILE_NAME
 			, USE_YN 
 			, UPLOAD_DT
+			, MAP_COLOR
 		)
 		VALUES(
 			  #{excelKey}
@@ -39,6 +40,7 @@
 			, #{savedFileName}
 			, #{useYn}
 			, NOW()
+			, #{mapColor}
 		 )
 	</insert>
 	
@@ -108,6 +110,10 @@
 			   a.ORIGINAL_FILE_NAME,
 			   a.SAVED_FILE_NAME,
 			   a.USE_YN,
+			   a.MAP_COLOR,
+			   (SELECT MEMBER_NM FROM T_MEMBER WHERE MEMBER_ID = a.UPLOADER ) UPLOADER_NM,
+			   (SELECT CD_NAME FROM T_CODE WHERE UPPER_CD_KEY = 'DATA_STATUS' AND CD_KEY = a.STATUS_CODE ) STATUS_CODE_NM,
+			   (SELECT FORMAT(SUM(LAND_WIDTH), 1) FROM T_EXCEL_UPLOAD_DATA A WHERE EXCEL_KEY = A.EXCEL_KEY ) TOTAL_LAND_WIDTH,
 				DATE_FORMAT(a.UPLOAD_DT, '%Y-%m-%d %H:%i') UPLOAD_DT
 	 	 FROM T_EXCEL_UPLOAD a
 		<include refid="commonExcelUploadWhere"></include>
@@ -148,6 +154,11 @@
 				, BUBUNJI
 				, PMU_CD				
 				, IS_VALID_YN
+				, FORMAT(LAND_WIDTH, 1) LAND_WIDTH
+				, CRS
+				, X_POS
+				, Y_POS
+				, POLIGON_DATA
 		   FROM  T_EXCEL_UPLOAD_DATA
 	 	  WHERE EXCEL_KEY = #{excelKey}
 	 </sql>
@@ -250,6 +261,7 @@
       		<if test="xPos != null"> X_POS = #{xPos},</if>
       		<if test="xPos != null"> Y_POS = #{yPos},</if>
       		<if test="landWidth != null"> LAND_WIDTH = #{landWidth},</if>
+      		<if test="poligonData != null"> POLIGON_DATA = #{poligonData},</if>
       		
    		</trim>
    		

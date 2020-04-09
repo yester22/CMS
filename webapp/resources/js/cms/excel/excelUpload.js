@@ -11,6 +11,8 @@ $(document).ready(function(){
 	$('.my-colorpicker2').on('colorpickerChange', function(event) {
 		$('.my-colorpicker2 .fa-square').css('color', event.color.toString());
 	});
+	
+	
 });
 
 

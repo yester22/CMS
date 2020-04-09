@@ -19,6 +19,7 @@ public class ExcelUploadVo extends AbstractVo implements Serializable {
 	private String title;
 	private int dataCount;
 	private String uploader;
+	private String uploaderNm;
 	private String locationCode;
 	private String locationCodeName;
 	private String physicalPath;
@@ -28,6 +29,10 @@ public class ExcelUploadVo extends AbstractVo implements Serializable {
 	private String uploadDt;
 	private String validCompleteYn;
 	private String statusCode;
+	
+	private String mapColor;
+	private String statusCodeNm;
+	private String totalLandWidth;
 	
 	private long   rownum;
 	
@@ -114,6 +119,30 @@ public class ExcelUploadVo extends AbstractVo implements Serializable {
 	}
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
+	}
+	public String getStatusCodeNm() {
+		return statusCodeNm;
+	}
+	public void setStatusCodeNm(String statusCodeNm) {
+		this.statusCodeNm = statusCodeNm;
+	}
+	public String getUploaderNm() {
+		return uploaderNm;
+	}
+	public void setUploaderNm(String uploaderNm) {
+		this.uploaderNm = uploaderNm;
+	}
+	public String getTotalLandWidth() {
+		return totalLandWidth;
+	}
+	public void setTotalLandWidth(String totalLandWidth) {
+		this.totalLandWidth = totalLandWidth;
+	}
+	public String getMapColor() {
+		return mapColor;
+	}
+	public void setMapColor(String mapColor) {
+		this.mapColor = mapColor;
 	}
 
 		

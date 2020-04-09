@@ -43,94 +43,60 @@ $(document).ready(function(){
 	$("#searchStatDate").val( CommonUtil.getPreviousDate(7,'-'));
 	$("#searchEndDate").val( CommonUtil.getToday('-'));
 	
-	const excelUploadGrid = new tui.Grid({
-		el: document.getElementById("excelUploadGrid"),
-	    data: [],
-	    scrollX: false,
-	    scrollY: false,
-	    selectionUnit: 'row',
-	    pagination : true,
-	    columns: [
-	        {  header: '순번', 	 	name: 'rownum', width: 50 },
-	        {  header: '제목', 	 	name: 'title', align: 'left'},
-	        {  header: '지역', 	 	name: 'locationCodeName', width: 200 , align: 'left' },
-	        {  header: '등록자', 	 	name: 'uploaderNm', width: 150   },
-	        {  header: '등록일자', 	name: 'uploadDt', width: 150  },
-	        {  header: 'excelKey', 	name: 'excelKey', hidden : true, },
-	      ],
-	    pageOptions: {
-		    perPage: 5,
-		    totalPage : 0,
-		    useClient: true,
-		},
-	 });
+	 $("#jgUploadList").jsGrid({
+		 height: "200px",
+	     width: "100%",
+	     paging: true,
+	     sorting: false,
+	     loadIndication: true,
+	     loadIndicationDelay: 500,
+	     pageIndex: 1,
+	     pageSize: 10,
+	     pageButtonCount: 10,
+	     pagePrevText: "P",
+	     pageNextText: "N",
+	     pageFirstText: "F",
+	     pageLastText: "L",
+	     data: [],
+	     fields: [
+	            { title : '순번', 			name: 'rownum', 			type: 'text',  align: 'center', width: 50  },
+		        { title : '제목', 			name: 'title',			 	type: 'text',  align: 'left', 	width: 200 },
+		        { title : '지역명(시/도)', 	name: 'locationCodeName', 	type: 'text',  align: 'left', 	width: 100 },
+		        { title : '상태', 			name: 'statusCodeNm', 		type: 'text',  align: 'left', 	width: 150 },
+		        { title : '총평수', 			name: 'totalLandWidth',		type: 'text',  align: 'right', 	width: 150 },
+		        { title : '등록자명', 			name: 'uploaderNm',		 	type: 'text',  align: 'left', 	width: 100 },
+		        { title : '등록일자', 			name: 'uploadDt',		 	type: 'text',  align: 'center', width: 150 },
+	        ],
+	     rowClick: function(args) { ExcelList.excelUploadRowClick(args); }
+	  });
+	 
+	 $("#jgDataList").jsGrid({
+		 height: "300px",
+	     width: "100%",
+	     paging: true,
+	     sorting: false,
+	     loadIndication: true,
+	     loadIndicationDelay: 500,
+	     pageIndex: 1,
+	     pageSize: 10,
+	     pageButtonCount: 10,
+	     pagePrevText: "P",
+	     pageNextText: "N",
+	     pageFirstText: "F",
+	     pageLastText: "L",
+	     data: [],
+	     fields: [
+	            { title : '순번', 			name: 'rownum', 		type: 'text',  align: 'center', width: 50  },
+		        { title : '지역명(시/도)', 	name: 'sido',			type: 'text',  align: 'left', 	width: 200 },
+		        { title : '지역(시/군/구)', 	name: 'sigungu', 		type: 'text',  align: 'left', 	width: 150 },
+		        { title : '읍면동', 			name: 'upmyundong',		type: 'text',  align: 'left', 	width: 150 },
+		        { title : '리', 				name: 'ri',		 		type: 'text',  align: 'center', width: 150 },
+		        { title : '번지', 			name: 'bunji', 			type: 'text',  align: 'center', width: 150 }, 
+		        { title : '부번지', 			name: 'bubunji',		type: 'text',  align: 'center', width: 150 }, 
+		        { title : '대지(m2)', 		name: 'landWidth', 		type: 'text',  align: 'right', width: 120 },
+	        ]
+	    });
 	
-	excelUploadGrid.getPagination().on("beforMove", function(ev) {
-		console.log ( ev.page );
-	});
-	
-/*	
-	 paganation.on('afterMove', function(evt) {
-		 
-		 var currentPage = evt.page;
-	     console.log(currentPage);
-	 });
-	*/
-	// fired mouse event
-	excelUploadGrid.on('click', (ev) => {
-		//if ( excelUploadGrid.data == null ) return; 
-		
-		var rowData = excelUploadGrid.getRowAt(ev.rowKey);
-		ExcelList.excelKey = rowData.excelKey;
-		ExcelList.excelUploadRowClick( rowData.excelKey );
-	});
-	
-	const excelDataGrid = new tui.Grid({
-		el: document.getElementById("excelDataGrid"),
-	    data: [],
-	    dataSource: null,
-	    scrollX: false,
-	    scrollY: false,
-	    selectionUnit: 'row',
-	    pagination : true,
-	    columns: [
-	        {  header: 'Seq', 	 name: 'rownum', width:50, },
-	        {  header: '시/도', 	 name: 'sido' },
-	        {  header: '시/군/구', name: 'sigungu' },
-	        {  header: '면/동', 	 name: 'upmyundong' },
-	        {  header: '리', 	 name: 'ri' },
-	        {  header: '번지', 	 name: 'bunji' },
-	        {  header: '부번지', 	 name: 'bubunji' },
-	        {  header: '확인유무', name: 'isValidYn' },
-	        {  header: '수정대상', name: 'isTransYn' },
-	      ], 
-	 	pageOptions: {
-	        perPage: 5,
-	        totalPage: 3,
-	        totalItems : 30,
-	        page: 1,
-	        useClient: true,
-	    },
-	 });
-	
-	// fired mouse event
-	excelDataGrid.on('click', function(ev) {
-	  var target = ev.nativeEvent.target;
-	  console.log( target );
-	});
-	
-	//페이지 버튼 클릭시
-	excelDataGrid.getPagination().on("afterMove", function(ev) {
-		var pageNum = ev.page;
-		if( pageNum == 1 ) ExcelList.dataStartNum = 0;
-		else ExcelList.dataStartNum = (pageNum - 1 ) * ExcelList.dataPageSize ;
-		
-		//excelDataGrid.data.slice( ExcelList.dataStartNum, ExcelList.dataPageSize );
-		//ExcelList.excelUploadRowClick( ExcelList.excelKey  );
-	});
-	
-	ExcelList.excelDataGrid = excelDataGrid;
-	ExcelList.excelUploadGrid =  excelUploadGrid;
 	
 });
 
@@ -143,14 +109,6 @@ class ExcelList {
 	
 	static init() {
 		this.excelKey = '';
-		this.pageSize = 10;
-		this.currentPage = 1;
-		this.startNum = 0;
-		this.excelDataGrid = null;
-		this.excelUploadGrid = null;
-		this.dataPageSize = 5;
-		this.dataCurrentPage = 1;
-		this.dataStartNum = 0;
 	}
 	
 	/*
@@ -179,11 +137,11 @@ class ExcelList {
 	}
 	//
 	static cbExcelRetrieveResult ( data ) {
-		ExcelList.excelUploadGrid.getPagination().setTotalItems( data.COUNT );
-		ExcelList.excelUploadGrid.getPagination().reset(data.COUNT);
-		ExcelList.excelUploadGrid.resetData( data.LIST );
-		ExcelList.excelDataGrid.resetData( [] );
+		$("#jgUploadList").jsGrid("option", "data", data.LIST);
+		$("#jgUploadList").jsGrid("option", "itemsCount", data.COUNT);
 		
+		$("#jgDataList").jsGrid("option", "data", []);
+		$("#jgDataList").jsGrid("option", "itemsCount", 0);
 	}
 	
 	static cbExcelRetrieveError( error ) {
@@ -191,10 +149,12 @@ class ExcelList {
 		console.log( error );
 	}
 	
-	static excelUploadRowClick( excelKey ) {
+	static excelUploadRowClick( args ) {
+		ExcelList.excelKey = args.item.excelKey;
+		
 		var url = "/admin/excelDataRetrieve";
 		var sendData = {
-			excelKey : excelKey ,
+			excelKey : args.item.excelKey ,
 			pageSize : ExcelList.dataPageSize,
 			startNum : ExcelList.dataStartNum, 
 		};
@@ -206,13 +166,12 @@ class ExcelList {
 	            type: 'POST',
 	            success: ExcelList.cbExcelDataRetrieveResult,
 	            error  : ExcelList.cbExcelRetrieveError,
-	        });
+	     });
 	}
 	
 	static cbExcelDataRetrieveResult( data ) {
-		ExcelList.excelDataGrid.resetData( data.LIST );
-		ExcelList.excelDataGrid.getPagination().setTotalItems( data.COUNT );
-		ExcelList.excelDataGrid.getPagination().reset(data.COUNT);
+		$("#jgDataList").jsGrid("option", "data", data.LIST);
+		$("#jgDataList").jsGrid("option", "itemsCount", data.COUNT);
 	}
 	
 }

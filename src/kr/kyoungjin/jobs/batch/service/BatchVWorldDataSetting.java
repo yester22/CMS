@@ -35,7 +35,7 @@ import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
  * </PRE>
  */
 public class BatchVWorldDataSetting {
-
+	
 	private ExcelDao excelDao;
 	private BatchHistoryInfoDao batchDao;
 	
@@ -149,7 +149,7 @@ public class BatchVWorldDataSetting {
 					    	parser = null;
 					    }
 					    
-					    //2초 대기 
+					    //1초 대기 
 					    try { Thread.sleep(10000); } catch ( Exception e) { }
 					
 					}
@@ -301,7 +301,7 @@ public class BatchVWorldDataSetting {
 					    	parser = null;
 					    }
 					    
-					    //2초 대기 
+					    //1초 대기 
 					    try { Thread.sleep(10000); } catch ( Exception e) { }
 					
 					}
@@ -321,6 +321,120 @@ public class BatchVWorldDataSetting {
 			e.printStackTrace();
 		}
 			logger.debug("doLndpclarJob batchEnd");
+	}
+
+	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 8.
+	 * @Method Name : doDataPolygonSynch
+	 * @return : void
+	 */
+	public void doDataPolygonSynch() {
+		logger.debug("doDataPolygonSynch batchStart");
+		String batchKey = "";
+
+		//batch 시작플래그 생성
+		BatchHistoryInfoVo batchVo = new BatchHistoryInfoVo();
+		try {
+			batchKey = batchDao.selectBatchKeyGenerate();
+			batchVo.setBatchKey(batchKey);
+			batchVo.setBatchType(ConstantNames.BATCH_KEY_VWORLD_POLYGON);
+		} catch ( Exception e) { }
+		
+		try {
+			
+			ExcelUploadVo excelUploadVo = new ExcelUploadVo();			
+			excelUploadVo.setValidCompleteYn(ConstantNames.USE_YN_N);
+			excelUploadVo.setUseYn(ConstantNames.USE_YN_Y);
+			excelUploadVo.setStatusCode(ConstantNames.EXCEL_STATUS_DS_INFO_END);
+			String excelKey = excelDao.selectExcelKeyForStatusConfirm(excelUploadVo);
+			
+			if ( excelKey != null ) {
+				
+				Map<String,Object> param = new HashMap<String,Object>();
+				param.put(ConstantNames.EXCEL_KEY, excelKey);
+				List<ExcelUploadDetailVo> list = excelDao.selectExcelUploaData(param);
+				if ( list.size() > 1 ) {
+					//excelUpload 데이터의 상태 변경
+					excelUploadVo.setExcelKey(excelKey);
+					excelUploadVo.setStatusCode(ConstantNames.EXCEL_STATUS_DS_POLYGON_START);
+					excelDao.updateExcelUpoadStatus(excelUploadVo);
+
+					//batch 내용  insert
+					batchVo.setBatchTarget(excelKey);
+					batchDao.insertBatchHistory(batchVo);
+					
+					// 서비스 호출을 위한 파라미터 세팅
+					String url = "http://api.vworld.kr/req/data?";
+					Map<String,Object> params = new LinkedHashMap<>(); 
+				    params.put("key",   authKey);
+				    params.put("service",    "data");
+				    params.put("version",    "2.0");
+				    params.put("request",    "getfeature");
+				    params.put("format",     "json");
+				    params.put("size",       "100");
+				    params.put("page",       "1");
+				    params.put("geometry",   "true");
+				    params.put("attribute",  "true");
+				    params.put("crs",        "EPSG:900913");
+				    params.put("data",       "LP_PA_CBND_BUBUN");
+				    params.put("domain",     "http://localhost");
+				    
+				    JSONObject obj, res, result;
+				    JSONParser parser;
+				    StringBuffer strReaseon = new StringBuffer();
+					for ( ExcelUploadDetailVo item : list ) {
+						if ( item.getxPos() == null || item.getyPos() == null ) continue;
+						else {
+							params.put("geomfilter", "POINT(" + item.getxPos() + " " + item.getyPos() + ")");
+						    String response = this.httpGetJsonString( url, params );
+						    if ( response != null ) {
+						    	parser = new JSONParser();
+						    	obj = (JSONObject) parser.parse(response);
+						    	
+						    	res = (JSONObject) obj.get("response");
+						    	result  = (JSONObject) res.get("result");
+						    	try {
+						    		item.setPoligonData(result.toString());
+						    	} catch(NullPointerException ne) {
+						    		strReaseon.append(item.getExcelKey() + "," + item.getDataSeq() + " data get error, ");
+						    		item.setPoligonData("");
+							    	
+							    	logger.debug(response);
+						    	}
+						    	excelDao.updateExcelDataForService(item);
+	
+						    	//메모리 해제 시키기
+						    	result = null;
+						    	res = null;
+						    	obj = null;
+						    	parser = null;
+						    }
+					    }
+					    
+					    //1초 대기 
+					    try { Thread.sleep(10000); } catch ( Exception e) { }
+					
+					}
+					//batch 완료 시키기
+					batchVo.setSuccessYn(ConstantNames.YN_Y);
+					batchVo.setDescript(strReaseon.toString());
+					batchDao.updateBatchHistory(batchVo);
+					    
+					//excelUpload 데이터의 상태 변경
+					excelUploadVo.setExcelKey(excelKey);
+					excelUploadVo.setStatusCode(ConstantNames.EXCEL_STATUS_DS_POLYGON_END);
+					excelDao.updateExcelUpoadStatus(excelUploadVo);
+				}
+			} 
+			excelUploadVo = null;
+		} catch(Exception e ) {
+			e.printStackTrace();
+			
+		}
+		
+		logger.debug("doDataPolygonSynch batchEnd");
 	}
 	
 	

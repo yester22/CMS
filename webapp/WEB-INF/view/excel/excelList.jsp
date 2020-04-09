@@ -12,16 +12,40 @@
 		background-position: right center;
 	}
 </style>
-<div id="page-wrapper">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header"><small>엑셀 데이터 조회</small></h1>
-		</div>
-		<div class="col-lg-12">
-			<div class="panel panel-primary">
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-					<form id="searchForm" method="post">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>엑셀 데이터 조회</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+            	<li class="breadcrumb-item"><a href="#">Home</a></li>
+				<li class="breadcrumb-item"><a href="#">Data 관리</a></li>
+				<li class="breadcrumb-item active">Data 조회</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        
+        <div class="card card-default">
+          	<div class="card-header">
+            	<h3 class="card-title">검색</h3>
+            	<div class="card-tools" style="margin-top:15px;">
+            		<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+        		</div>
+        	</div>
+        
+	        <div class="card-body">
+				<form id="searchForm" method="post">
 						<input type="hidden" name="pageSize" 	id="pageSize" 	value="" />
 						<input type="hidden" name="currentPage" id="currentPage" value="" />
 						<input type="hidden" name="startNum" 	id="startNum" 	value="" />
@@ -76,30 +100,37 @@
 							</tbody>
 						</table>
 					</form>
-				</div>
-				<!-- /.panel-body -->
-			</div>
+	        </div>
+        </div>
+        <div class="card card-default">
+        	<div class="card-header">
+            	<h3 class="card-title">업로드 엑셀정보 목록</h3>
+            	<div class="card-tools" style="margin-top:15px;">
+            		<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+        		</div>
+        	</div>
+        	<div class="card-body">
+	          	<div id="jgUploadList"></div>
+	        </div>
 		</div>
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-				 	<div id="excelUploadGrid"></div>
-				</div>
-			</div>
+        <!-- /.card -->
+		 <div class="card card-default">
+        	<div class="card-header">
+            	<h3 class="card-title">Data List</h3>
+            	<div class="card-tools" style="margin-top:15px;">
+            		<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+        		</div>
+        	</div>
+        	<div class="card-body">
+	          <div id="jgDataList"></div>
+	        </div>
 		</div>
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					Excel Data
-				</div>
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-					<div id="excelDataGrid"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-</div>
+        <!-- /.card -->
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
 <script type="text/javascript" src="/resources/js/cms/excel/excelList.js"></script>
