@@ -1,13 +1,16 @@
 package kr.kyoungjin.jobs.excel.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import kr.kyoungjin.common.abstractObject.AbstractController;
 import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
+import kr.kyoungjin.common.util.ExcelUtil;
 import kr.kyoungjin.dataobject.vo.ExcelUploadDetailVo;
 import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
 import kr.kyoungjin.dataobject.vo.MemberVo;
@@ -103,5 +107,57 @@ public class ExcelRetrieveController extends AbstractController {
 	}
 	
 	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : excelList
+	 * @return : void
+	 */
+	@RequestMapping(value = "/admin/excelDown")
+	public void excelList(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws InvalidFormatException {
+		Map<String , Object> beans = new HashMap<String , Object>();
+		Map<String, Object> rtnList = null;
+		ExcelUploadVo uploadVo = null;
+		try {
+			uploadVo =  excelRetrieveService.getExcelUploadInfo(params);
+			beans.put("INFO",   uploadVo);
+			
+			rtnList = excelRetrieveService.getExcelDetailList(params);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if ( rtnList != null && rtnList.get("LIST") != null ) {
+			beans.put(JSONResult.LIST,   rtnList.get("LIST"));
+		}
+		String fileName = uploadVo.getOriginalFileName().replaceAll(".xlsx", "");
+		fileName = uploadVo.getOriginalFileName().replaceAll(".xls", "");
+		
+		ExcelUtil.download(request, response, beans, fileName,  "EL_0001.xlsx");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/admin/excelDataDelete", method = RequestMethod.POST)
+	public JSONObject excelDelete(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws Exception {
+		JSONObject result = new JSONObject();
+		
+		String deleteData = params.get("deleteData").toString();
+		if ( deleteData != null && ! "".equals(deleteData)) {
+			if ( deleteData.lastIndexOf(",") > 0 ) {
+				params.put("deleteArray", deleteData.split(","));
+			} else {
+				String[] arr = { deleteData };
+				params.put("deleteArray", arr);
+			}
+		}
+		
+		try {
+			excelRetrieveService.deleteExcelData (params );
+			result.put(JSONResult.RESULT, JSONResult.OK);
+		} catch(Exception e ) {
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result;
+	}
 	
 }

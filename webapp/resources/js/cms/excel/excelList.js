@@ -9,6 +9,8 @@ $(document).ready(function(){
 	ExcelList.init();
 	
 	$("#btnSearch").bind("click", ExcelList.btnExcelRetrieve);
+	$("#btnExcelDownload").bind("click", ExcelList.btnExcelDownload);
+	$("#btnDelete").bind("click", ExcelList.btnDelete);
 	
 	$('#searchStatDate').datepicker({
 		dateFormat: 'yy-mm-dd' //Input Display Format 변경
@@ -86,6 +88,16 @@ $(document).ready(function(){
 	     pageLastText: "L",
 	     data: [],
 	     fields: [
+	    		{
+	                headerTemplate: function() {
+	                    return $("<input>").attr("type", "checkbox").on("change", ExcelList.checkAllItem);
+	                },
+	                itemTemplate: function(_, item) {
+	                    return $("<input>").attr("type", "checkbox").attr('name', 'excelData').attr('value', item.dataSeq);
+	                },
+	                align: "center",
+	                width: 50
+	            },
 	            { title : '순번', 			name: 'rownum', 		type: 'text',  align: 'center', width: 50  },
 		        { title : '지역명(시/도)', 	name: 'sido',			type: 'text',  align: 'left', 	width: 200 },
 		        { title : '지역(시/군/구)', 	name: 'sigungu', 		type: 'text',  align: 'left', 	width: 150 },
@@ -93,7 +105,7 @@ $(document).ready(function(){
 		        { title : '리', 				name: 'ri',		 		type: 'text',  align: 'center', width: 150 },
 		        { title : '번지', 			name: 'bunji', 			type: 'text',  align: 'center', width: 150 }, 
 		        { title : '부번지', 			name: 'bubunji',		type: 'text',  align: 'center', width: 150 }, 
-		        { title : '대지(m2)', 		name: 'landWidth', 		type: 'text',  align: 'right', width: 120 },
+		        { title : '대지(m3)', 		name: 'landWidth', 		type: 'text',  align: 'right', width: 120 },
 	        ]
 	    });
 	
@@ -174,4 +186,89 @@ class ExcelList {
 		$("#jgDataList").jsGrid("option", "itemsCount", data.COUNT);
 	}
 	
+	
+	//그리드 전체 선택시
+	static checkAllItem() {
+		console.log( $(this).val() );
+	}
+	
+	
+	//엑셀 다운로드
+	static btnExcelDownload( e ) {
+		var url = "/admin/excelDown";
+		var form = document.createElement("form");
+        form.setAttribute("charset", "UTF-8");
+        form.setAttribute("method", "Post");
+        form.setAttribute("action", url);
+
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "excelKey");
+        hiddenField.setAttribute("value", ExcelList.excelKey);
+
+        form.appendChild(hiddenField);
+        document.body.appendChild(form);
+
+        form.submit();
+	}
+	
+	
+	static btnDelete(e) {
+		if ( ExcelList.excelKey == '') {
+			msgBox.alert("엑셀정보를 선택 후 선택하세요");
+			return false;
+		};
+		
+		var checkVal = '';
+		$('input:checkbox[name="excelData"]').each(function(index, item) {
+			if(this.checked){
+				checkVal = checkVal + ',' + this.value;
+			}
+		});
+		if ( checkVal.length > 1 ) {
+			checkVal = checkVal.substring(1,checkVal.length);	
+		}
+		
+		console.log ( checkVal );
+		
+		
+		if ( checkVal.length <= 1) {
+			msgBox.alert("체크된 데이터 건수가 존재하지 않습니다");
+			return false;
+		}
+		
+		var title = "데이터 삭제 확인";
+		var msg = '데이터를 삭제하시겠습니까?';
+		msgBox.confirm (title, msg, function() {
+			var url = "/admin/excelDataDelete";
+			var sendData = {
+				deleteData : checkVal ,
+				excelKey : ExcelList.excelKey
+			}			
+
+			 $.ajax({
+		            url: url,
+		            dataType: 'json', 
+		            data: sendData,
+		            type: 'POST',
+		            success: ExcelList.cbExcelDataDeleteResult,
+		            error  : ExcelList.cbExcelRetrieveError,
+		     });
+		});
+	}
+
+	//삭제후 실행되는 콜백함수 
+	static cbExcelDataDeleteResult(data) {
+		if ( data.RESULT == "OK") {
+			msgBox.alert('데이터가 삭제되었습니다');
+			
+			var args = {
+				item : {
+					excelKey : ExcelList.excelKey	
+				}		
+			};
+			
+			ExelList.excelUploadRowClick(args);
+		}
+	}
 }

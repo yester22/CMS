@@ -77,6 +77,7 @@
 <script type="text/javascript" src="/resources/js/common/pageMove.js"></script>
 <script type="text/javascript" src="/resources/js/common/msgBox.js"></script>
 <script type="text/javascript" src="/resources/js/common/commonUtil.js"></script>
+<script type="text/javascript" src="/resources/js/common/jsGridUtil.js"></script>
 
 
 <div id="DIV_ABSTRACT_MESSAGE">

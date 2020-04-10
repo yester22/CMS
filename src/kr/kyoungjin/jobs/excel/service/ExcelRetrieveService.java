@@ -31,4 +31,20 @@ public interface ExcelRetrieveService {
 	 * @return : List<ExcelUploadDetailVo>
 	 */
 	public Map<String, Object> getExcelDetailList(Map<String,Object> param) throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : getExcelUploadInfo
+	 * @return : ExcelUploadVo
+	 */
+	public ExcelUploadVo getExcelUploadInfo(Map<String, Object> params)  throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : deleteExcelData
+	 * @return : void
+	 */
+	public int deleteExcelData(Map<String, Object> params)   throws Exception;
 }

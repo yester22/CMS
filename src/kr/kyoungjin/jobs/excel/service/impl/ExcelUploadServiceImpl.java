@@ -122,6 +122,7 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 			workbook = new XSSFWorkbook(inputStream);
 		}
 
+		String landWidth = "";
 		sheet = workbook.getSheetAt(0);
         int rows = sheet.getPhysicalNumberOfRows();//시트에서 총 행수
         for (int nCrrentRow = nStatRow; nCrrentRow <= rows; nCrrentRow++) {
@@ -136,6 +137,10 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
         	detailVo.setMountainYn(this.getCellValue(sheet.getRow(nCrrentRow).getCell(5)));
         	detailVo.setBunji(this.getCellValue(sheet.getRow(nCrrentRow).getCell(6)));
         	detailVo.setBubunji(this.getCellValue(sheet.getRow(nCrrentRow).getCell(7)));
+        	
+        	landWidth = this.getCellValue(sheet.getRow(nCrrentRow).getCell(8));
+        	
+        	detailVo.setLandWidth(this.landWidthColoneClear(landWidth));
         	detailVo.setIsValidYn(ConstantNames.USE_YN_N);
         	
         	excelUploadDao.insertExcelDetailInfo(detailVo);
@@ -202,4 +207,13 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 		return nRtnCnt;
 	}
 	
+	
+	private String landWidthColoneClear(String landWidthData) {
+		String rtnVal = landWidthData.replaceAll(",", "");
+		rtnVal = rtnVal.replaceAll("(", "");
+		rtnVal = rtnVal.replaceAll(")", "");
+		rtnVal = rtnVal.replaceAll("#", "");
+		rtnVal = rtnVal.replaceAll("!", "");
+		return rtnVal;
+	}
 }

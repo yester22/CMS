@@ -4,7 +4,7 @@
 <!-- Brand Logo -->
 <a href="#" class="brand-link"> 
 	<img src="/resources/bootstrap/adminite/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-	<span class="brand-text font-weight-light">AdminLTE 3</span>
+	<span class="brand-text font-weight-light">ADDRON 3</span>
 </a>
 
 <!-- Sidebar -->
@@ -59,7 +59,7 @@
 			</li>
 			<li class="nav-item has-treeview">
 				<a href="#" class="nav-link">
-					<i class="nav-icon fas fa-chart-pie"></i>
+					<i class="nav-icon fas fa-th"></i>
 					<p>	Map Data 조회 <i class="right fas fa-angle-left"></i></p>
 				</a>
 				<ul class="nav nav-treeview">
@@ -71,6 +71,7 @@
 					</li>
 				</ul>
 			</li>
+			<!-- 
 			<li class="nav-item">z
 				<a href="/resources/bootstrap/adminite/pages/widgets.html" class="nav-link">
 					<i class="nav-icon fas fa-th"></i>
@@ -458,6 +459,7 @@
 					class="nav-icon far fa-circle text-info"></i>
 					<p>Informational</p>
 			</a></li>
+			 -->
 		</ul>
 	</nav>
 	<!-- /.sidebar-menu -->

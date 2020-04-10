@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <style>
 	.cmsDatePicker {
 		padding:4px 2px 5px 25px; 
@@ -124,6 +125,10 @@
         	<div class="card-body">
 	          <div id="jgDataList"></div>
 	        </div>
+	        <div class="card-footer">
+				<button type="button" id="btnDelete" class="btn btn-info">삭제</button>
+        		<button type="button" id="btnExcelDownload" class="btn btn-primary float-right">엑셀다운로드</button>
+        	</div><!-- card footer end -->
 		</div>
         <!-- /.card -->
         <!-- /.row -->

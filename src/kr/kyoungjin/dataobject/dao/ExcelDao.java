@@ -127,4 +127,20 @@ public interface ExcelDao {
 	 * @return : int
 	 */
 	public int updateExcelUpoadStatus(ExcelUploadVo excelUploadVo) throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : selectExcelInfoData
+	 * @return : void
+	 */
+	public ExcelUploadVo selectExcelInfoData(ExcelUploadVo params)  throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : deleteExcelData
+	 * @return : int
+	 */
+	public int deleteExcelData(Map<String, Object> params)  throws Exception;
 }

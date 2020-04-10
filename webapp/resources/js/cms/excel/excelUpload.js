@@ -32,7 +32,8 @@ class CodeList {
         formData.append("fileObj", $("#uploadfile")[0].files[0]);
         formData.append("title", $("#title").val());
         formData.append("locationCode", $("#locationCode").val());
-        
+        formData.append("mapColor", $("#mapColor").val());
+                
         $.ajax({
             url: url,
             processData: false,

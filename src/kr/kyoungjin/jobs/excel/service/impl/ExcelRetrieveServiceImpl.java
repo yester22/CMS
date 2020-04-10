@@ -78,4 +78,18 @@ public class ExcelRetrieveServiceImpl implements ExcelRetrieveService {
 		return returnMap;
 	}
 
+	@Override
+	public ExcelUploadVo getExcelUploadInfo(Map<String, Object> params)  throws Exception {
+		ExcelUploadVo paramObj = new ExcelUploadVo();
+		paramObj.setExcelKey(params.get("excelKey").toString());
+		return excelDao.selectExcelInfoData(paramObj);
+	}
+
+
+	@Override
+	public int deleteExcelData(Map<String, Object> params) throws Exception {
+		return excelDao.deleteExcelData(params);
+		
+	}
+	
 }
