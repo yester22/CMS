@@ -75,6 +75,7 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 		saveExcelUpload.setExcelKey(sNewExcelKey);
 		saveExcelUpload.setTitle(params.get("title").toString());
 		saveExcelUpload.setLocationCode(params.get("locationCode").toString());
+		saveExcelUpload.setMapColor(params.get("mapColor").toString());
 		saveExcelUpload.setOriginalFileName(uploadfile.getOriginalFilename());
 		saveExcelUpload.setPhysicalPath(saveFileInfo.get(FileUtil.FILE_PATH).toString());
 		saveExcelUpload.setSavedFileName(saveFileInfo.get(FileUtil.UPLOAD_FILE_NM).toString());
@@ -89,7 +90,7 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 		saveExcelUpload = new ExcelUploadVo();
 		saveExcelUpload.setExcelKey(sNewExcelKey);
 		saveExcelUpload.setDataCount(nExcelDataCount);
-		saveExcelUpload.setStatusCode("RS_REG");
+		saveExcelUpload.setStatusCode(ConstantNames.EXCEL_STATUS_DS_REG);
 		
 		excelUploadDao.updateExcelUploaInfo(saveExcelUpload);
 		

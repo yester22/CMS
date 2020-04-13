@@ -21,6 +21,8 @@ public class ConstantNames {
 	
 	public static final String BATCH_KEY_VWORLD_SEARCH = "V_SEARCH";
 	public static final String BATCH_KEY_VWORLD_POLYGON = "V_POLYGON";
+	public static final String BATCH_KEY_VWORLD_COURTDONG = "V_COURTDONG";
+
 	public static final String BATCH_KEY_NSDI_LADFRLLIST = "LADFRLLIST";
 	
 }

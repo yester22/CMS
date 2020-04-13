@@ -15,8 +15,11 @@
     <bean id="BatchVWorldDataSetting" class="kr.kyoungjin.jobs.batch.service.BatchVWorldDataSetting">
     	<property name="excelDao" ref="excelDao"  />
     	<property name="batchDao" ref="batchHistoryInfoDao"  />
+    	<property name="addrCourtdongPolygonDao" ref="addrCourtdongPolygonDao"  />
     	<property name="NSDI_KEY" value="${API.NSDI.KEY}"  />
-    	<property name="VWORLD_KEY" value="${API.VWORD.KEY}"  />
+    	<property name="VWORLD_KEY" value="${API.VWORLD.KEY}"  />
+    	<property name="CRS_TYPE" value="${MAP.MADICATOR.CRS}"  />
+    	<property name="VWORLD_DOAMIN" value="${API.VWORLD.DOMAIN}"  />
     </bean>
     
     <task:scheduler id="scheduler" pool-size="2"/>
@@ -30,6 +33,10 @@
     	
     	<!-- CRS 포지션 가져오기 -->
     	<task:scheduled ref="BatchVWorldDataSetting" method="doDataCrsPostionSynch" cron="0 0/1 * * * ?" />
+    	
+    	<!-- 법정동 기준 폴리곤 데이터 가져오기 -->
+    	<task:scheduled ref="BatchVWorldDataSetting" method="doDataCourtDongPolygonSynch" cron="0 0/1 * * * ?" />
+    	
 	</task:scheduled-tasks>  
     
 </beans>

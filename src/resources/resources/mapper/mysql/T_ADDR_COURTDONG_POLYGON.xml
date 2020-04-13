@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.AddrCourtdongPolygonDao">
+
+	<sql id="sqlCourtDongPolygon">
+		SELECT 	A.COURT_DONG_CODE,
+       			A.SIDO_NM,
+		        A.SIGUNGU_NM,
+		        A.COURT_UPMYUNDONG_NM,
+		        A.COURT_RI_NM,
+		        A.POLYGON_DATA
+  		  FROM  T_ADDR_COURTDONG_POLYGON A
+	</sql>
+	
+	
+	<select id="selectPolygonDataInputTarget" parameterType="hashmap" resultType="AddrCourtDongPolygonVo">
+		SELECT  COURT_DONG_CODE, 
+		    	SIDO_NM,
+		    	SIGUNGU_NM,
+		    	COURT_UPMYUNDONG_NM,
+		    	COURT_RI_NM
+		 FROM (     	
+			SELECT  A.COURT_DONG_CODE, 
+			    	A.SIDO_NM,
+			    	A.SIGUNGU_NM,
+			    	A.COURT_UPMYUNDONG_NM,
+			    	A.COURT_RI_NM,
+			    	ACP.POLYGON_DATA
+			  FROM ( 
+					SELECT  B.COURT_DONG_CODE
+						  , B.SIDO_NM
+						  , B.SIGUNGU_NM
+						  , B.COURT_UPMYUNDONG_NM
+						  , B.COURT_RI_NM
+						  , COUNT(1) CNT 
+					FROM ( 
+						SELECT SIDO, SIGUNGU FROM T_EXCEL_UPLOAD_DATA A WHERE EXCEL_KEY = #{excelKey} LIMIT 1
+					) A, 
+					(
+						SELECT COURT_DONG_CODE, SIDO_NM, SIGUNGU_NM, COURT_UPMYUNDONG_NM, COURT_RI_NM FROM T_ADDR_JIBUN A
+					) B
+					WHERE A.SIDO = B.SIDO_NM 
+					  AND A.SIGUNGU = B.SIGUNGU_NM 
+					GROUP BY  B.COURT_DONG_CODE
+						  , B.SIDO_NM
+						  , B.SIGUNGU_NM
+						  , B.COURT_UPMYUNDONG_NM
+						  , B.COURT_RI_NM
+			) A
+			LEFT OUTER JOIN T_ADDR_COURTDONG_POLYGON ACP ON ( A.COURT_DONG_CODE = ACP.COURT_DONG_CODE AND A.COURT_RI_NM = ACP.COURT_RI_NM )
+		) B WHERE IFNULL(POLYGON_DATA, '') = ''
+	</select>
+	
+	
+	 
+	 <insert id="insertPolygonData" parameterType="AddrCourtDongPolygonVo">
+	 	INSERT INTO T_ADDR_COURTDONG_POLYGON ( 
+	 		  COURT_DONG_CODE
+	 		, SIDO_NM,SIGUNGU_NM
+	 		, COURT_UPMYUNDONG_NM
+	 		, COURT_RI_NM
+	 		, POLYGON_DATA 
+	 	)
+		VALUES(
+			  #{courtDongCode}    
+			, #{sidoNm}
+			, #{sigunguNm}        
+			, #{courtUpmyundongNm}
+			, #{courtRiNm}
+			, #{polygonData}      
+		)
+	 </insert>
+	 
+</mapper>	

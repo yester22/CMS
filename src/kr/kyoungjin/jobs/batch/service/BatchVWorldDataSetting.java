@@ -18,8 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.kyoungjin.common.abstractObject.ConstantNames;
+import kr.kyoungjin.dataobject.dao.AddrCourtdongPolygonDao;
 import kr.kyoungjin.dataobject.dao.BatchHistoryInfoDao;
 import kr.kyoungjin.dataobject.dao.ExcelDao;
+import kr.kyoungjin.dataobject.vo.AddrCourtDongPolygonVo;
 import kr.kyoungjin.dataobject.vo.BatchHistoryInfoVo;
 import kr.kyoungjin.dataobject.vo.ExcelUploadDetailVo;
 import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
@@ -39,9 +41,12 @@ public class BatchVWorldDataSetting {
 	
 	private String NSDI_KEY;
 	private String VWORLD_KEY;
+	private String CRS_TYPE;
+	private String VWORLD_DOAMIN;
 	
 	private ExcelDao excelDao;
 	private BatchHistoryInfoDao batchDao;
+	private AddrCourtdongPolygonDao  addrCourtdongPolygonDao;
 	
 	public static final String USER_AGENT = "Mozilla/5.0";
 	
@@ -95,7 +100,7 @@ public class BatchVWorldDataSetting {
 				    params.put("service", "search");
 				    params.put("request", "search");
 				    params.put("version", "2.0");
-				    params.put("crs", "EPSG:900913");
+				    params.put("crs", CRS_TYPE);
 				    params.put("type",  "address");
 				    params.put("category", "parcel");
 				    params.put("format", "json");
@@ -380,9 +385,9 @@ public class BatchVWorldDataSetting {
 				    params.put("page",       "1");
 				    params.put("geometry",   "true");
 				    params.put("attribute",  "true");
-				    params.put("crs",        "EPSG:900913");
 				    params.put("data",       "LP_PA_CBND_BUBUN");
-				    params.put("domain",     "http://localhost");
+				    params.put("crs",        CRS_TYPE);
+				    params.put("domain",     VWORLD_DOAMIN);
 				    
 				    JSONObject obj, res, result;
 				    JSONParser parser;
@@ -441,6 +446,128 @@ public class BatchVWorldDataSetting {
 	}
 	
 	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 8.
+	 * @Method Name : doDataPolygonSynch
+	 * @return : void
+	 */
+	public void doDataCourtDongPolygonSynch() {
+		logger.debug("doDataCourtDongPolygonSynch batchStart");
+		String batchKey = "";
+
+		//batch 시작플래그 생성
+		BatchHistoryInfoVo batchVo = new BatchHistoryInfoVo();
+		try {
+			batchKey = batchDao.selectBatchKeyGenerate();
+			batchVo.setBatchKey(batchKey);
+			batchVo.setBatchType(ConstantNames.BATCH_KEY_VWORLD_COURTDONG);
+		} catch ( Exception e) { }
+		
+		try {
+			
+			ExcelUploadVo excelUploadVo = new ExcelUploadVo();			
+			excelUploadVo.setValidCompleteYn(ConstantNames.USE_YN_N);
+			excelUploadVo.setUseYn(ConstantNames.USE_YN_Y);
+			excelUploadVo.setStatusCode(ConstantNames.EXCEL_STATUS_DS_POLYGON_END);
+			String excelKey = excelDao.selectExcelKeyForStatusConfirm(excelUploadVo);
+			
+			if ( excelKey != null ) {
+				
+				Map<String,Object> param = new HashMap<String,Object>();
+				param.put(ConstantNames.EXCEL_KEY, excelKey);
+				List<AddrCourtDongPolygonVo> list = getAddrCourtdongPolygonDao().selectPolygonDataInputTarget(param);
+				
+				if ( list.size() > 1 ) {
+
+					//batch 내용  insert
+					batchVo.setBatchTarget(excelKey);
+					batchDao.insertBatchHistory(batchVo);
+					
+					// 서비스 호출을 위한 파라미터 세팅
+					String url = "http://api.vworld.kr/req/data?";
+					Map<String,Object> params = new LinkedHashMap<>(); 
+				    params.put("key",        VWORLD_KEY);
+				    params.put("crs",        CRS_TYPE);
+				    params.put("domain",     VWORLD_DOAMIN);
+				    params.put("service",    "data");
+				    params.put("version",    "2.0");
+				    params.put("request",    "getfeature");
+				    params.put("format",     "json");
+				    params.put("errorFormat","json");
+				    params.put("size",       "" + list.size());
+				    params.put("columns",    "ag_geom");
+				    params.put("geometry",   "true");
+				    params.put("attribute",  "true");
+				    params.put("data",       "LT_C_ADRI_INFO");
+				    
+				    
+				    JSONObject obj, res, result;
+				    JSONParser parser;
+				    StringBuffer strReaseon = new StringBuffer();
+				    String upmyundongCode = "";
+				    int nPage = 1;
+				    
+				    for ( AddrCourtDongPolygonVo item : list ) {
+					
+				    	upmyundongCode = item.getCourtDongCode().substring(0, 8);
+				    	params.put("attrFilter", "emdCd:=:" + upmyundongCode);
+				    	params.put("page",       "" + nPage++ );
+				    	
+						String response = this.httpGetJsonString( url, params );
+					    if ( response != null ) {
+					    	parser = new JSONParser();
+					    	obj = (JSONObject) parser.parse(response);
+						    	
+					    	res = (JSONObject) obj.get("response");
+					    	result  = (JSONObject) res.get("result");
+					    	try {
+					    		item.setPolygonData(result.toString());
+					    	} catch(NullPointerException ne) {
+					    		strReaseon.append(item.getSidoNm() + "," + item.getSigunguNm() + " data get error, ");
+					    		item.setPolygonData("");
+							    	
+						    	logger.debug(response);
+					    	}
+	
+						    //데이터 insert 처리
+						    getAddrCourtdongPolygonDao().insertPolygonData(item);
+					    	
+					    	//메모리 해제 시키기
+					    	result = null;
+					    	res = null;
+					    	obj = null;
+					    	parser = null;
+
+					    }
+					    //1초 대기 
+					    //try { Thread.sleep(10000); } catch ( Exception e) { }
+					}
+				    
+
+				    
+					//batch 완료 시키기
+					batchVo.setSuccessYn(ConstantNames.YN_Y);
+					batchVo.setDescript(strReaseon.toString());
+					batchDao.updateBatchHistory(batchVo);
+					    
+					//excelUpload 데이터의 상태 변경
+					excelUploadVo.setExcelKey(excelKey);
+					excelUploadVo.setStatusCode(ConstantNames.EXCEL_STATUS_DS_POLYGON_END);
+					excelDao.updateExcelUpoadStatus(excelUploadVo);
+				}
+			} 
+			excelUploadVo = null;
+		} catch(Exception e ) {
+			e.printStackTrace();
+			
+		}
+		
+		logger.debug("doDataPolygonSynch batchEnd");
+	}
+	
+	
+	
 	public void setExcelDao(ExcelDao excelDao) {
 		this.excelDao = excelDao;
 	}
@@ -463,6 +590,30 @@ public class BatchVWorldDataSetting {
 
 	public void setVWORLD_KEY(String vWORLD_KEY) {
 		VWORLD_KEY = vWORLD_KEY;
+	}
+
+	public String getCRS_TYPE() {
+		return CRS_TYPE;
+	}
+
+	public void setCRS_TYPE(String cRS_TYPE) {
+		CRS_TYPE = cRS_TYPE;
+	}
+
+	public String getVWORLD_DOAMIN() {
+		return VWORLD_DOAMIN;
+	}
+
+	public void setVWORLD_DOAMIN(String vWORLD_DOAMIN) {
+		VWORLD_DOAMIN = vWORLD_DOAMIN;
+	}
+
+	public AddrCourtdongPolygonDao getAddrCourtdongPolygonDao() {
+		return addrCourtdongPolygonDao;
+	}
+
+	public void setAddrCourtdongPolygonDao(AddrCourtdongPolygonDao addrCourtdongPolygonDao) {
+		this.addrCourtdongPolygonDao = addrCourtdongPolygonDao;
 	}
 	
 }

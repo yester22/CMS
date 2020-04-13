@@ -38,6 +38,8 @@
 		<typeAlias alias="ExcelUploadDetailVo" type="kr.kyoungjin.dataobject.vo.ExcelUploadDetailVo" />
 		<typeAlias alias="ExcelUploadVo" type="kr.kyoungjin.dataobject.vo.ExcelUploadVo" />
 		<typeAlias alias="BatchHistoryInfoVo" type="kr.kyoungjin.dataobject.vo.BatchHistoryInfoVo" />
+		<typeAlias alias="AddrCourtDongPolygonVo" type="kr.kyoungjin.dataobject.vo.AddrCourtDongPolygonVo" />
+		
 	</typeAliases>
 
 
