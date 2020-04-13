@@ -15,6 +15,8 @@
     <bean id="BatchVWorldDataSetting" class="kr.kyoungjin.jobs.batch.service.BatchVWorldDataSetting">
     	<property name="excelDao" ref="excelDao"  />
     	<property name="batchDao" ref="batchHistoryInfoDao"  />
+    	<property name="NSDI_KEY" value="${API.NSDI.KEY}"  />
+    	<property name="VWORLD_KEY" value="${API.VWORD.KEY}"  />
     </bean>
     
     <task:scheduler id="scheduler" pool-size="2"/>

@@ -1,8 +1,6 @@
 package kr.kyoungjin.jobs.excel.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.kyoungjin.common.abstractObject.AbstractController;
-import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
 import kr.kyoungjin.common.util.ExcelUtil;
-import kr.kyoungjin.dataobject.vo.ExcelUploadDetailVo;
 import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
-import kr.kyoungjin.dataobject.vo.MemberVo;
 import kr.kyoungjin.jobs.excel.service.ExcelRetrieveService;
 import kr.kyoungjin.jobs.system.message.service.IMessageService;
 import net.sf.json.JSONObject;
@@ -36,14 +32,14 @@ import net.sf.json.JSONObject;
  * @author yeste
  * <PRE>
  * -------------------------
- * 개정이력
- * 2020. 3. 24. yeste : 최초작성
+ * 媛쒖젙�씠�젰
+ * 2020. 3. 24. yeste : 理쒖큹�옉�꽦
  * </PRE>
  */
 @CrossOrigin("*")
 @RestController
 public class ExcelRetrieveController extends AbstractController {
-	private Log logger = LogFactory.getLog(ExcelRetrieveController.class);
+	private Logger logger  = LoggerFactory.getLogger(ExcelRetrieveController.class);
 	
 	@Autowired
 	private ExcelRetrieveService excelRetrieveService;

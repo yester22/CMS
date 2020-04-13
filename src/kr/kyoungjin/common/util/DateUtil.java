@@ -7,13 +7,15 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //import com.kr.cmc.cc.service.dao.CmcCcCommDao;
 
 
 /**
  * 
- * 날짜와 시간에 대한 처리 기능을 제공하는 유틸 클래스.
+ * �궇吏쒖� �떆媛꾩뿉 ���븳 泥섎━ 湲곕뒫�쓣 �젣怨듯븯�뒗 �쑀�떥 �겢�옒�뒪.
  * 
  * @author : PMNET
  * -------------------------- Modification Log ------------------------------------
@@ -22,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
  */
 
 /*
- * 포맷의 형태는 다음을 참조하여 포맷형태를 만들면 된다.
+ * �룷留룹쓽 �삎�깭�뒗 �떎�쓬�쓣 李몄“�븯�뿬 �룷留룻삎�깭瑜� 留뚮뱾硫� �맂�떎.
  * <pre>
  *  Symbol   Meaning                 Presentation        Example
  *  ------   -------                 ------------        -------
@@ -49,12 +51,11 @@ import org.apache.commons.logging.LogFactory;
  */
 @SuppressWarnings("unused")
 public class DateUtil {
-	protected static Log _log = LogFactory.getLog(DateUtil.class);
-
+	private static Logger _log  = LoggerFactory.getLogger(DateUtil.class);
 	/**
-	 * DB 현재 날짜정보를 가져온다.
+	 * DB �쁽�옱 �궇吏쒖젙蹂대�� 媛��졇�삩�떎.
 	 * 
-	 * @return 	DB서버의 현재년도월일
+	 * @return 	DB�꽌踰꾩쓽 �쁽�옱�뀈�룄�썡�씪
 	 */
 	public static String getCurrentDay()
 	{
@@ -76,9 +77,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * 현재시간 가져오기
+	 * �쁽�옱�떆媛� 媛��졇�삤湲�
 	 * 
-	 * @param conn DB 커넥션 핸들
+	 * @param conn DB 而ㅻ꽖�뀡 �빖�뱾
 	 * @return String:yyyyMMddHH24MISS
 	 * @throws
 	 * ----- Logging Comment -------
@@ -98,9 +99,9 @@ public class DateUtil {
 
 	/**
 	 * Calendar.get(year + 1900, month, date)
-	 * App서버의 현재년도월일을  리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱�뀈�룄�썡�씪�쓣  由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재년도월일
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱�뀈�룄�썡�씪
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -110,9 +111,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재년도월일을  리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱�뀈�룄�썡�씪�쓣  由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재년도월일
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱�뀈�룄�썡�씪
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -122,9 +123,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재년도를 리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱�뀈�룄瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재년도
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱�뀈�룄
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -134,9 +135,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재월을 리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱�썡�쓣 由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재월(1 ~ 12)
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱�썡(1 ~ 12)
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -146,9 +147,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재일을 리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱�씪�쓣 由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재일(1 ~ 31)
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱�씪(1 ~ 31)
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -158,9 +159,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재일을 리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱�씪�쓣 由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재일(1 ~ 31)
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱�씪(1 ~ 31)
 	 */
 	public static String getSysMonthDay()
 	{
@@ -168,9 +169,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재시를 리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱�떆瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재시(0 ~ 23)
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱�떆(0 ~ 23)
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -180,9 +181,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재분을 리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱遺꾩쓣 由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재분(0 ~ 59)
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱遺�(0 ~ 59)
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -192,9 +193,9 @@ public class DateUtil {
 	}
 
 	/**
-	 * App서버의 현재초을 리턴한다.
+	 * App�꽌踰꾩쓽 �쁽�옱珥덉쓣 由ы꽩�븳�떎.
 	 * 
-	 * @return 	App서버의 현재초(0 ~ 59)
+	 * @return 	App�꽌踰꾩쓽 �쁽�옱珥�(0 ~ 59)
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -204,12 +205,12 @@ public class DateUtil {
 	}
 
 	/**
-	 * 현재 시간을 포맷된 형태로 돌려 준다.<BR>
-	 * 예를 들어 "2001/10/05 21:30:23"를 만들고 싶으면 포맷 문자열을 "yyyy'/'MM'/'dd' 'HH':'mm':'ss"
-	 * 와 같이 하면 된다.
+	 * �쁽�옱 �떆媛꾩쓣 �룷留룸맂 �삎�깭濡� �룎�젮 以��떎.<BR>
+	 * �삁瑜� �뱾�뼱 "2001/10/05 21:30:23"瑜� 留뚮뱾怨� �떢�쑝硫� �룷留� 臾몄옄�뿴�쓣 "yyyy'/'MM'/'dd' 'HH':'mm':'ss"
+	 * �� 媛숈씠 �븯硫� �맂�떎.
 	 * 
-	 * @param format 시간의 표현할 포맷 형식 문자열
-	 * @return 포맷형식으로 포맷된 현재시간이 반환된다.
+	 * @param format �떆媛꾩쓽 �몴�쁽�븷 �룷留� �삎�떇 臾몄옄�뿴
+	 * @return �룷留룻삎�떇�쑝濡� �룷留룸맂 �쁽�옱�떆媛꾩씠 諛섑솚�맂�떎.
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -223,11 +224,11 @@ public class DateUtil {
 	}
 
 	/**
-	 * 지정된 날짜를 포맷된 문자열로 반환한다.<BR>
+	 * 吏��젙�맂 �궇吏쒕�� �룷留룸맂 臾몄옄�뿴濡� 諛섑솚�븳�떎.<BR>
 	 * 
-	 * @param date java.util.Date의 객체로 지정한 날짜
-	 * @param format 반환하고자 하는 문자열의 포맷
-	 * @return 포맷형식으로 포맷된 시간이 반환된다.
+	 * @param date java.util.Date�쓽 媛앹껜濡� 吏��젙�븳 �궇吏�
+	 * @param format 諛섑솚�븯怨좎옄 �븯�뒗 臾몄옄�뿴�쓽 �룷留�
+	 * @return �룷留룻삎�떇�쑝濡� �룷留룸맂 �떆媛꾩씠 諛섑솚�맂�떎.
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -238,7 +239,7 @@ public class DateUtil {
 		}
 
 		if(format == null || format.equals("")) {
-			format = "yyyy'년'MM'월'dd'일 'HH'시'mm'분'dd'초'";
+			format = "yyyy'�뀈'MM'�썡'dd'�씪 'HH'�떆'mm'遺�'dd'珥�'";
 		}
 
 		SimpleDateFormat formatter = new SimpleDateFormat(format);
@@ -247,11 +248,11 @@ public class DateUtil {
 	}
 
 	/**
-	 * 년 또는 년월 또는 년월일 문자열을 입력받아 Date객체를 리턴한다.<br>
-	 * 참고) 년의경우 월일은 1월1일로, 년월의경우 일은 1일로 설정된다.
+	 * �뀈 �삉�뒗 �뀈�썡 �삉�뒗 �뀈�썡�씪 臾몄옄�뿴�쓣 �엯�젰諛쏆븘 Date媛앹껜瑜� 由ы꽩�븳�떎.<br>
+	 * 李멸퀬) �뀈�쓽寃쎌슦 �썡�씪�� 1�썡1�씪濡�, �뀈�썡�쓽寃쎌슦 �씪�� 1�씪濡� �꽕�젙�맂�떎.
 	 * 
-	 * @param	date	"YYYY" 또는 "YYYYMM" 또는 "YYYYMMDD"
-	 * @return 	Date 객체(시간은 0시0분0초), Date 객체로 변환할 수 없는 경우 null
+	 * @param	date	"YYYY" �삉�뒗 "YYYYMM" �삉�뒗 "YYYYMMDD"
+	 * @return 	Date 媛앹껜(�떆媛꾩� 0�떆0遺�0珥�), Date 媛앹껜濡� 蹂��솚�븷 �닔 �뾾�뒗 寃쎌슦 null
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -268,12 +269,12 @@ public class DateUtil {
 
 
 	/**
-	 * 년월일을 입력받아 0시0분0초의 Date객체를 리턴한다.
+	 * �뀈�썡�씪�쓣 �엯�젰諛쏆븘 0�떆0遺�0珥덉쓽 Date媛앹껜瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @param	year	년
-	 * @param	month	월("1" ~ "12")
-	 * @param	day		일("1" ~ "31")
-	 * @return 	Date 객체(시간은 0시0분0초), 년월일 중 값이 없는 경우 null
+	 * @param	year	�뀈
+	 * @param	month	�썡("1" ~ "12")
+	 * @param	day		�씪("1" ~ "31")
+	 * @return 	Date 媛앹껜(�떆媛꾩� 0�떆0遺�0珥�), �뀈�썡�씪 以� 媛믪씠 �뾾�뒗 寃쎌슦 null
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -282,12 +283,12 @@ public class DateUtil {
 	}
 
 	/**
-	 * 년월일을 입력받아 0시0분0초의 Date객체를 리턴한다.
+	 * �뀈�썡�씪�쓣 �엯�젰諛쏆븘 0�떆0遺�0珥덉쓽 Date媛앹껜瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @param	year	년
-	 * @param	month	월(1 ~ 12)
-	 * @param	day		일(1 ~ 31)
-	 * @return 	Date 객체(시간은 0시0분0초)
+	 * @param	year	�뀈
+	 * @param	month	�썡(1 ~ 12)
+	 * @param	day		�씪(1 ~ 31)
+	 * @return 	Date 媛앹껜(�떆媛꾩� 0�떆0遺�0珥�)
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -296,11 +297,11 @@ public class DateUtil {
 	}
 
 	/**
-	 * 년 또는 년월 또는 년월일 문자열을 입력받아 Date객체를 리턴한다.<br>
-	 * 참고) 년의경우 월일은 1월1일로, 년월의경우 일은 1일로 설정된다.
+	 * �뀈 �삉�뒗 �뀈�썡 �삉�뒗 �뀈�썡�씪 臾몄옄�뿴�쓣 �엯�젰諛쏆븘 Date媛앹껜瑜� 由ы꽩�븳�떎.<br>
+	 * 李멸퀬) �뀈�쓽寃쎌슦 �썡�씪�� 1�썡1�씪濡�, �뀈�썡�쓽寃쎌슦 �씪�� 1�씪濡� �꽕�젙�맂�떎.
 	 * 
-	 * @param	date	"YYYY" 또는 "YYYYMM" 또는 "YYYYMMDD"
-	 * @return 	Date 객체(시간은 23시59분59초), Date 객체로 변환할 수 없는 경우 null
+	 * @param	date	"YYYY" �삉�뒗 "YYYYMM" �삉�뒗 "YYYYMMDD"
+	 * @return 	Date 媛앹껜(�떆媛꾩� 23�떆59遺�59珥�), Date 媛앹껜濡� 蹂��솚�븷 �닔 �뾾�뒗 寃쎌슦 null
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -316,12 +317,12 @@ public class DateUtil {
 	}
 
 	/**
-	 * 년월일을 입력받아 23시59분59초의 Date객체를 리턴한다.
+	 * �뀈�썡�씪�쓣 �엯�젰諛쏆븘 23�떆59遺�59珥덉쓽 Date媛앹껜瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @param	year	년
-	 * @param	month	월("1" ~ "12")
-	 * @param	day		일("1" ~ "31")
-	 * @return 	Date 객체(시간은 23시59분59초), 년월일 중 값이 없는 경우 null
+	 * @param	year	�뀈
+	 * @param	month	�썡("1" ~ "12")
+	 * @param	day		�씪("1" ~ "31")
+	 * @return 	Date 媛앹껜(�떆媛꾩� 23�떆59遺�59珥�), �뀈�썡�씪 以� 媛믪씠 �뾾�뒗 寃쎌슦 null
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -330,12 +331,12 @@ public class DateUtil {
 	}
 
 	/**
-	 * 년월일을 입력받아 23시59분59초의 Date객체를 리턴한다.
+	 * �뀈�썡�씪�쓣 �엯�젰諛쏆븘 23�떆59遺�59珥덉쓽 Date媛앹껜瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @param	year	년
-	 * @param	month	월(1 ~ 12)
-	 * @param	day		일(1 ~ 31)
-	 * @return 	Date 객체(시간은 23시59분59초)
+	 * @param	year	�뀈
+	 * @param	month	�썡(1 ~ 12)
+	 * @param	day		�씪(1 ~ 31)
+	 * @return 	Date 媛앹껜(�떆媛꾩� 23�떆59遺�59珥�)
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -344,15 +345,15 @@ public class DateUtil {
 	}
 
 	/**
-	 * 년월일시분초를 입력받아 Date객체를 리턴한다.
+	 * �뀈�썡�씪�떆遺꾩큹瑜� �엯�젰諛쏆븘 Date媛앹껜瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @param	year	년
-	 * @param	month	월("1" ~ "12")
-	 * @param	day		일("1" ~ "31")
-	 * @param	hour	시("0" ~ "23")
-	 * @param	minute	분("0" ~ "59")
-	 * @param	second	초("0" ~ "59")
-	 * @return 	Date 객체, 년월일시분초 중 값이 없는 경우 null
+	 * @param	year	�뀈
+	 * @param	month	�썡("1" ~ "12")
+	 * @param	day		�씪("1" ~ "31")
+	 * @param	hour	�떆("0" ~ "23")
+	 * @param	minute	遺�("0" ~ "59")
+	 * @param	second	珥�("0" ~ "59")
+	 * @return 	Date 媛앹껜, �뀈�썡�씪�떆遺꾩큹 以� 媛믪씠 �뾾�뒗 寃쎌슦 null
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -364,15 +365,15 @@ public class DateUtil {
 	}
 
 	/**
-	 * 년월일시분초를 입력받아 Date객체를 리턴한다.
+	 * �뀈�썡�씪�떆遺꾩큹瑜� �엯�젰諛쏆븘 Date媛앹껜瑜� 由ы꽩�븳�떎.
 	 * 
-	 * @param	year	년
-	 * @param	month	월(1 ~ 12)
-	 * @param	day		일(1 ~ 31)
-	 * @param	hour	시(0 ~ 23)
-	 * @param	minute	분(0 ~ 59)
-	 * @param	second	초(0 ~ 59)
-	 * @return 	Date 객체
+	 * @param	year	�뀈
+	 * @param	month	�썡(1 ~ 12)
+	 * @param	day		�씪(1 ~ 31)
+	 * @param	hour	�떆(0 ~ 23)
+	 * @param	minute	遺�(0 ~ 59)
+	 * @param	second	珥�(0 ~ 59)
+	 * @return 	Date 媛앹껜
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -385,10 +386,10 @@ public class DateUtil {
 
 
 	/**
-	 * <pre>년월일시분초 스트링을 입력받아 Date객체를 리턴한다.</pre>
+	 * <pre>�뀈�썡�씪�떆遺꾩큹 �뒪�듃留곸쓣 �엯�젰諛쏆븘 Date媛앹껜瑜� 由ы꽩�븳�떎.</pre>
 	 * 
 	 * @param	datetime yyyyMMddHHmmss
-	 * @return 	Date 객체, 값이 없는 경우 null
+	 * @return 	Date 媛앹껜, 媛믪씠 �뾾�뒗 寃쎌슦 null
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -413,11 +414,11 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * 두 일시의 차를 시간차를 구한다.
+	 * �몢 �씪�떆�쓽 李⑤�� �떆媛꾩감瑜� 援ы븳�떎.
 	 * </pre>
 	 * @param d1
 	 * @param d2
-	 * @return 두 일시의 차를 시간차
+	 * @return �몢 �씪�떆�쓽 李⑤�� �떆媛꾩감
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -432,7 +433,7 @@ public class DateUtil {
 
 	/**
 	 * Method Name : getTimeCalc<br>
-	 * 이 메소드는 시간을 더한다.<br>
+	 * �씠 硫붿냼�뱶�뒗 �떆媛꾩쓣 �뜑�븳�떎.<br>
 	 *
 	 * @param strTime
 	 * @param value
@@ -482,11 +483,11 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * 두 일시의 차를 분차를 구한다.
+	 * �몢 �씪�떆�쓽 李⑤�� 遺꾩감瑜� 援ы븳�떎.
 	 * </pre>
 	 * @param d1
 	 * @param d2
-	 * @return 두 일시의 분의 시간차
+	 * @return �몢 �씪�떆�쓽 遺꾩쓽 �떆媛꾩감
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -501,11 +502,11 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * 두 날짜의 차를 구한다.
+	 * �몢 �궇吏쒖쓽 李⑤�� 援ы븳�떎.
 	 * </pre>
 	 * @param d1
 	 * @param d2
-	 * @return 두 날짜의 일수차
+	 * @return �몢 �궇吏쒖쓽 �씪�닔李�
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -520,29 +521,29 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * 두 날짜의 월수 차를 구한다.
+	 * �몢 �궇吏쒖쓽 �썡�닔 李⑤�� 援ы븳�떎.
 	 * </pre>
 	 * @param d1
 	 * @param d2
-	 * @return 두 날짜의 월수차
+	 * @return �몢 �궇吏쒖쓽 �썡�닔李�
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
 	public static int getMonthInterval(Date d1, Date d2) throws Exception {
 		int interval = 0;
 
-		// 비교1 년도, 달
+		// 鍮꾧탳1 �뀈�룄, �떖
 		int yyyy_d1 = CastUtil.toInt(getTime(d1, "yyyy"));
 		int mm_d1 = CastUtil.toInt(getTime(d1, "MM"));
 
-		// 비교2 년도, 달
+		// 鍮꾧탳2 �뀈�룄, �떖
 		int yyyy_d2 = CastUtil.toInt(getTime(d2, "yyyy"));
 		int mm_d2 = CastUtil.toInt(getTime(d2, "MM"));
 
-		// 년도에 따른 달수 계산..
+		// �뀈�룄�뿉 �뵲瑜� �떖�닔 怨꾩궛..
 		int _month = ( yyyy_d2 - yyyy_d1 ) * 12;
 
-		// 결과값
+		// 寃곌낵媛�
 		interval = ( mm_d2 - mm_d1 ) + _month;
 
 		return interval;
@@ -551,12 +552,12 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * Date 객체에 일정기간을 증감하여 리턴한다.
+	 * Date 媛앹껜�뿉 �씪�젙湲곌컙�쓣 利앷컧�븯�뿬 由ы꽩�븳�떎.
 	 * </pre>
-	 * @param	date	원래 Date 객체
-	 * @param	ymd		증감필드(1:년, 2:월, 3:일, 4:시, 5:분)
-	 * @param	amt		증감기간(양수:미래로~, 음수:과거로~)
-	 * @return 	증감된 Date 객체
+	 * @param	date	�썝�옒 Date 媛앹껜
+	 * @param	ymd		利앷컧�븘�뱶(1:�뀈, 2:�썡, 3:�씪, 4:�떆, 5:遺�)
+	 * @param	amt		利앷컧湲곌컙(�뼇�닔:誘몃옒濡�~, �쓬�닔:怨쇨굅濡�~)
+	 * @return 	利앷컧�맂 Date 媛앹껜
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -569,11 +570,11 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * Date 객체에 일정기간을 증감하여 리턴한다.
+	 * Date 媛앹껜�뿉 �씪�젙湲곌컙�쓣 利앷컧�븯�뿬 由ы꽩�븳�떎.
 	 * </pre>
-	 * @param	ymd		증감필드(1:년, 2:월, 3:일, 4:시, 5:분)
-	 * @param	amt		증감기간(양수:미래로~, 음수:과거로~)
-	 * @return 	증감된 Date 객체
+	 * @param	ymd		利앷컧�븘�뱶(1:�뀈, 2:�썡, 3:�씪, 4:�떆, 5:遺�)
+	 * @param	amt		利앷컧湲곌컙(�뼇�닔:誘몃옒濡�~, �쓬�닔:怨쇨굅濡�~)
+	 * @return 	利앷컧�맂 Date 媛앹껜
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -582,23 +583,23 @@ public class DateUtil {
 	}
 
 	/**
-	 * 특정일자에 년,월,일을 가감한다.
-	 * 가감구분값
-	 *    Y : 년을 가감
-	 *    M : 월을 가감
-	 *    D : 일을 가감
+	 * �듅�젙�씪�옄�뿉 �뀈,�썡,�씪�쓣 媛�媛먰븳�떎.
+	 * 媛�媛먭뎄遺꾧컪
+	 *    Y : �뀈�쓣 媛�媛�
+	 *    M : �썡�쓣 媛�媛�
+	 *    D : �씪�쓣 媛�媛�
 	 * 
-	 * @param strDate 일자
-	 * @param intDate 가감수
-	 * @param strymd 가감구분
-	 * @return 가감된 날짜
+	 * @param strDate �씪�옄
+	 * @param intDate 媛�媛먯닔
+	 * @param strymd 媛�媛먭뎄遺�
+	 * @return 媛�媛먮맂 �궇吏�
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
 	public static String getDateCalc( String strDate, int intDate, String strymd )
 	{
 		int yyyy, mm, dd;
-		strDate = StringUtil.getNumber(strDate);	//숫자아닌 다른 값 들어올 경우 처리
+		strDate = StringUtil.getNumber(strDate);	//�닽�옄�븘�땶 �떎瑜� 媛� �뱾�뼱�삱 寃쎌슦 泥섎━
 		String strRet = "";
 
 		if (strDate.length() == 8)
@@ -625,7 +626,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 주어진 날짜에 '-'와 ':'를 추가 또는 제거
+	 * 二쇱뼱吏� �궇吏쒖뿉 '-'�� ':'瑜� 異붽� �삉�뒗 �젣嫄�
 	 * @param datetime
 	 * @return
 	 * ----- Logging Comment -------
@@ -659,7 +660,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 주어진 날짜에 '-'를 추가 또는 제거
+	 * 二쇱뼱吏� �궇吏쒖뿉 '-'瑜� 異붽� �삉�뒗 �젣嫄�
 	 * @param date
 	 * @return
 	 * ----- Logging Comment -------
@@ -677,7 +678,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 스트링문자열을 날짜형식으로 변환하여 리턴한다.
+	 * �뒪�듃留곷Ц�옄�뿴�쓣 �궇吏쒗삎�떇�쑝濡� 蹂��솚�븯�뿬 由ы꽩�븳�떎.
 	 * 
 	 * @param date
 	 * @return
@@ -695,7 +696,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 날자형식의 문자열에서 '-'를 제거하여 리턴한다.
+	 * �궇�옄�삎�떇�쓽 臾몄옄�뿴�뿉�꽌 '-'瑜� �젣嫄고븯�뿬 由ы꽩�븳�떎.
 	 * 
 	 * @param date
 	 * @return
@@ -714,10 +715,10 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * 현재날짜에 대한 요일명을 얻는다.
+	 * �쁽�옱�궇吏쒖뿉 ���븳 �슂�씪紐낆쓣 �뼸�뒗�떎.
 	 * </pre>
-	 * @param date 예:20040528
-	 * @return 요일명
+	 * @param date �삁:20040528
+	 * @return �슂�씪紐�
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -733,25 +734,25 @@ public class DateUtil {
 
 		switch(c.get(Calendar.DAY_OF_WEEK)) {
 		case Calendar.SUNDAY :
-			result = "일";
+			result = "�씪";
 			break;
 		case Calendar.MONDAY :
-			result = "월";
+			result = "�썡";
 			break;
 		case Calendar.TUESDAY :
-			result = "화";
+			result = "�솕";
 			break;
 		case Calendar.WEDNESDAY :
-			result = "수";
+			result = "�닔";
 			break;
 		case Calendar.THURSDAY :
-			result = "목";
+			result = "紐�";
 			break;
 		case Calendar.FRIDAY :
-			result = "금";
+			result = "湲�";
 			break;
 		case Calendar.SATURDAY :
-			result = "토";
+			result = "�넗";
 			break;
 
 		}
@@ -761,10 +762,10 @@ public class DateUtil {
 
 	/**
 	 * <pre>
-	 * 현재날짜에 대한 요일의 숫자를 얻는다.
+	 * �쁽�옱�궇吏쒖뿉 ���븳 �슂�씪�쓽 �닽�옄瑜� �뼸�뒗�떎.
 	 * </pre>
-	 * @param date 예:20040528
-	 * @return 요일번호
+	 * @param date �삁:20040528
+	 * @return �슂�씪踰덊샇
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
@@ -782,7 +783,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * Date형 객체와 DateFormat을 스트링으로 넘겨주면 날짜를 반환하는 메서드
+	 * Date�삎 媛앹껜�� DateFormat�쓣 �뒪�듃留곸쑝濡� �꽆寃⑥＜硫� �궇吏쒕�� 諛섑솚�븯�뒗 硫붿꽌�뱶
 	 * @param dDate
 	 * @param strDateFormat
 	 * @return
@@ -799,8 +800,8 @@ public class DateUtil {
 	}
 
 	/**
-	 * 주어진 년, 월의 마지막 일자를 구한다
-	 * 예) 2003, 8 이면 31을 리턴
+	 * 二쇱뼱吏� �뀈, �썡�쓽 留덉�留� �씪�옄瑜� 援ы븳�떎
+	 * �삁) 2003, 8 �씠硫� 31�쓣 由ы꽩
 	 * @param year
 	 * @param month
 	 * @return
@@ -819,7 +820,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 시간 00~24시
+	 * �떆媛� 00~24�떆
 	 * @return
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
@@ -837,7 +838,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 분 00~50분 (10분단위)
+	 * 遺� 00~50遺� (10遺꾨떒�쐞)
 	 * @return
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
@@ -855,7 +856,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 주어진 초를 "시간:분:초"로 변환하여 리턴
+	 * 二쇱뼱吏� 珥덈�� "�떆媛�:遺�:珥�"濡� 蹂��솚�븯�뿬 由ы꽩
 	 * @param Second
 	 * @return
 	 * ----- Logging Comment -------
@@ -877,7 +878,7 @@ public class DateUtil {
 	}
 
 	/**
-	 * 주어진 초를 "시간:분:초"로 변환하여 리턴
+	 * 二쇱뼱吏� 珥덈�� "�떆媛�:遺�:珥�"濡� 蹂��솚�븯�뿬 由ы꽩
 	 * @param Second
 	 * @return
 	 * ----- Logging Comment -------
@@ -925,18 +926,18 @@ public class DateUtil {
 
 
 	/**
-	 * 시스템 처리시간 모니터링
+	 * �떆�뒪�뀥 泥섎━�떆媛� 紐⑤땲�꽣留�
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01
 	 */
 	private static SimpleDateFormat logDateFormat	= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static DecimalFormat df = new DecimalFormat(",###");
-	private static String monitorName 		= "";	// 모니터링명
-	private static long currentTimeMillis 	= 0;	// 시스템 처리시간 모니터링
-	private static double diffTime 			= 0;	// 시스템 처리시간
+	private static String monitorName 		= "";	// 紐⑤땲�꽣留곷챸
+	private static long currentTimeMillis 	= 0;	// �떆�뒪�뀥 泥섎━�떆媛� 紐⑤땲�꽣留�
+	private static double diffTime 			= 0;	// �떆�뒪�뀥 泥섎━�떆媛�
 
 	/**
-	 * 현재 작업명 입력
+	 * �쁽�옱 �옉�뾽紐� �엯�젰
 	 * @param name
 	 * ----- Logging Comment -------
 	 * PMNET : 2008/09/01

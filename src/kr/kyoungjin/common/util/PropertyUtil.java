@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -14,14 +14,13 @@ import org.springframework.stereotype.Component;
  * 
  * Property  Util
  * 
- * @author : 정경진
+ * @author : �젙寃쎌쭊
  * -------------------------- Modification Log ------------------------------------
- *  2018.06.11      정경진     신규
+ *  2018.06.11      �젙寃쎌쭊     �떊洹�
  */
 @Component("prop")
 public class PropertyUtil {
-	Log log = LogFactory.getLog(this.getClass());
-	
+	private Logger log  = LoggerFactory.getLogger(PropertyUtil.class);
 	private Properties properties;
 	public void setProperties( String filepath ) throws IOException {
 		FileSystemResourceLoader propFile =  new  FileSystemResourceLoader();
@@ -31,7 +30,7 @@ public class PropertyUtil {
 		properties.load(is);
 	}
 	
-	/** 키값을 가져온다
+	/** �궎媛믪쓣 媛��졇�삩�떎
 	 * @param key
 	 * @return
 	 */

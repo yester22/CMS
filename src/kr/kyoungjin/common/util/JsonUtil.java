@@ -11,6 +11,8 @@ import net.sf.json.JSONArray;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.kyoungjin.common.util.MessageHandler;
 
@@ -25,16 +27,15 @@ import kr.kyoungjin.common.util.MessageHandler;
  *
  * <pre>
  * 
- *   수정일                    수정자                  내용
+ *   �닔�젙�씪                    �닔�젙�옄                  �궡�슜
  *  -----------  --------   --------------------------
- *   2010. 8. 16.            최조작성
+ *   2010. 8. 16.            理쒖“�옉�꽦
  * 
  * </pre>
  */
 @SuppressWarnings("unchecked")
 public class JsonUtil {
-	protected static Log _log = LogFactory.getLog(JsonUtil.class);
-
+	private static Logger _log  = LoggerFactory.getLogger(JsonUtil.class);
 	private final static String IMG_NEW_SRC = "@{new}";
 	private final static String IMG_NEW_TARGET_OPEN = "<img src='";
 	private final static String IMG_NEW_TARGET_CLOSE = "/images/btn_star.gif' width='13' height='13' />";
@@ -87,10 +88,10 @@ public class JsonUtil {
 			res.setHeader("Cache-Control", "no-cache");
 			res.setContentType("text/plain");
 			res.setCharacterEncoding("UTF-8");
-			// 2012.12.14 김명섭
-			// 그리드 조회 결과가 없으면 alert을 띄우는데, 
-			// 한 화면에 여러개 그리드가 있는 경우 alert이 그리드 갯수만큼 뜨는 경우가 있음.
-			// 그래서 일단 alert을 막음
+			// 2012.12.14 源�紐낆꽠
+			// 洹몃━�뱶 議고쉶 寃곌낵媛� �뾾�쑝硫� alert�쓣 �쓣�슦�뒗�뜲, 
+			// �븳 �솕硫댁뿉 �뿬�윭媛� 洹몃━�뱶媛� �엳�뒗 寃쎌슦 alert�씠 洹몃━�뱶 媛��닔留뚰겮 �쑉�뒗 寃쎌슦媛� �엳�쓬.
+			// 洹몃옒�꽌 �씪�떒 alert�쓣 留됱쓬
 			if(!jObj.equals("{ totalPage : 0, rows: [ ]}")){
 			//if(!jObj.equals("{rows: [ ]}")){
 				res.getWriter().print(jObj);
@@ -110,7 +111,7 @@ public class JsonUtil {
 	}
 
 	/**
-	 * 결과반환 형식을 반환한다.
+	 * 寃곌낵諛섑솚 �삎�떇�쓣 諛섑솚�븳�떎.
 	 * 
 	 * @param infoName
 	 * @param infoDDto
@@ -128,11 +129,11 @@ public class JsonUtil {
 			return "";
 		}
 
-		// 결과 INFO구성
+		// 寃곌낵 INFO援ъ꽦
 		JSONArray infoArray = JSONArray.fromObject(infoDDto);
 		map.put(infoName, infoArray);
 
-		// 결과 List구성
+		// 寃곌낵 List援ъ꽦
 		if(!"".equals(StringUtil.trim(resultName, ""))||resultList!=null){
 			map.put(resultName, resultList);
 		}
@@ -218,7 +219,7 @@ public class JsonUtil {
 	}
 	
 	/**
-	 * 엔터를 <br/>로 변환한다.
+	 * �뿏�꽣瑜� <br/>濡� 蹂��솚�븳�떎.
 	 * @param object
 	 * @return
 	 */
@@ -232,7 +233,7 @@ public class JsonUtil {
 			result = StringUtil.replace(result, "\r", "<br/>");
 			if(result.indexOf('"')!=-1) {
 				//				System.out.print(result);
-				result = StringUtil.replace(result, "\"", "＂");
+				result = StringUtil.replace(result, "\"", "竊�");
 				//				System.out.println(" ----> " + result);
 			}
 			

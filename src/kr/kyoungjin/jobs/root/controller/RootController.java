@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,8 @@ import kr.kyoungjin.common.abstractObject.AbstractController;
 @Controller
 @RequestMapping(value="/")
 public class RootController extends AbstractController {
-	private Log logger = LogFactory.getLog(RootController.class);
+	
+	private Logger logger  = LoggerFactory.getLogger(this.getClass());
 	
 	/** 페이지 이동만을 위한 메소드
 	 * @param go

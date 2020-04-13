@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
  	
- 	<property name="LOG_DIR" value="/logs/CMS" />
+ 	<property name="LOG_DIR" value="/server/logs/CMS" />
  	<property name="LOG_PATH_NAME" value="${LOG_DIR}/stdout.log" />
  	<property name="GW_LOG_PATH_NAME" value="${LOG_DIR}/stdout_gw.log" />
  	

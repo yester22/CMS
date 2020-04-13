@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author yeste
  * <PRE>
  * -------------------------
- * 개정이력
- * 2020. 3. 21. yeste : 최초작성
+ * 媛쒖젙�씠�젰
+ * 2020. 3. 21. yeste : 理쒖큹�옉�꽦
  * </PRE>
  */
 public class GlobalException implements HandlerExceptionResolver {
@@ -25,10 +27,10 @@ public class GlobalException implements HandlerExceptionResolver {
 	private String defaultErrorView = "error";
 	
 	
-	private Log logger = LogFactory.getLog(GlobalException.class);
+	private Logger logger  = LoggerFactory.getLogger(GlobalException.class);
 	
 	/**
-	 *예외 처리하는 클래스
+	 *�삁�쇅 泥섎━�븯�뒗 �겢�옒�뒪
 	 */
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
@@ -46,12 +48,12 @@ public class GlobalException implements HandlerExceptionResolver {
 	
 	protected String determineViewName(Exception ex, HttpServletRequest request) {
 		String viewName = null;
-		// 특정한 Excpetion 별 세팅이 있는 경우에 findMatchingViewName(this.exceptionMappings, ex)에서 해당 viewName 이 넘어오고 아닌 경우 null 이 넘어온다. 
+		// �듅�젙�븳 Excpetion 蹂� �꽭�똿�씠 �엳�뒗 寃쎌슦�뿉 findMatchingViewName(this.exceptionMappings, ex)�뿉�꽌 �빐�떦 viewName �씠 �꽆�뼱�삤怨� �븘�땶 寃쎌슦 null �씠 �꽆�뼱�삩�떎. 
 		if (this.exceptionMappings != null) {
 			viewName = findMatchingViewName(this.exceptionMappings, ex);
 		}
  
-		//viewName 에 null 오고 defaultErrorView 가 존재하면 디폴트 화면으로 viewNmae을 설정하여 ViewResolver 로 보내어진다. 
+		//viewName �뿉 null �삤怨� defaultErrorView 媛� 議댁옱�븯硫� �뵒�뤃�듃 �솕硫댁쑝濡� viewNmae�쓣 �꽕�젙�븯�뿬 ViewResolver 濡� 蹂대궡�뼱吏꾨떎. 
 		if (viewName == null && this.defaultErrorView != null) {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Resolving to default view '" + this.defaultErrorView + "' for exception of type [" + ex.getClass().getName() + "]");

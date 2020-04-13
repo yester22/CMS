@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +23,13 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping(value = "/message")
 public class MessageController extends AbstractController {
-	private Log logger = LogFactory.getLog(MessageController.class);
+	private Logger logger  = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private IMessageService messageService;
 	
 	/**
-	 * 사용자 정보 조회
+	 * �궗�슜�옄 �젙蹂� 議고쉶
 	 * @param memberVo
 	 * @return
 	 * @throws Exception

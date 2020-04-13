@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +20,14 @@ import kr.kyoungjin.common.util.ClientInfoUtil;
 import kr.kyoungjin.dataobject.vo.LoginTryVo;
 import kr.kyoungjin.dataobject.vo.MemberVo;
 import kr.kyoungjin.dataobject.vo.MessageVo;
+import kr.kyoungjin.jobs.excel.service.impl.ExcelUploadServiceImpl;
 import kr.kyoungjin.jobs.member.service.IMemberService;
 import kr.kyoungjin.jobs.system.encryption.service.EncriptionService;
 import kr.kyoungjin.jobs.system.message.service.IMessageService;
 import net.sf.json.JSONObject;
 
 /**
- * 로그인 프로세스를 처리하기 위한 클래스
+ * 濡쒓렇�씤 �봽濡쒖꽭�뒪瑜� 泥섎━�븯湲� �쐞�븳 �겢�옒�뒪
  * @author yeste
  *
  */
@@ -41,7 +44,7 @@ public class LoginController extends AbstractController{
 	@Autowired
 	private EncriptionService encriptionService;
 	
-	private Log logger = LogFactory.getLog(LoginController.class);
+	private Logger logger  = LoggerFactory.getLogger(LoginController.class);
 	
 	/**
 	 * LOGIN CHECK
@@ -75,7 +78,7 @@ public class LoginController extends AbstractController{
 	
 	
 	/**
-	 * 사용자 정보 조회
+	 * �궗�슜�옄 �젙蹂� 議고쉶
 	 * @param memberVo
 	 * @return
 	 * @throws Exception
@@ -98,21 +101,21 @@ public class LoginController extends AbstractController{
 			logger.debug("encoded pw = "  + encriptionService.encode(memberVo.getPwd()));
 			
 			String encodedPw = encriptionService.encode(memberVo.getPwd());
-			//Login을 계속적으로 시도할시 에러를 생성하기 위한 처리
+			//Login�쓣 怨꾩냽�쟻�쑝濡� �떆�룄�븷�떆 �뿉�윭瑜� �깮�꽦�븯湲� �쐞�븳 泥섎━
 			LoginTryVo loginTryVo = new LoginTryVo();
 			loginTryVo.setIpAddr( clientIpAddr   );
 			loginTryVo.setNicAddr( clientMacAddr );
 			
 			MemberVo mv = memberService.view(memberVo);
 			if ( mv != null ) {
-				//로그인 실패 카운트가 10번 이상인 경우
+				//濡쒓렇�씤 �떎�뙣 移댁슫�듃媛� 10踰� �씠�긽�씤 寃쎌슦
 				if ( mv.getLoginFailCnt() > 9 ) {
 					
 				} else {
 					if (  mv.getPwd().equals(encodedPw)) {
 						result.put(JSONResult.RESULT, JSONResult.OK);
 						
-						//사용자 로그인 성공 처리
+						//�궗�슜�옄 濡쒓렇�씤 �꽦怨� 泥섎━
 						loginTryVo.setMemberId(mv.getMemberId());
 						loginTryVo.setLoginPw(encodedPw);
 						loginTryVo.setSuccessYn("Y");
@@ -122,11 +125,11 @@ public class LoginController extends AbstractController{
 						HttpSession session = request.getSession();
 						session.setAttribute(ConstantNames.SESSION_USER_INFO,  mv);
 						
-					} else { //패스워드가 맞지않을 경우
+					} else { //�뙣�뒪�썙�뱶媛� 留욎��븡�쓣 寃쎌슦
 						result.put(JSONResult.RESULT, JSONResult.NOT_MATCH);	
 						result.put("failCnt", mv.getLoginFailCnt() + 1);
 						
-						//사용자 로그인 실패처리
+						//�궗�슜�옄 濡쒓렇�씤 �떎�뙣泥섎━
 						loginTryVo.setMemberId(mv.getMemberId());
 						loginTryVo.setSuccessYn("N");
 						loginTryVo.setIdExist("Y");
@@ -138,10 +141,10 @@ public class LoginController extends AbstractController{
 						result.put(JSONResult.MESSAGE, messageService.view(messageVo).getMessage());
 					}
 				}
-			} else  { //계정이 존재하지 않을 경우
+			} else  { //怨꾩젙�씠 議댁옱�븯吏� �븡�쓣 寃쎌슦
 				result.put(JSONResult.RESULT, JSONResult.FAIL);
 
-				//사용자 로그인 실패처리
+				//�궗�슜�옄 濡쒓렇�씤 �떎�뙣泥섎━
 				loginTryVo.setMemberId(memberVo.getMemberId());
 				loginTryVo.setSuccessYn("N");
 				loginTryVo.setIdExist("N");

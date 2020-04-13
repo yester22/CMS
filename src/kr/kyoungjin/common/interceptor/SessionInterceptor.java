@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -26,8 +26,8 @@ import kr.kyoungjin.common.util.AccessiblePageUtil;
  */
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 
-    protected Log log = LogFactory.getLog(SessionInterceptor.class);
-    
+	private Logger log  = LoggerFactory.getLogger(SessionInterceptor.class);
+	
     @Value("#{config['ACCESS_URL_XML_PATH']}")
     private String ACCESS_URL_XML_PATH;
     

@@ -11,11 +11,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.dataobject.dao.BatchHistoryInfoDao;
@@ -36,13 +36,16 @@ import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
  */
 public class BatchVWorldDataSetting {
 	
+	
+	private String NSDI_KEY;
+	private String VWORLD_KEY;
+	
 	private ExcelDao excelDao;
 	private BatchHistoryInfoDao batchDao;
 	
 	public static final String USER_AGENT = "Mozilla/5.0";
 	
-	private Log logger = LogFactory.getLog(BatchVWorldDataSetting.class);
-	private final String authKey = "3C0D8395-23FD-3870-B012-50F4659E1CC1";
+	private Logger logger  = LoggerFactory.getLogger(BatchVWorldDataSetting.class);
 	
 	/**
 	 * @Author : yester21
@@ -97,7 +100,7 @@ public class BatchVWorldDataSetting {
 				    params.put("category", "parcel");
 				    params.put("format", "json");
 				    params.put("errorformat", "json");
-				    params.put("key", authKey);
+				    params.put("key", VWORLD_KEY);
 				    
 				    JSONObject obj, res, result, element, point;
 				    JSONArray items;
@@ -222,7 +225,7 @@ public class BatchVWorldDataSetting {
 	 */
 	public void doLndpclarJob() throws Exception {
 		logger.debug("doLndpclarJob batchStart");
-		String localAuthKey = "780f46ee2bd879c0da35b4";
+		
 		String batchKey = "";
 		//batch 시작플래그 생성
 		BatchHistoryInfoVo batchVo = new BatchHistoryInfoVo();
@@ -260,7 +263,7 @@ public class BatchVWorldDataSetting {
 					// 서비스 호출을 위한 파라미터 세팅
 					String url = "http://openapi.nsdi.go.kr/nsdi/eios/LadfrlService/ladfrlList.json?";
 					Map<String,Object> params = new LinkedHashMap<>(); 
-					params.put("authkey", localAuthKey);
+					params.put("authkey", NSDI_KEY);
 					params.put("numOfRows", "10");
 					params.put("pageNo", "1");
 				    
@@ -368,7 +371,7 @@ public class BatchVWorldDataSetting {
 					// 서비스 호출을 위한 파라미터 세팅
 					String url = "http://api.vworld.kr/req/data?";
 					Map<String,Object> params = new LinkedHashMap<>(); 
-				    params.put("key",   authKey);
+				    params.put("key",   VWORLD_KEY);
 				    params.put("service",    "data");
 				    params.put("version",    "2.0");
 				    params.put("request",    "getfeature");
@@ -444,6 +447,22 @@ public class BatchVWorldDataSetting {
 
 	public void setBatchDao(BatchHistoryInfoDao batchDao) {
 		this.batchDao = batchDao;
+	}
+
+	public String getNSDI_KEY() {
+		return NSDI_KEY;
+	}
+
+	public void setNSDI_KEY(String nSDI_KEY) {
+		NSDI_KEY = nSDI_KEY;
+	}
+
+	public String getVWORLD_KEY() {
+		return VWORLD_KEY;
+	}
+
+	public void setVWORLD_KEY(String vWORLD_KEY) {
+		VWORLD_KEY = vWORLD_KEY;
 	}
 	
 }

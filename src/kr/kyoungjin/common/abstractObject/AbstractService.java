@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,7 +21,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
- * @author 컴퓨터
+ * @author 而댄벂�꽣
  *
  */
 public class AbstractService {
@@ -31,7 +33,7 @@ public class AbstractService {
 	protected SessionLocaleResolver sessionLocaleResolver;
 	
 	//logger
-	protected Log logger = LogFactory.getLog(AbstractService.class);
+	private Logger logger  = LoggerFactory.getLogger(AbstractService.class);
 
 
 	private static HttpServletRequest request;
@@ -59,7 +61,7 @@ public class AbstractService {
 	}
 	
 	
-	/**로케일 스트링을 반환한다
+	/**濡쒖��씪 �뒪�듃留곸쓣 諛섑솚�븳�떎
 	 * @return language return
 	 */
 	public String getLanguage() {
@@ -74,7 +76,7 @@ public class AbstractService {
 	}
 
 	/**
-	 * 언어 설정
+	 * �뼵�뼱 �꽕�젙
 	 * @param language 
 	 */
 	public void setLanguage( String language ) {

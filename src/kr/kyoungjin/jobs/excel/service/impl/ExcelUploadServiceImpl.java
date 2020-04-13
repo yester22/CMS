@@ -28,6 +28,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.util.FileUtil;
@@ -41,14 +43,14 @@ import kr.kyoungjin.jobs.excel.service.ExcelUploadService;
  * @author yester21
  * <PRE>
  * -------------------------
- * 개정이력
- * 2020. 3. 20. yester21 : 최초작성
+ * 媛쒖젙�씠�젰
+ * 2020. 3. 20. yester21 : 理쒖큹�옉�꽦
  * </PRE>
  */
 @Service
 public class ExcelUploadServiceImpl implements ExcelUploadService {
 
-	private Log logger = LogFactory.getLog(ExcelUploadServiceImpl.class);
+	private Logger logger  = LoggerFactory.getLogger(ExcelUploadServiceImpl.class);
 	
 	@Value("#{config['FILE.SAVE_PATH']}")
 	private String FILE_SAVE_PATH;
@@ -58,13 +60,13 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 	
 	
 	/**
-	 *엑셀 업로드 처리
+	 *�뿊�� �뾽濡쒕뱶 泥섎━
 	 */
 	@Override
 	@Transactional
 	public String excelUpload(Map<String,Object> params , MultipartFile uploadfile, String uploaderId) throws Exception {
 		
-		//새로 생성할 selectKey를 가져온다
+		//�깉濡� �깮�꽦�븷 selectKey瑜� 媛��졇�삩�떎
 		String sNewExcelKey = excelUploadDao.selectNewExcelKey();
 		
 		Map<String, String> saveFileInfo = FileUtil.uploadFile(uploadfile, FILE_SAVE_PATH);
@@ -108,7 +110,7 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 		int nDataCount = 0;
 		int nStatRow = 2;
 		
-		//file 확장자 
+		//file �솗�옣�옄 
 		String fileExt = FileUtil.getExt(filePath);
 		
 		ExcelUploadDetailVo detailVo = new ExcelUploadDetailVo();
@@ -124,7 +126,7 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 
 		String landWidth = "";
 		sheet = workbook.getSheetAt(0);
-        int rows = sheet.getPhysicalNumberOfRows();//시트에서 총 행수
+        int rows = sheet.getPhysicalNumberOfRows();//�떆�듃�뿉�꽌 珥� �뻾�닔
         for (int nCrrentRow = nStatRow; nCrrentRow <= rows; nCrrentRow++) {
         	detailVo = new ExcelUploadDetailVo();
         	
@@ -159,7 +161,7 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 		}else if(cell != null && cell.getCellType() == Cell.CELL_TYPE_BLANK){
               value="";
        } else{
-          //타입별로 내용 읽기
+          //���엯蹂꾨줈 �궡�슜 �씫湲�
           switch (cell.getCellType()){
               case Cell.CELL_TYPE_FORMULA:
                   value=cell.getCellFormula();
@@ -210,10 +212,10 @@ public class ExcelUploadServiceImpl implements ExcelUploadService {
 	
 	private String landWidthColoneClear(String landWidthData) {
 		String rtnVal = landWidthData.replaceAll(",", "");
-		rtnVal = rtnVal.replaceAll("(", "");
-		rtnVal = rtnVal.replaceAll(")", "");
-		rtnVal = rtnVal.replaceAll("#", "");
-		rtnVal = rtnVal.replaceAll("!", "");
+		/*
+		 * rtnVal = rtnVal.replaceAll("(", ""); rtnVal = rtnVal.replaceAll(")", "");
+		 * rtnVal = rtnVal.replaceAll("#", ""); rtnVal = rtnVal.replaceAll("!", "");
+		 */
 		return rtnVal;
 	}
 }

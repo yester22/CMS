@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,15 +33,15 @@ import net.sf.json.JSONObject;
  * @author yeste
  * <PRE>
  * -------------------------
- * 개정이력
- * 2020. 3. 20. yeste : 최초작성
+ * 媛쒖젙�씠�젰
+ * 2020. 3. 20. yeste : 理쒖큹�옉�꽦
  * </PRE>
  */
 @CrossOrigin("*")
 @RestController
 public class ExcelUploadController  extends AbstractController {
 	
-	private Log logger = LogFactory.getLog(ExcelUploadController.class);
+	private Logger logger  = LoggerFactory.getLogger(ExcelUploadController.class);
 	
 	@Autowired
 	private ExcelUploadService excelUploadService;
