@@ -310,4 +310,12 @@
  			</foreach>
 	 </delete>
 	 
+	 
+	 <select id="selectExcelDataForWidthUpdate"  parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+	 	<include refid="commonExcelUploadData"></include>
+	 		AND IFNULL(LAND_WIDTH, '') = ''
+	 </select>
+	   
+	 
+	 
 </mapper>	

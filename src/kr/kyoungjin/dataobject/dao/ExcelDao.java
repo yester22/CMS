@@ -69,7 +69,13 @@ public interface ExcelDao {
 	 */
 	public List<ExcelUploadDetailVo> selectExcelUploaData(Map<String, Object> param) throws Exception;
 
-	
+	/**
+	 * @Author : yeste
+	 * @Date : 2020. 4. 16.
+	 * @Method Name : selectExcelDataForWidthUpdate
+	 * @return : List<ExcelUploadDetailVo>
+	 */
+	public List<ExcelUploadDetailVo> selectExcelDataForWidthUpdate(Map<String, Object> param) throws Exception;
 	
 	/**
 	 * @Author : yester21

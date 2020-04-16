@@ -252,7 +252,7 @@ public class BatchVWorldDataSetting {
 				
 				Map<String,Object> param = new HashMap<String,Object>();
 				param.put(ConstantNames.EXCEL_KEY, excelKey);
-				List<ExcelUploadDetailVo> list = excelDao.selectExcelUploaData(param);
+				List<ExcelUploadDetailVo> list = excelDao.selectExcelDataForWidthUpdate(param);
 				
 				if ( list.size() > 1 ) {
 					//excelUpload 데이터의 상태 변경

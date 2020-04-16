@@ -37,7 +37,6 @@
 		<servlet-class>kr.kyoungjin.common.servlet.I18nServlet</servlet-class>
 	</servlet>
 	
-	<!-- 
 	<listener>
 	    <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
 	</listener>
@@ -46,7 +45,6 @@
 	    <param-name>logbackConfigLocation</param-name>
 	    <param-value>/WEB-INF/classes/resources/logs/logback.xml</param-value>
 	</context-param>
-	 -->
 	 
 	<servlet>
 		<servlet-name>action</servlet-name>

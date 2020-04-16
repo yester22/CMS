@@ -10,7 +10,6 @@
         http://www.springframework.org/schema/task/spring-task-3.0.xsd">
         
     <task:annotation-driven />
-
      
     <bean id="BatchVWorldDataSetting" class="kr.kyoungjin.jobs.batch.service.BatchVWorldDataSetting">
     	<property name="excelDao" ref="excelDao"  />

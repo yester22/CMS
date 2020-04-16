@@ -9,7 +9,7 @@ $(document).ready(function(){
 	MapView.mapInit();
 	MapView.gridInit();
 	MapView.excelRetrieve ( );	
-	MapView.move( 14283776.791077042, 4163507.838217992, 16);
+	MapView.move( 38.44874761259062, 128.391105775592, 16);
 });
 
 
@@ -28,112 +28,39 @@ class MapView {
 		this.dataStartNum = 1;
 		this.featureData = new Array();
 		this.mapColor = null;
+		this.markerArray = new Array();
 	};
 	
 	static mapInit() {
 		
-		 // 기본 주소
-		var raster = new ol.layer.Tile({
-			source:  new ol.source.XYZ({
-		    	url : 'http://xdworld.vworld.kr:8080/2d/Base/201612/{z}/{x}/{y}.png' 
-		    	,attributions : '&copy; ADDRON' + '&middot; '
-		    }) 
+		//create the map
+		var vmap = new google.maps.Map(document.getElementById('map-canvas'), {
+		  zoom: 17,
+		  center: {lat: 38.4487476125906, lng:128.391105775592},
+		  mapTypeId : 'hybrid'
 		});
-
-		var source = new ol.source.Vector({
-		     id: "sourceId"
-		});
-		source.set("name", "sourceName");
-
-		var vector = new ol.layer.Vector({
-			id: "vectorId",
-		    source: source,
-		    style: new ol.style.Style({
-		    	fill: new ol.style.Fill({                 // 타입을 Point로 하면 마커가 생성됨.
-		    		color : [ 255, 0, 0, .4 ]
-		    	}),
-		    	stroke: new ol.style.Stroke({
-		    		color: '#1DDB16',
-		    		width: 3
-		    	}),
-		    	image: new ol.style.Icon(/** @type {olx.style.IconOptions} */({
-		    		anchor: [0.5, 10],
-		    		anchorXUnits: 'fraction',
-		    		anchorYUnits: 'pixels',
-		    		src: 'http://map.vworld.kr/images/ol3/marker_blue.png'
-		    	}))
-		    })
-		});
-		vector.set("name", "vectorName");
-		$('#vmap').attr("style", "height:350px;width:100%;"); // 전체화면
-		
-		var element = document.createElement('div');
-		element.className = 'btn-ctl ol-unselectable ol-control';
-		
-		var vmap = new ol.Map({
-			layers: [raster, vector],
-		    target: 'vmap',
-		    controls: ol.control.defaults().extend([new ol.control.Control({element:element})]),
-		    view: new ol.View({
-		    	center: [14283776.791077042, 4163507.838217992],
-		    	zoom: 17
-		    })
-		});
-		
-		// 지적도 레이어
-		var wms_title = '지적도';
-		var wms_val   = 'lp_pa_cbnd_bubun';
-
-		var wms_tile = new ol.layer.Tile({
-			name : "WMS_LAYER",
-		    source : new ol.source.TileWMS({
-		    url : "http://api.vworld.kr/req/wms?",
-		    params : {
-			      LAYERS : wms_val,
-			      STYLES : wms_val,
-			      CRS    : "EPSG:900913",
-			      apikey : "B3DDE6F5-680A-3F04-AF90-6D16F15DB88E",
-			      DOMAIN : "http://loacalhost:8080",
-			      title  : wms_title,
-			      FORMAT : "image/png",
-			      domain : "http://localhost"
-		    	}
-		    })
-		});
-		vmap.addLayer(wms_tile);
-		
-		//// 필지 폴리곤 그리기 - 시작
-		var vectorSource = new ol.source.Vector({
-		    features: []
-		});
-		var vector_layer = new ol.layer.Vector({
-			source: vectorSource
-		
-		})
-		vector_layer.set("name","search_result");
-		vmap.addLayer(vector_layer); 
 		
 		MapView.vmap = vmap;
 	}
 	
-	static move( x, y, zoom) {
-		MapView.vmap.getView().setCenter([ x, y ]); // 지도 이동
-		MapView.vmap.getView().setZoom(zoom); // 줌레벨 설정
+	static move( y, x, zoom) {
+		const center = new google.maps.LatLng(y, x);
+		MapView.fnMoveZoom(zoom);
+		MapView.vmap.panTo(center);
 	}
 
-	static fnMoveZoom( zoom ) {
-		//var local_zoom = MapView.vmap.getView().getZoom();
-		if (16 > zoom) {
-			MapView.vmap.getView().setZoom(14);
-		}
+
+	static fnMoveZoom( level ) {
+		 google.maps.event.addListener(MapView.vmap, 'zoom_changed', function () {
+	            var zoomChangeBoundsListener = google.maps.event.addListener(MapView.vmap, 'bounds_changed', function (event) {
+	                if (this.getZoom() > level && this.initialZoom == true) {
+	                    this.setZoom(level);
+	                    this.initialZoom = false;
+	                }
+	                google.maps.event.removeListener(zoomChangeBoundsListener);
+	            });
+	        });
 	};
-	
-	/**
-	오버레이 삭제
-	 */
-	static deleteOverlay (id) {
-		MapView.map.removeOverlay(MapView.map.getOverlayById(id));
-	}
 	
 	//grid init
 	static gridInit() {
@@ -217,27 +144,30 @@ class MapView {
 
 	//그리드 아이템 선택시 web service 콜백함수
 	static cbExcelDataRetrieveResult( data ) {
-		MapView.feautreData = [];
 		
-		if ( MapView.feautreData) { 
-			var idx = 1;
-			MapView.vmap.getLayers().forEach(function(layer){
-				if ( layer.get("name") == "polygonData_" + idx) {
-					MapView.vmap.removeLayer(layer);
-				}
-				idx = 1 + idx;
+		if ( MapView.vmap.data ) {
+			MapView.vmap.data.forEach(function(feature) {
+				MapView.vmap.data.remove(feature);
 			});
+			MapView.featureArray = null;
 		}
-		
+
 		var moveData = new Object();
 		var mapColorRgbData = null;
 		if( MapView.mapColor ) {
-			mapColorRgbData = MapView.hexToRgb( MapView.mapColor );
+			mapColorRgbData = MapView.mapColor;
 		}
 		
+		
 		if ( data.COUNT > 0 ) {
+			MapView.featureArray = new Array();
+			
+			//폴리곤 데이터 그리기
 			var list = data.LIST;
 			var polygonData = '';
+			var marker = null;
+			var shortAddr = '';
+			
 			for ( var idx = 0; idx < data.COUNT; idx++ ) {
 				polygonData = list[idx].poligonData;
 				
@@ -246,32 +176,37 @@ class MapView {
 						moveData.xPos = list[idx].xPos;
 						moveData.yPos = list[idx].yPos;
 					}
-					
 					polygonData = JSON.parse(polygonData);
-					
-					var vectorSource = new ol.source.Vector({
-			        	features: (new ol.format.GeoJSON()).readFeatures(polygonData.featureCollection)
-			        });
-			        var vector_layer = new ol.layer.Vector({
-			             source: vectorSource,
-			             style: new ol.style.Style({
-			 		    	fill: new ol.style.Fill({                 // 타입을 Point로 하면 마커가 생성됨.
-			 		    		color : [ parseInt(mapColorRgbData.r), parseInt(mapColorRgbData.g), parseInt(mapColorRgbData.b), .4 ]
-			 		    	}),
-			 		    	stroke: new ol.style.Stroke({
-			 		    		color: MapView.mapColor,
-			 		    		width: 1
-			 		    	}),
-			             }),
-			        });
-			        vector_layer.set("name","polygonData_" + (idx + 1));
-			        MapView.vmap.addLayer(vector_layer);
-			        
-			        MapView.feautreData.push('polygonData_' + (idx + 1));
+					var featrue = MapView.vmap.data.addGeoJson(polygonData.featureCollection,{idPropertyName:"id_" + (idx + 1) }); 
+					MapView.featureArray.push(featrue);
+				}
+				
+				//marker 생성
+				shortAddr = ( ( list[idx].ri == null || list[idx].ri == '') ? list[idx].upmyundong : list[idx].ri ); 
+				shortAddr = shortAddr + ' ' + ( ( list[idx].bubunji == null || list[idx].bubunji == '') ? list[idx].bunji : list[idx].bunji + '-' + list[idx].bubunji );
+				
+				
+				if ( list[idx].xPos != null && list[idx].xPos != '' && list[idx].yPos != null && list[idx].yPos != '' ) { 
+					var marker = new MarkerWithLabel({
+						position: {lat: Number(list[idx].yPos), lng: Number(list[idx].xPos)},
+						map: MapView.vmap,
+						icon: ' ',  
+						labelContent: shortAddr,
+						labelClass: "label",
+						labelStyle: {opacity: 0.5},
+					});
+					MapView.markerArray.push(marker);
 				}
 			}
 			
-			MapView.move( moveData.xPos, moveData.yPos, 15);
+			MapView.vmap.data.setStyle({
+				strokeColor: mapColorRgbData,
+				strokeWeight: 1,
+				strokeOpacity: 0.8,
+				fillColor: mapColorRgbData,
+				fillOpacity: 0.5
+			});
+			MapView.move( moveData.yPos, moveData.xPos, 15);
 		}
 	}
 	
@@ -286,27 +221,5 @@ class MapView {
 	        }, 250);
 	    }
 	}
-	
-	//hex 값을 rgb값으로 변환
-	static hexToRgb( hexType ){ 
-
-        var hex = hexType.replace( "#", "" ); 
-        var value = hex.match( /[a-f\d]/gi ); 
-
-        // 헥사값이 세자리일 경우, 여섯자리로. 
-        if ( value.length == 3 ) hex = value[0] + value[0] + value[1] + value[1] + value[2] + value[2]; 
-        value = hex.match( /[a-f\d]{2}/gi ); 
-
-        var r = parseInt( value[0], 16 ); 
-        var g = parseInt( value[1], 16 ); 
-        var b = parseInt( value[2], 16 ); 
-
-        var rgbType = new Object;
-        rgbType.r = r;
-        rgbType.g = g;
-        rgbType.b = b;
-
-        return rgbType; 
-} 
 	
 };
