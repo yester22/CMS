@@ -91,5 +91,37 @@ public class ExcelRetrieveServiceImpl implements ExcelRetrieveService {
 		return excelDao.deleteExcelData(params);
 		
 	}
+
+
+	@Override
+	public Map<String, Object> getExcelDetailListByPaging(Map<String, Object> param) {
+		String startNum = (String)param.get("startNum");
+		if ( startNum != null && !"".equals(startNum) ) {
+			param.put("startNum", Long.parseLong(startNum));
+		}
+		
+		String pageSize = (String)param.get("pageSize");
+		if ( pageSize != null && !"".equals(pageSize) ) {
+			param.put("pageSize", Long.parseLong(pageSize));
+		}
+		
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		
+		try {
+			//data 호출만 할시 onlyData파라미터를 붙인다
+			String onlyData = (String)param.get("onlyData");
+			if ( onlyData != null && "N".equals(onlyData)) {	
+				returnMap.put("COUNT", excelDao.selectExcelUploaDataCount(param));
+			}
+			
+			returnMap.put("LIST",  excelDao.selectExcelUploaDataByPaging(param));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return returnMap;
+	
+	}
 	
 }

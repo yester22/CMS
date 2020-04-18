@@ -105,6 +105,33 @@ public class ExcelRetrieveController extends AbstractController {
 	
 	/**
 	 * @Author : yester21
+	 * @Date : 2020. 3. 20.
+	 * @Method Name : excelRetrieve
+	 * @return : JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/admin/excelDataRetrieveByPaging", method = RequestMethod.POST)
+	public JSONObject excelDataRetrieveByPaging (@RequestParam Map<String,Object> params) {
+		JSONObject result = new JSONObject();
+		
+		try {
+			Map<String,Object> rtnList = excelRetrieveService.getExcelDetailListByPaging(params);
+			if ( rtnList.get("LIST") != null ) {
+				result.put(JSONResult.LIST,   rtnList.get("LIST"));	
+			}
+			if ( rtnList.get("COUNT") != null ) {
+				result.put(JSONResult.COUNT,   rtnList.get("COUNT"));	
+			}
+			result.put(JSONResult.RESULT, JSONResult.OK);
+		} catch( Exception e ) {
+			e.printStackTrace();
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result;
+	}
+	
+	/**
+	 * @Author : yester21
 	 * @Date : 2020. 4. 10.
 	 * @Method Name : excelList
 	 * @return : void

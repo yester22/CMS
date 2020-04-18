@@ -29,6 +29,8 @@ class MapView {
 		this.featureData = new Array();
 		this.mapColor = null;
 		this.markerArray = new Array();
+		this.pageSize = 20;
+		this.startNum = 1;
 	};
 	
 	static mapInit() {
@@ -127,9 +129,11 @@ class MapView {
 		MapView.excelKey = args.item.excelKey;
 		MapView.mapColor = args.item.mapColor;
 		
-		var url = "/admin/excelDataRetrieve";
+		var url = "/admin/excelDataRetrieveByPaging";
 		var sendData = {
 			excelKey : args.item.excelKey ,
+			startNum : 1,
+			pageSize : 20,
 		};
 		
 		 $.ajax({
@@ -140,74 +144,93 @@ class MapView {
 	            success: MapView.cbExcelDataRetrieveResult,
 	            error  : MapView.cbExcelRetrieveError,
 	     });
+		 
+		 MapView.startNum = 1;
+		 MapView.pageSize = 1;
+		 
 	}
 
 	//그리드 아이템 선택시 web service 콜백함수
 	static cbExcelDataRetrieveResult( data ) {
 		
-		if ( MapView.vmap.data ) {
+		/*if ( MapView.vmap.data ) {
 			MapView.vmap.data.forEach(function(feature) {
 				MapView.vmap.data.remove(feature);
 			});
 			MapView.featureArray = null;
 		}
-
+		*/
+		
 		var moveData = new Object();
 		var mapColorRgbData = null;
 		if( MapView.mapColor ) {
 			mapColorRgbData = MapView.mapColor;
 		}
 		
-		
-		if ( data.COUNT > 0 ) {
-			MapView.featureArray = new Array();
+		if ( data.LIST.length <= 0 ) {
+			MsgBox.alert('데이터가 존재하지 않습니다');
+			return false;
+		}
+			
+		MapView.featureArray = new Array();
 			
 			//폴리곤 데이터 그리기
-			var list = data.LIST;
-			var polygonData = '';
-			var marker = null;
-			var shortAddr = '';
+		var list = data.LIST;
+		var polygonData = '';
+		var marker = null;
+		var shortAddr = '';
+		
+		for ( var idx = 0; idx < list.length; idx++ ) {
+			polygonData = list[idx].poligonData;
 			
-			for ( var idx = 0; idx < data.COUNT; idx++ ) {
-				polygonData = list[idx].poligonData;
-				
-				if ( polygonData != null && polygonData != '' ) {
-					if ( idx == 0 ) { //move data
-						moveData.xPos = list[idx].xPos;
-						moveData.yPos = list[idx].yPos;
-					}
-					polygonData = JSON.parse(polygonData);
-					var featrue = MapView.vmap.data.addGeoJson(polygonData.featureCollection,{idPropertyName:"id_" + (idx + 1) }); 
-					MapView.featureArray.push(featrue);
+			if ( polygonData != null && polygonData != '' ) {
+				if ( idx == 0 ) { //move data
+					moveData.xPos = list[idx].xPos;
+					moveData.yPos = list[idx].yPos;
 				}
-				
-				//marker 생성
-				shortAddr = ( ( list[idx].ri == null || list[idx].ri == '') ? list[idx].upmyundong : list[idx].ri ); 
-				shortAddr = shortAddr + ' ' + ( ( list[idx].bubunji == null || list[idx].bubunji == '') ? list[idx].bunji : list[idx].bunji + '-' + list[idx].bubunji );
-				
-				
-				if ( list[idx].xPos != null && list[idx].xPos != '' && list[idx].yPos != null && list[idx].yPos != '' ) { 
-					var marker = new MarkerWithLabel({
-						position: {lat: Number(list[idx].yPos), lng: Number(list[idx].xPos)},
-						map: MapView.vmap,
-						icon: ' ',  
-						labelContent: shortAddr,
-						labelClass: "label",
-						labelStyle: {opacity: 0.5},
-					});
-					MapView.markerArray.push(marker);
-				}
+				//polygonData = JSON.parse(polygonData);
+				//var featrue = MapView.vmap.data.addGeoJson(polygonData.featureCollection,{idPropertyName:"id_" + (idx + 1) }); 
+
 			}
 			
-			MapView.vmap.data.setStyle({
-				strokeColor: mapColorRgbData,
-				strokeWeight: 1,
-				strokeOpacity: 0.8,
-				fillColor: mapColorRgbData,
-				fillOpacity: 0.5
-			});
-			MapView.move( moveData.yPos, moveData.xPos, 15);
+			//marker 생성
+			shortAddr = ( ( list[idx].ri == null || list[idx].ri == '') ? list[idx].upmyundong : list[idx].ri ); 
+			shortAddr = shortAddr + ' ' + ( ( list[idx].bubunji == null || list[idx].bubunji == '') ? list[idx].bunji : list[idx].bunji + '-' + list[idx].bubunji );
+			
+			var markerData = new Object();
+			markerData.labelContent = shortAddr;
+			markerData.lat = ( list[idx].yPos != null && list[idx].yPos != '' ) ? 0 : Number(list[idx].yPos);
+			markerData.lng = ( list[idx].xPos != null && list[idx].xPos != '' ) ? 0 : Number(list[idx].xPos);
+			markerData.polygonData = polygonData;
+			
+		/*	if ( list[idx].xPos != null && list[idx].xPos != '' && list[idx].yPos != null && list[idx].yPos != '' ) { 
+				var marker = new MarkerWithLabel({
+					position: {lat: Number(list[idx].yPos), lng: Number(list[idx].xPos)},
+					map: MapView.vmap,
+					icon: ' ',  
+					labelContent: shortAddr,
+					labelClass: "label",
+					labelStyle: {opacity: 0.5},
+				});
+				MapView.markerArray.push(marker);
+			}*/
 		}
+		
+		/*MapView.vmap.data.setStyle({
+			strokeColor: mapColorRgbData,
+			strokeWeight: 1,
+			strokeOpacity: 0.8,
+			fillColor: mapColorRgbData,
+			fillOpacity: 0.5
+		});*/
+		
+		MapView.move( moveData.yPos, moveData.xPos, 15);
+	
+	}
+	
+	
+	static drawMapInfo() {
+		
 	}
 	
 	//화면 로드시 그리드 첫번째 아이템 자동 선택 

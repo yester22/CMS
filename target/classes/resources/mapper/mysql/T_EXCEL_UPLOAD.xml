@@ -317,5 +317,10 @@
 	 </select>
 	   
 	 
+	 <select id="selectExcelUploaDataByPaging" parameterType="hashmap"  resultType="ExcelUploadDetailVo">
+	 	<include refid="commonExcelUploadData"></include>
+	 	LIMIT #{startNum}, #{pageSize}
+	 </select>
+	 
 	 
 </mapper>	

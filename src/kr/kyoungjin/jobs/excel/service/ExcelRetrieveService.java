@@ -47,4 +47,12 @@ public interface ExcelRetrieveService {
 	 * @return : void
 	 */
 	public int deleteExcelData(Map<String, Object> params)   throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : getExcelDetailListByPaging
+	 * @return : void
+	 */
+	public Map<String, Object> getExcelDetailListByPaging(Map<String, Object> params);
 }

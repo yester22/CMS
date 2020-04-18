@@ -143,10 +143,19 @@ public interface ExcelDao {
 	public ExcelUploadVo selectExcelInfoData(ExcelUploadVo params)  throws Exception;
 
 	/**
-	 * @Author : yester21
+	 * @Author : yester21`
 	 * @Date : 2020. 4. 10.
 	 * @Method Name : deleteExcelData
 	 * @return : int
 	 */
 	public int deleteExcelData(Map<String, Object> params)  throws Exception;
+
+	
+	/**
+	 * @Author : yester21`
+	 * @Date : 2020. 4. 17.
+	 * @Method Name : deleteExcelData
+	 * @return : Map<String, Object>
+	 */
+	public List<ExcelUploadDetailVo> selectExcelUploaDataByPaging(Map<String, Object> params);
 }
