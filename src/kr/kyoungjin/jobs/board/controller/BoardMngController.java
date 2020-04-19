@@ -1,6 +1,12 @@
 package kr.kyoungjin.jobs.board.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.kyoungjin.common.abstractObject.AbstractController;
+import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
+import kr.kyoungjin.dataobject.vo.MemberVo;
 import kr.kyoungjin.jobs.board.service.BoardMngService;
 import kr.kyoungjin.jobs.system.message.service.IMessageService;
 import net.sf.json.JSONObject;
@@ -48,6 +58,54 @@ public class BoardMngController extends AbstractController {
 			if ( rtnList.get("COUNT") != null ) {
 				result.put(JSONResult.COUNT,   rtnList.get("COUNT"));	
 			}
+			result.put(JSONResult.RESULT, JSONResult.OK);
+		} catch( Exception e ) {
+			e.printStackTrace();
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/admin/boardMngDelete", method = RequestMethod.POST)
+	public JSONObject boardMngDelete(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws Exception {
+		JSONObject result = new JSONObject();
+		
+		String deleteData = params.get("deleteData").toString();
+		if ( deleteData != null && ! "".equals(deleteData)) {
+			if ( deleteData.lastIndexOf(",") > 0 ) {
+				params.put("deleteArray", deleteData.split(","));
+			} else {
+				String[] arr = { deleteData };
+				params.put("deleteArray", arr);
+			}
+		}
+		
+		try {
+			BoardMngService.deleteBoardMng (params );
+			result.put(JSONResult.RESULT, JSONResult.OK);
+		} catch(Exception e ) {
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/admin/boardMngReg", method = RequestMethod.POST)
+	public JSONObject boardMngReg (MultipartHttpServletRequest request , @RequestParam Map<String,Object> params) {
+		JSONObject result = new JSONObject();
+		
+		try {
+			MemberVo sessionMemberInfo = (MemberVo)request.getSession().getAttribute(ConstantNames.SESSION_USER_INFO);
+			List<String> uploadFilesId = new ArrayList<String>();
+			String boardId = "";
+
+			boardId = BoardMngService.insertBoardMng(params, sessionMemberInfo.getMemberId());
+			if (boardId != null && !"".equals(boardId) ) {
+				uploadFilesId.add(boardId);
+			}
+
+			result.put("boardIds", uploadFilesId);
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch( Exception e ) {
 			e.printStackTrace();

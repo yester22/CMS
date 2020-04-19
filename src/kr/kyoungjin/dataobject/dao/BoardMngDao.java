@@ -13,9 +13,9 @@ public interface BoardMngDao {
 	 * @Author : yester21
 	 * @Date : 2020. 3. 20.
 	 * @Method Name : selectExcelUploaInfo
-	 * @return : List<ExcelUploadVo>
+	 * @return : List<BoardMngVo>
 	 */
-	public List<ExcelUploadVo> selectBoardMngList(Map<String, Object> param) throws Exception;
+	public List<BoardMngVo> selectBoardMngList(Map<String, Object> param) throws Exception;
 	
 	
 	/**
@@ -25,6 +25,32 @@ public interface BoardMngDao {
 	 * @return : Long
 	 */
 	public Long selectBoardMngListCount(Map<String, Object> param) throws Exception;
+
+	/**
+	 * @Author : yester21`
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : deleteExcelData
+	 * @return : int
+	 */
+	public int deleteBoardMng(Map<String, Object> params)  throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 3. 20.
+	 * @Method Name : selectExcelKey
+	 * @return : String
+	 */
+	public String selectNewBoardKey() throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 3. 20.
+	 * @Method Name : insertExcelUploaInfo
+	 * @return : void
+	 */
+	public void insertBoardMng(BoardMngVo vo) throws Exception;
+
+
 
 	public List<BoardMngVo> list ( BoardMngVo boardMngVo);
 	public BoardMngVo view ( BoardMngVo boardMngVo);

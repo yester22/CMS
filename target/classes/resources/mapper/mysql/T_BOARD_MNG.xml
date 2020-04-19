@@ -52,6 +52,50 @@
 	      )a 
 	</select>
 
+	<delete id="deleteBoardMng" parameterType="hashmap">
+	 	UPDATE T_BOARD_MNG
+	 	  SET USE_YN = 'N'
+	 	 WHERE BOARD_CD IN
+	 	 	<foreach collection="deleteArray" item="item"  open="(" close=")" separator=",">
+				#{item.value}
+ 			</foreach>
+	</delete>
+
+	<select id="selectNewBoardKey" resultType="string">
+		SELECT ( CASE WHEN B.MAXVAL IS NULL THEN CONCAT(DATE_FORMAT(NOW(), '%Y%m%d%H'), LPAD(1, 5, '0'))
+	    				  ELSE B.MAXVAL + 1  END ) NEWKEY 
+		  FROM (  
+  				SELECT MAX(BOARD_CD) MAXVAL FROM T_BOARD_MNG B
+  				WHERE SUBSTR(B.BOARD_CD, 1, 10) = DATE_FORMAT(NOW(), '%Y%m%d%H')
+		 ) B	
+	</select>
+
+	<insert id="insertBoardMng" parameterType="BoardMngVo">
+		/** kr.kyoungjin.dataobject.dao.BoardMngDao.insertBoardMng */
+		INSERT INTO T_BOARD_MNG ( 
+			  BOARD_CD
+			, BOARD_NM
+			, LIST_ROW_CNT
+			, LIST_BLOCK_CNT
+			, TITLE_SPLIT_LEN
+			, CONTENTS_SPLIT_LEN
+			, USE_YN
+			, REG_DATE
+			, REG_ID
+		)
+		VALUES(
+			  #{boardCd}
+			, #{boardNm} 
+			, #{listRowCnt} 
+			, #{listBlockCnt} 
+			, #{titleSplitLen}
+			, #{contentsSplitLen}
+			, #{useYn}  
+			, NOW()
+			, #{regId}
+		 )
+	</insert>
+
 	<select id="view" parameterType="BoardMngVo" resultType="BoardMngVo">
 		
 	</select>
