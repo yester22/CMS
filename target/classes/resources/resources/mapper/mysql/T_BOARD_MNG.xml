@@ -23,7 +23,7 @@
 	<sql id="commonBoardMngWhere">
 		<where>
 			<if test='searchTitle != null and !"".equals(searchTitle)'>
-				AND a.BOARD_NM = #{searchTitle}
+				AND a.BOARD_NM like concat('%', concat(#{searchTitle}, '%'))
 			</if>
 	 	</where>
 	</sql>
@@ -54,7 +54,7 @@
 
 	<delete id="deleteBoardMng" parameterType="hashmap">
 	 	UPDATE T_BOARD_MNG
-	 	  SET USE_YN = 'N'
+	 	  SET DEL_YN = 'Y'
 	 	 WHERE BOARD_CD IN
 	 	 	<foreach collection="deleteArray" item="item"  open="(" close=")" separator=",">
 				#{item.value}
@@ -82,6 +82,7 @@
 			, USE_YN
 			, REG_DATE
 			, REG_ID
+			, DEL_YN
 		)
 		VALUES(
 			  #{boardCd}
@@ -93,8 +94,36 @@
 			, #{useYn}  
 			, NOW()
 			, #{regId}
+			, 'N'
 		 )
 	</insert>
+
+	<select id="selectBoardMngRead" parameterType="BoardMngVo" resultType="BoardMngVo">
+	 	SELECT a.BOARD_CD,
+			   a.BOARD_NM,
+			   a.LIST_ROW_CNT,
+			   a.LIST_BLOCK_CNT,
+			   a.TITLE_SPLIT_LEN,
+			   a.CONTENTS_SPLIT_LEN,
+			   a.USE_YN
+	 	 FROM T_BOARD_MNG a
+	 	WHERE BOARD_CD = #{boardCd}
+	</select>
+
+	<update id="updateBoardMng" parameterType="BoardMngVo">
+		/** kr.kyoungjin.dataobject.dao.BoardMngDao.BoardMngVo */
+		UPDATE T_BOARD_MNG
+		  SET BOARD_NM = #{boardNm}
+		    , LIST_ROW_CNT = #{listRowCnt}
+		    , LIST_BLOCK_CNT = #{listBlockCnt}
+		    , TITLE_SPLIT_LEN = #{titleSplitLen}
+		    , CONTENTS_SPLIT_LEN = #{contentsSplitLen}
+		    , USE_YN = #{useYn}
+		    , UPT_DATE = NOW()
+		    , UPT_ID = #{uptId}
+		WHERE BOARD_CD = #{boardCd}
+	</update>
+	
 
 	<select id="view" parameterType="BoardMngVo" resultType="BoardMngVo">
 		

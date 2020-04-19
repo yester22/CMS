@@ -88,11 +88,13 @@
         	</div><!-- card footer end -->
 		</div>
         <!-- /.card -->
-        <div class="card card-default boardRegBox" style="display:none;">
+        <div class="card card-default boardRegBox" id="saveArea" style="display:none;">
         	<div class="card-header">
-				<h3 class="card-title">게시판 등록</h3>
+				<h3 class="card-title titleTextCg"></h3>
 			</div>
 			<form id="uploadForm" method="post" enctype="multipart/form-data" class="form-horizontal">
+				<input type="hidden" name="boardSaveKey" id="boardSaveKey" value="C" />
+				<input type="hidden" name="boardCode" id="boardCode" value="" />
 				<div class="card-body">
 					<div class="form-group row">
 	                	<label for="title" class="col-sm-2 col-form-label">게시판이름</label>
@@ -136,7 +138,7 @@
 				</div><!-- card body end -->
 				<div class="card-footer">
 					<button type="button" id="btnCancle" class="btn btn-primary float-right" style="margin-left: 5px;">취소</button>
-                	<button type="button" id="btnUpload" class="btn btn-primary float-right">등록</button>
+                	<button type="button" id="btnUpload" class="btn btn-primary float-right saveTextCg"></button>
                	</div><!-- card footer end -->
 			</form>
 		</div>

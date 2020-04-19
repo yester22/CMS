@@ -50,6 +50,21 @@ public interface BoardMngDao {
 	 */
 	public void insertBoardMng(BoardMngVo vo) throws Exception;
 
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : selectExcelInfoData
+	 * @return : void
+	 */
+	public BoardMngVo selectBoardMngRead(BoardMngVo params)  throws Exception;
+
+	/**
+	 * @Author : yeste
+	 * @Date : 2020. 3. 23.
+	 * @Method Name : updateExcelUploaInfo
+	 * @return : void
+	 */
+	public void updateBoardMng(BoardMngVo saveBoardUpload) throws Exception;
 
 
 	public List<BoardMngVo> list ( BoardMngVo boardMngVo);

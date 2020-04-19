@@ -4,6 +4,9 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kyoungjin.dataobject.vo.BoardMngVo;
+import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
+
 public interface BoardMngService {
 	/**
 	 * @Author : yeste21
@@ -22,4 +25,12 @@ public interface BoardMngService {
 	public int deleteBoardMng(Map<String, Object> params)   throws Exception;
 
 	public String insertBoardMng( Map<String, Object> params, String uploaderId) throws Exception;
+
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 10.
+	 * @Method Name : getExcelUploadInfo
+	 * @return : ExcelUploadVo
+	 */
+	public BoardMngVo getBoardMngRead(Map<String, Object> params)  throws Exception;
 }

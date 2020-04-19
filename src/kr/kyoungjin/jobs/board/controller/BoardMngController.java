@@ -1,6 +1,7 @@
 package kr.kyoungjin.jobs.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import kr.kyoungjin.common.abstractObject.AbstractController;
 import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
+import kr.kyoungjin.dataobject.vo.BoardMngVo;
 import kr.kyoungjin.dataobject.vo.MemberVo;
 import kr.kyoungjin.jobs.board.service.BoardMngService;
 import kr.kyoungjin.jobs.system.message.service.IMessageService;
@@ -106,6 +108,33 @@ public class BoardMngController extends AbstractController {
 			}
 
 			result.put("boardIds", uploadFilesId);
+			result.put(JSONResult.RESULT, JSONResult.OK);
+		} catch( Exception e ) {
+			e.printStackTrace();
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/admin/boardMngRead", method = RequestMethod.POST)
+	public JSONObject boardMngRead (@RequestParam Map<String,Object> params) {
+		JSONObject result = new JSONObject();
+		BoardMngVo rtnList = null;
+		
+		try {
+			rtnList = BoardMngService.getBoardMngRead(params);
+			if ( rtnList != null ) {
+				System.out.println("rtnList=============="+rtnList);
+				result.put("boardCd",   rtnList.getBoardCd());
+				result.put("boardNm",   rtnList.getBoardNm());
+				result.put("listRowCnt",   rtnList.getListRowCnt());
+				result.put("listBlockCnt",   rtnList.getListBlockCnt());
+				result.put("titleSplitLen",   rtnList.getTitleSplitLen());
+				result.put("contentsSplitLen",   rtnList.getContentsSplitLen());
+				result.put("useYn",   rtnList.getUseYn());
+			}
+
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch( Exception e ) {
 			e.printStackTrace();
