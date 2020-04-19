@@ -1,21 +1,21 @@
 /**
  * jsgrid Utility
  */
-class jsGridUtil {
+var jsGridUtil = {
 	
-	static init() {
+	init : function() {
 		this.selectedItems = [];
-	}
+	},
 	
-	static getSelectedItem() {
+	getSelectedItem  : function () {
 		return jsGridUtil.selectedItems;
-	}
+	},
 	
-	static checkBoxHeader ( callbackFunction ) {
+	checkBoxHeader  : function ( callbackFunction ) {
 		return $('<input>').attr('type', 'checkbox').attr('name', 'checkAllItem').on('change', callbackFunction);
-	}
+	},
 	
-	static checkBoxItem( _, item ) {
+	checkBoxItem  : function( _, item ) {
 		
 		if (this.selectedItems == null ) jsGridUtil.init();
 		
@@ -24,15 +24,15 @@ class jsGridUtil {
         
         );
 		
-	}
+	},
 	
-	static selectItem (item) {
+	selectItem  : function(item) {
 		 jsGridUtil.selectedItems.push(item);
-	};
+	},
 	 
-	static unselectItem(item) {
+	unselectItem  : function(item) {
 		 jsGridUtil.selectedItems = $.grep(selectedItems, function(i) {
 	            return i !== item;
 		 });
-	};
+	}
 }

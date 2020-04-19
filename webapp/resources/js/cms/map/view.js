@@ -26,11 +26,11 @@ class MapView {
 		this.vectorSource = null;
 		this.dataPageSize = 10;
 		this.dataStartNum = 1;
-		this.featureData = new Array();
 		this.mapColor = null;
-		this.markerArray = new Array();
 		this.pageSize = 20;
 		this.startNum = 1;
+		this.featureData = new Array();
+		this.markerArray = new Array();
 	};
 	
 	static mapInit() {
@@ -129,11 +129,17 @@ class MapView {
 		MapView.excelKey = args.item.excelKey;
 		MapView.mapColor = args.item.mapColor;
 		
-		var url = "/admin/excelDataRetrieveByPaging";
+		MapView.markerArray = [];
+		MapView.featureData = [];		
+		
+		MapView.excelDataRetrieve(MapView.excelKey);
+	}
+
+	//excelData retrieve
+	static excelDataRetrieve( excelKey ) {
+		var url = "/admin/excelDataRetrieveCount";
 		var sendData = {
-			excelKey : args.item.excelKey ,
-			startNum : 1,
-			pageSize : 20,
+			excelKey : excelKey ,
 		};
 		
 		 $.ajax({
@@ -141,12 +147,14 @@ class MapView {
 	            dataType: 'json', 
 	            data: sendData,
 	            type: 'POST',
+	            async : false,
 	            success: MapView.cbExcelDataRetrieveResult,
 	            error  : MapView.cbExcelRetrieveError,
 	     });
 		 
 		 MapView.startNum = 1;
 		 MapView.pageSize = 1;
+	
 		 
 	}
 
@@ -160,81 +168,106 @@ class MapView {
 			MapView.featureArray = null;
 		}
 		*/
-		
-		var moveData = new Object();
-		var mapColorRgbData = null;
-		if( MapView.mapColor ) {
-			mapColorRgbData = MapView.mapColor;
-		}
-		
-		if ( data.LIST.length <= 0 ) {
-			MsgBox.alert('데이터가 존재하지 않습니다');
-			return false;
-		}
-			
+
 		MapView.featureArray = new Array();
 			
 			//폴리곤 데이터 그리기
-		var list = data.LIST;
+		var list = null;
 		var polygonData = '';
-		var marker = null;
 		var shortAddr = '';
+		var nStartNum = 0;
 		
-		for ( var idx = 0; idx < list.length; idx++ ) {
-			polygonData = list[idx].poligonData;
-			
-			if ( polygonData != null && polygonData != '' ) {
-				if ( idx == 0 ) { //move data
-					moveData.xPos = list[idx].xPos;
-					moveData.yPos = list[idx].yPos;
-				}
-				//polygonData = JSON.parse(polygonData);
-				//var featrue = MapView.vmap.data.addGeoJson(polygonData.featureCollection,{idPropertyName:"id_" + (idx + 1) }); 
+		var dataTotalCnt = data.COUNT;
+		
+		for ( var idx = 0; idx < dataTotalCnt; idx+=20 ) {
 
-			}
+			nStartNum = idx + 1;
 			
-			//marker 생성
-			shortAddr = ( ( list[idx].ri == null || list[idx].ri == '') ? list[idx].upmyundong : list[idx].ri ); 
-			shortAddr = shortAddr + ' ' + ( ( list[idx].bubunji == null || list[idx].bubunji == '') ? list[idx].bunji : list[idx].bunji + '-' + list[idx].bubunji );
+			var url = "/admin/excelDataRetrieveByPaging";
+			var sendData = {
+				excelKey : MapView.excelKey ,
+				startNum : nStartNum,
+				pageSize : 20,
+				onlyData : "Y",
+			};
 			
-			var markerData = new Object();
-			markerData.labelContent = shortAddr;
-			markerData.lat = ( list[idx].yPos != null && list[idx].yPos != '' ) ? 0 : Number(list[idx].yPos);
-			markerData.lng = ( list[idx].xPos != null && list[idx].xPos != '' ) ? 0 : Number(list[idx].xPos);
-			markerData.polygonData = polygonData;
-			
-		/*	if ( list[idx].xPos != null && list[idx].xPos != '' && list[idx].yPos != null && list[idx].yPos != '' ) { 
-				var marker = new MarkerWithLabel({
-					position: {lat: Number(list[idx].yPos), lng: Number(list[idx].xPos)},
-					map: MapView.vmap,
-					icon: ' ',  
-					labelContent: shortAddr,
-					labelClass: "label",
-					labelStyle: {opacity: 0.5},
-				});
-				MapView.markerArray.push(marker);
-			}*/
+			 $.ajax({
+		            url: url,
+		            dataType: 'json', 
+		            data: sendData,
+		            type: 'POST',
+		            async : false,
+		            success: function(data) {
+		            	list = data.LIST;
+		            	
+		            	for ( var nIdx = 0; nIdx < list.length; nIdx++ ) {
+		            		polygonData = list[nIdx].poligonData;
+			    						    			
+			    			//marker 생성
+			    			shortAddr = ( ( list[nIdx].ri == null || list[nIdx].ri == '') ? list[nIdx].upmyundong : list[nIdx].ri ); 
+			    			shortAddr = shortAddr + ' ' + ( ( list[nIdx].bubunji == null || list[nIdx].bubunji == '') ? list[nIdx].bunji : list[nIdx].bunji + '-' + list[nIdx].bubunji );
+
+			    			if ( polygonData != '') {
+				    			var markerData = new Object();
+				    			markerData.labelContent = shortAddr;
+				    			markerData.lat = ( list[nIdx].yPos != null && list[nIdx].yPos != '' ) ? Number(list[nIdx].yPos) : 0;
+				    			markerData.lng = ( list[nIdx].xPos != null && list[nIdx].xPos != '' ) ? Number(list[nIdx].xPos) : 0;
+				    			markerData.polygonData = polygonData;
+				    			
+				    			if ( MapView.markerArray.length <= dataTotalCnt ) MapView.markerArray.push(markerData);
+			    			}
+		            	}
+		            	list = null;
+		            }
+		     });
+			 
+			 if ( dataTotalCnt == MapView.markerArray.length || MapView.markerArray.length > dataTotalCnt) break;
 		}
 		
-		/*MapView.vmap.data.setStyle({
-			strokeColor: mapColorRgbData,
-			strokeWeight: 1,
-			strokeOpacity: 0.8,
-			fillColor: mapColorRgbData,
-			fillOpacity: 0.5
-		});*/
-		
-		MapView.move( moveData.yPos, moveData.xPos, 15);
-	
+		MapView.drawMapInfo();
 	}
 	
 	
 	static drawMapInfo() {
+		console.log('drawMapInfo');
+		//console.log( MapView.markerArray);
+
+		if (MapView.markerArray.length <= 0 ) return;
+		var list = MapView.markerArray;
 		
+		var polygonData = null;
+		var feature  = null;
+		for ( var idx=0; idx < list.length; idx++ ) {
+			try {
+				polygonData = JSON.parse(list[idx].polygonData);
+				feature = MapView.vmap.data.addGeoJson(polygonData.featureCollection,{idPropertyName:"id_" + (idx + 1) });
+				MapView.featureData.push( feature );
+			} catch ( e ) { }
+			
+			/*var marker = new MarkerWithLabel({
+				position: {lat: Number(list[idx].yPos), lng: Number(list[idx].xPos)},
+				map: MapView.vmap,
+				icon: ' ',  
+				labelContent: list[idx].shortAddr,
+				labelClass: "label",
+				labelStyle: {opacity: 0.5},
+			});
+			
+			MapView.markerArray.push(marker);*/
+		}	
+		
+		MapView.vmap.data.setStyle({
+			strokeColor: '#000000',
+			strokeWeight: 1,
+			strokeOpacity: 0.8,
+			fillColor: MapView.mapColor,
+			fillOpacity: 0.5
+		});
 	}
 	
 	//화면 로드시 그리드 첫번째 아이템 자동 선택 
 	static refreshedGrid( args ) {
+		/**
 		if (args.grid.data.length) {
 	        var gridBody = $("#jgUploadList").find('.jsgrid-grid-body');
 	        gridBody.find('.jsgrid-table tr:first-child').trigger('click');
@@ -243,6 +276,7 @@ class MapView {
 	            scrollLeft: 0
 	        }, 250);
 	    }
+	    **/
 	}
 	
 };

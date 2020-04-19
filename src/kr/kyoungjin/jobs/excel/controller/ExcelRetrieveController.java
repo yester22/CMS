@@ -119,9 +119,6 @@ public class ExcelRetrieveController extends AbstractController {
 			if ( rtnList.get("LIST") != null ) {
 				result.put(JSONResult.LIST,   rtnList.get("LIST"));	
 			}
-			if ( rtnList.get("COUNT") != null ) {
-				result.put(JSONResult.COUNT,   rtnList.get("COUNT"));	
-			}
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch( Exception e ) {
 			e.printStackTrace();
@@ -129,6 +126,31 @@ public class ExcelRetrieveController extends AbstractController {
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 3. 20.
+	 * @Method Name : excelRetrieve
+	 * @return : JSONObject
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/admin/excelDataRetrieveCount", method = RequestMethod.POST)
+	public JSONObject excelDataRetrieveCount (@RequestParam Map<String,Object> params) {
+		JSONObject result = new JSONObject();
+		
+		try {
+;			Long cnt = excelRetrieveService.getExcelDetailCount(params);
+			result.put(JSONResult.COUNT, cnt);
+			result.put(JSONResult.RESULT, JSONResult.OK);
+		} catch( Exception e ) {
+			e.printStackTrace();
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result;
+	}
+	
+	
 	
 	/**
 	 * @Author : yester21
@@ -158,6 +180,8 @@ public class ExcelRetrieveController extends AbstractController {
 		
 		ExcelUtil.download(request, response, beans, fileName,  "EL_0001.xlsx");
 	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/admin/excelDataDelete", method = RequestMethod.POST)

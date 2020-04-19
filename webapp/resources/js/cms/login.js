@@ -14,11 +14,71 @@ $(document).ready(function(){
 /*
 * LOGIN 작업 클래스 
 */
+var Login = {
+	btnLoginEvent : function(thing){
+		var url  = "/login/loginCheck"
+	    var data = $("#loginForm").serialize();
+	    var rtnObj = ajaxUtil.ajaxExecute ( url, data );
+	    var result = rtnObj.ajaxResult;
+	    	
+	    if ( result == 'ERROR' ) {
+	    	msgBox.alert ( rtnObj.data.MSG );
+	    	return;
+	    } else {
+	    	if ( rtnObj.data.RESULT == "OK") {
+	    		var url = '/main';
+	    		location.href = url;
+	    	} else {
+	    		msgBox.alert (rtnObj.data.MSG );
+	    	}
+	    }
+	},
+	
+	keyUpPwd : function( e ) {
+		if( e.keyCode == 13 ) {
+			console.log( 'enterkey' );
+			Login.btnLoginEvent(e);
+		}
+	}
+	
+}
 
+/**
+( function () {
+	
+    function btnLoginEvent () {
+    	var url  = "/login/loginCheck"
+    	var data = $("#loginForm").serialize();
+    	var rtnObj = ajaxUtil.ajaxExecute ( url, data );
+    	var result = rtnObj.ajaxResult;
+    		
+    	if ( result == 'ERROR' ) {
+    		msgBox.alert ( rtnObj.data.MSG );
+    		return;
+    	} else {
+    		if ( rtnObj.data.RESULT == "OK") {
+    			var url = '/main';
+    			location.href = url;
+    		} else {
+    			msgBox.alert (rtnObj.data.MSG );
+    		}
+    	}
+    };
+    
+    function keyUpPwd ( e ) {
+		if( e.keyCode == 13 ) {
+			console.log( 'enterkey' );
+			Login.btnLoginEvent(e);
+		}
+	}
+    
+}())
+**/
+/*
 class Login {
-	/*
+	
 	* e : 이벤트 객체
-	*/ 
+	 
 	static btnLoginEvent ( e ) {
 		var url  = "/login/loginCheck"
 		var data = $("#loginForm").serialize();
@@ -40,13 +100,14 @@ class Login {
 		
 	} 
 	
-	/*
+	
 	* e : 이벤트 객체
-	*/ 
+	 
 	static keyUpPwd ( e ) {
 		if( e.keyCode == 13 ) {
+			console.log( 'enterkey' );
 			Login.btnLoginEvent(e);
 		}
 	}
 	
-}
+}*/

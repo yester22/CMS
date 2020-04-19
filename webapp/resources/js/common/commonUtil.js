@@ -2,12 +2,12 @@
  *  yyyyMMdd 포맷으로 반환
  */
 
-class CommonUtil {
+var CommonUtil  = {
 
 	/**
 	 * 오늘 날짜 가져오는 함수
 	 */
-	static getToday( divChar ){
+	getToday : function( divChar ){
 		var divChar2 = ( divChar == null ) ? "" : divChar;   
 		var date = new Date();
 	    var year = date.getFullYear();              //yyyy
@@ -17,12 +17,12 @@ class CommonUtil {
 	    day = ( day >= 10 ) ? day : '0' + day;          //day 두자리로 저장
 	    
 	    return  year + divChar2 + month + divChar2 + day;
-	}
+	},
 	
 	/**
 	 * 오늘 날짜 가져오는 함수
 	 */
-	static getPreviousDate( nDay , divChar) {
+	getPreviousDate : function( nDay , divChar) {
 		var nowDate = new Date();
 		var prevDate =  nowDate.getTime() - ( nDay * 24 * 60 * 60 * 1000 );
 		nowDate.setTime(prevDate); 

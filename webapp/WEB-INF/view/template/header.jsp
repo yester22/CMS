@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+
+<div id="DIV_ABSTRACT_MESSAGE">
+	<span id="SPAN_ABSTRACT_TITLE"></span>
+	<span id="SPAN_ABSTRACT_MESSAGE"></span>
+</div>
+
 <ul class="navbar-nav">
 	<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 		href="#" role="button"><i class="fas fa-bars"></i></a></li>

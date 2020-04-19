@@ -71,16 +71,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.12/proj4.js" type="text/javascript"></script>
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
  -->
- 
-<script type="text/javascript" src="/resources/js/common/ajax.js"></script>
-<script type="text/javascript" src="/resources/js/common/message.js"></script>
+
+<script type="text/javascript" src="/resources/js/common/message.js"></script> 
 <script type="text/javascript" src="/resources/js/common/pageMove.js"></script>
+<script type="text/javascript" src="/resources/js/common/ajax.js"></script>
 <script type="text/javascript" src="/resources/js/common/msgBox.js"></script>
+ <!-- 
 <script type="text/javascript" src="/resources/js/common/commonUtil.js"></script>
 <script type="text/javascript" src="/resources/js/common/jsGridUtil.js"></script>
-
-
-<div id="DIV_ABSTRACT_MESSAGE">
-	<span id="SPAN_ABSTRACT_TITLE"></span>
-	<span id="SPAN_ABSTRACT_MESSAGE"></span>
-</div>
+ -->

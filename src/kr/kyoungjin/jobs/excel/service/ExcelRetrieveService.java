@@ -54,5 +54,14 @@ public interface ExcelRetrieveService {
 	 * @Method Name : getExcelDetailListByPaging
 	 * @return : void
 	 */
-	public Map<String, Object> getExcelDetailListByPaging(Map<String, Object> params);
+	public Map<String, Object> getExcelDetailListByPaging(Map<String, Object> params)   throws Exception;
+	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 19.
+	 * @Method Name : getExcelDetailCount
+	 * @return : Long
+	 */
+	public Long getExcelDetailCount(Map<String, Object> params)   throws Exception;
+
 }

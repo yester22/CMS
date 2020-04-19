@@ -2,10 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="/WEB-INF/tld/Message.tld" prefix="Message"%>
 
+<div id="DIV_ABSTRACT_MESSAGE">
+	<span id="SPAN_ABSTRACT_TITLE"></span>
+	<span id="SPAN_ABSTRACT_MESSAGE"></span>
+</div>
 <form id="loginForm" method="post">
 	<div class="login-box">
 		<div class="login-logo">
-			<a href="../../index2.html"><b>Admin</b>LTE</a>
+			<a href="../../index2.html"><b>Dron Control Mananagement System</b></a>
 		</div>
 		<!-- /.login-logo -->
 		<div class="card">

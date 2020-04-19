@@ -104,16 +104,8 @@ public class ExcelRetrieveServiceImpl implements ExcelRetrieveService {
 		if ( pageSize != null && !"".equals(pageSize) ) {
 			param.put("pageSize", Long.parseLong(pageSize));
 		}
-		
 		Map<String,Object> returnMap = new HashMap<String,Object>();
-		
 		try {
-			//data 호출만 할시 onlyData파라미터를 붙인다
-			String onlyData = (String)param.get("onlyData");
-			if ( onlyData != null && "N".equals(onlyData)) {	
-				returnMap.put("COUNT", excelDao.selectExcelUploaDataCount(param));
-			}
-			
 			returnMap.put("LIST",  excelDao.selectExcelUploaDataByPaging(param));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -121,7 +113,16 @@ public class ExcelRetrieveServiceImpl implements ExcelRetrieveService {
 		}
 		
 		return returnMap;
-	
 	}
+
+
+
+
+	@Override
+	public Long getExcelDetailCount(Map<String, Object> params) throws Exception {
+		return excelDao.selectExcelUploaDataCount(params);
+	}
+
+	
 	
 }
