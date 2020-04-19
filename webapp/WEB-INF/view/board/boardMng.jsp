@@ -20,13 +20,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>게시판 조회</h1>
+            <h1>게시판 관리</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
             	<li class="breadcrumb-item"><a href="#">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">게시판 관리</a></li>
-				<li class="breadcrumb-item active">게시판 조회</li>
+				<li class="breadcrumb-item"><a href="#">공통코드</a></li>
+				<li class="breadcrumb-item active">게시판 관리</li>
             </ol>
           </div>
         </div>
@@ -53,35 +53,14 @@
 						
 						<table class="col-lg-12">
 							<colgroup>
-								<col width="5%" />
-								<col width="15%" />
 								<col width="10%" />
-								<col width="15%" />
-								<col width="10%" />
-								<col width="30%" />
+								<col width="60%" />
 								<col width="*" />
 							</colgroup>
 							<tbody>
 								<tr>
-									<th style="text-align:center !important;"><label for="title">게시판 명</label></th>
-									<td>
-										<select name="searchBoardCode" id="searchBoardCode" class="form-control form-control-sm">
-											<option value="">선택</option>
-											<option value="1">게시판1</option>
-											<option value="2">게시판2</option>
-											<option value="3">게시판3</option>
-											<option value="4">게시판4</option>
-											<option value="5">게시판5</option>
-										</select>
-									</td>
-									<th><label for="title">제목</label></th>
-									<td><input type="text" name="searchTitle" id="title" size="30" maxlength="30" class="form-control form-control-sm" placeholder="제목을 입력해주세요" /></td>
-									<th  style="text-align:center !important;"><label for="uploadfile">검색일자</label></th>
-									<td>
-					                    <input type='text' id="searchStatDate" name="searchStartDate" class="cmsDatePicker" size="10" maxlength="10" />
-						                &nbsp;~&nbsp;
-					                    <input type='text' id="searchEndDate"  name="searchEndDate" class="cmsDatePicker"  size="10" maxlength="10" />
-									</td>
+									<th><label for="searchTitle">게시판 명</label></th>
+									<td><input type="text" name="searchTitle" id="searchTitle" size="30" maxlength="30" class="form-control form-control-sm" placeholder="제목을 입력해주세요" /></td>
 									<td style="text-align:right;">
 										<input type="button" id="btnSearch" class="btn btn-primary" value="검색">			
 									</td>

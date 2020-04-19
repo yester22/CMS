@@ -4,29 +4,54 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kyoungjin.dataobject.dao.BoardMngDao">
 
-	<select id="selectBoardMngList" parameterType="BoardMngVo" resultType="BoardMngVo">
-		SELECT 	BOARD_CD, 
-				BOARD_NM, 
-				LIST_ROW_CNT, 
-				LIST_BLOCK_CNT, 
-				TITLE_SPLIT_LEN, 
-				CONTENTS_SPLIT_LEN, 
-				LATEST_NOTICE_CNT, 
-				USE_YN, 
-				REG_DATE, 
-				REG_ID, 
-				UPT_DATE, 
-				UPT_ID
-		  FROM 
-				T_BOARD_MNG
-		 <where>
-		 
-		 </where>
-		 
-		 LIMIT #{pagingSize}, 
-		    
+	<sql id="commonBoardMng">
+	 	SELECT a.BOARD_CD,
+			   a.BOARD_NM,
+			   a.LIST_ROW_CNT,
+			   a.LIST_BLOCK_CNT,
+			   a.TITLE_SPLIT_LEN,
+			   a.CONTENTS_SPLIT_LEN,
+			   a.USE_YN,
+			   a.REG_DATE,
+			   a.REG_ID,
+			   a.UPT_DATE,
+			   a.UPT_ID
+	 	 FROM T_BOARD_MNG a
+		<include refid="commonBoardMngWhere"></include>
+	</sql>
+
+	<sql id="commonBoardMngWhere">
+		<where>
+			<if test='searchTitle != null and !"".equals(searchTitle)'>
+				AND a.BOARD_NM = #{searchTitle}
+			</if>
+	 	</where>
+	</sql>
+
+	<select id="selectBoardMngList" parameterType="hashmap" resultType="BoardMngVo">
+		/** kr.kyoungjin.dataobject.dao.BoardMngDao.selectBoardMngList  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonBoardMng"></include>
+				    )a 
+		) as b
 	</select>
-	 
+
+	<select id="selectBoardMngListCount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.BoardMngDao.selectBoardMngListCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonBoardMng"></include>
+	      )a 
+	</select>
+
 	<select id="view" parameterType="BoardMngVo" resultType="BoardMngVo">
 		
 	</select>

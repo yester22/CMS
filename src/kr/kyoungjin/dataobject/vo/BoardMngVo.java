@@ -10,7 +10,11 @@ public class BoardMngVo extends AbstractVo {
 	private String titleSplitLen; 
 	private String contentsSplitLen; 
 	private String latestNoticeCnt; 
-	private String useYn; 
+	private String useYn;
+	private String regDate;
+	private String regId;
+	private String uptDate;
+	private String uptId;
 
 	public String getBoardCd() {
 		return boardCd;
@@ -60,7 +64,29 @@ public class BoardMngVo extends AbstractVo {
 	public void setUseYn(String useYn) {
 		this.useYn = useYn;
 	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	public String getRegId() {
+		return regId;
+	}
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+	public String getUptDate() {
+		return uptDate;
+	}
+	public void setUptDate(String uptDate) {
+		this.uptDate = uptDate;
+	}
 
-	
-	
+	public String getUptId() {
+		return uptId;
+	}
+	public void setUptId(String uptId) {
+		this.uptId = uptId;
+	}
 }

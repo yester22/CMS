@@ -16,17 +16,7 @@ public class BoardMngServiceImpl implements BoardMngService {
 	private BoardMngDao BoardMngDao;
 
 	@Override
-	public Map<String, Object> getBoardMngList(Map<String, Object> param) throws Exception {
-		String searchDate = (String)param.get("searchStartDate"); 
-		if ( searchDate != null && !"".equals(searchDate) ) {
-			param.put("searchStartDate", searchDate.replaceAll("-", ""));
-		}
-		
-		searchDate = (String)param.get("searchEndDate"); 
-		if ( searchDate != null && !"".equals(searchDate) ) {
-			param.put("searchEndDate", searchDate.replaceAll("-", ""));
-		}
-		
+	public Map<String, Object> getBoardMngList(Map<String, Object> param) throws Exception {		
 		String startNum = (String)param.get("startNum");
 		if ( startNum != null && !"".equals(startNum) ) {
 			param.put("startNum", Long.parseLong(startNum));
