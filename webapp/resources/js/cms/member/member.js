@@ -17,16 +17,16 @@ $(document).ready(function(){
 * 멤버 관리 작업 클래스 
 */
 
-class MemberList {
+var MemberList  = {
 	
-	static init() {
+	init : function() {
 		
-	}
+	},
 	
 	/*
 	* e : 이벤트 객체
 	*/ 
-	static btnSearch ( e ) {
+	btnSearch : function( e ) {
 		var url = '';
 		var formData = {};
         $.ajax({
@@ -37,13 +37,13 @@ class MemberList {
             success: MemberList.cbMemberRetrieveResult,
             error  : MemberList.cbMemberRetrieveError,
         });
-	}
+	},
 	
-	static cbMemberRetrieveResult(data) {
+	cbMemberRetrieveResult : function(data) {
 		
-	}
+	},
 	
-	static cbMemberRetrieveError(data) {
+	cbMemberRetrieveError : function (data) {
 		
 	}
 	

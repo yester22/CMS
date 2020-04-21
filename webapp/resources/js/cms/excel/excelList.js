@@ -106,10 +106,18 @@ $(document).ready(function(){
 		        { title : '번지', 			name: 'bunji', 			type: 'text',  align: 'center', width: 150 }, 
 		        { title : '부번지', 			name: 'bubunji',		type: 'text',  align: 'center', width: 150 }, 
 		        { title : '대지(m3)', 		name: 'landWidth', 		type: 'text',  align: 'right', width: 120 },
-	        ]
-	    });
-	
-	
+	        ],
+	      loadIndicator: function(config) {
+	          return {
+	        	  show: function() {
+	        		
+	              },
+	              hide: function() {
+	            	  $('#cover-spin').hide();;
+	              }
+	          };
+	      }  
+	 });
 });
 
 
@@ -117,16 +125,16 @@ $(document).ready(function(){
 * LOGIN 작업 클래스 
 */
 
-class ExcelList {
+var ExcelList = {
 	
-	static init() {
+	init : function() {
 		this.excelKey = '';
-	}
+	},
 	
 	/*
 	* e : 이벤트 객체
 	*/ 
-	static btnExcelRetrieve ( e ) {
+	btnExcelRetrieve  : function ( e ) {
 		e.preventDefault();
 		var url = "/admin/excelRetrieve";
 		
@@ -146,22 +154,25 @@ class ExcelList {
             success: ExcelList.cbExcelRetrieveResult,
             error  : ExcelList.cbExcelRetrieveError,
         });
-	}
+	},
 	//
-	static cbExcelRetrieveResult ( data ) {
+	cbExcelRetrieveResult  : function( data ) {
 		$("#jgUploadList").jsGrid("option", "data", data.LIST);
 		$("#jgUploadList").jsGrid("option", "itemsCount", data.COUNT);
 		
 		$("#jgDataList").jsGrid("option", "data", []);
 		$("#jgDataList").jsGrid("option", "itemsCount", 0);
-	}
+	},
 	
-	static cbExcelRetrieveError( error ) {
+	cbExcelRetrieveError : function( error ) {
 		console.log("result error");
 		console.log( error );
-	}
+	},
 	
-	static excelUploadRowClick( args ) {
+	excelUploadRowClick : function( args ) {
+		
+		$('#cover-spin').show(0);
+		
 		ExcelList.excelKey = args.item.excelKey;
 		
 		var url = "/admin/excelDataRetrieve";
@@ -179,22 +190,24 @@ class ExcelList {
 	            success: ExcelList.cbExcelDataRetrieveResult,
 	            error  : ExcelList.cbExcelRetrieveError,
 	     });
-	}
+	},
 	
-	static cbExcelDataRetrieveResult( data ) {
+	cbExcelDataRetrieveResult : function( data ) {
 		$("#jgDataList").jsGrid("option", "data", data.LIST);
 		$("#jgDataList").jsGrid("option", "itemsCount", data.COUNT);
-	}
+		
+		$('#cover-spin').hide();
+	},
 	
 	
 	//그리드 전체 선택시
-	static checkAllItem() {
-		console.log( $(this).val() );
-	}
+	checkAllItem : function() {
+		
+	},
 	
 	
 	//엑셀 다운로드
-	static btnExcelDownload( e ) {
+	btnExcelDownload : function( e ) {
 		var url = "/admin/excelDown";
 		var form = document.createElement("form");
         form.setAttribute("charset", "UTF-8");
@@ -210,10 +223,10 @@ class ExcelList {
         document.body.appendChild(form);
 
         form.submit();
-	}
+	},
 	
 	
-	static btnDelete(e) {
+	btnDelete : function(e) {
 		if ( ExcelList.excelKey == '') {
 			msgBox.alert("엑셀정보를 선택 후 선택하세요");
 			return false;
@@ -228,9 +241,6 @@ class ExcelList {
 		if ( checkVal.length > 1 ) {
 			checkVal = checkVal.substring(1,checkVal.length);	
 		}
-		
-		console.log ( checkVal );
-		
 		
 		if ( checkVal.length <= 1) {
 			msgBox.alert("체크된 데이터 건수가 존재하지 않습니다");
@@ -255,10 +265,10 @@ class ExcelList {
 		            error  : ExcelList.cbExcelRetrieveError,
 		     });
 		});
-	}
+	},
 
 	//삭제후 실행되는 콜백함수 
-	static cbExcelDataDeleteResult(data) {
+	cbExcelDataDeleteResult : function(data) {
 		if ( data.RESULT == "OK") {
 			msgBox.alert('데이터가 삭제되었습니다');
 			

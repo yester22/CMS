@@ -5,7 +5,7 @@
  * description : 엑셀파일 업로드 페이지
  */
 $(document).ready(function(){
-	$("#btnUpload").bind("click", CodeList.btnExcelUpload);
+	$("#btnUpload").bind("click", ExcelUpload.btnExcelUpload);
 	$('.my-colorpicker2').colorpicker()
 
 	$('.my-colorpicker2').on('colorpickerChange', function(event) {
@@ -20,11 +20,11 @@ $(document).ready(function(){
 * LOGIN 작업 클래스 
 */
 
-class CodeList {
+var ExcelUpload  = {
 	/*
 	* e : 이벤트 객체
 	*/ 
-	static btnExcelUpload ( e ) {
+	btnExcelUpload : function ( e ) {
 		e.preventDefault();
 		var url = "/admin/excelUpload";
 		var form = $("#uploadForm")[0];
@@ -43,9 +43,12 @@ class CodeList {
             success: CodeList.cbExcelUploadResult,
             error  : CodeList.cbExcelUploadError,
         });
-	}
+	},
 	
-	static cbExcelUploadResult ( data ) {
+	inputcheck : function() {
+
+	},
+	cbExcelUploadResult : function ( data ) {
 		if ( data != null ) {
 			if ( data.RESULT == "OK" ) {
 				var title = "데이터업로드 성공";
@@ -55,9 +58,9 @@ class CodeList {
 				});
 			}
 		}
-	}
+	},
 	
-	static cbExcelUploadError( error ) {
+	cbExcelUploadError : function( error ) {
 		console.log("result error");
 		console.log( error );
 	}

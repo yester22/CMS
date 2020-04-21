@@ -16,9 +16,8 @@ $(document).ready(function(){
 /*
 * MapView 작업 클래스 
 */
-
-class MapView {
-	static init() {
+var MapView = {
+	init : function() {
 		this.rdata = '';
 		this.geojsonObject = '';
 		this.vmap = null;
@@ -31,9 +30,9 @@ class MapView {
 		this.startNum = 1;
 		this.featureData = new Array();
 		this.markerArray = new Array();
-	};
+	},
 	
-	static mapInit() {
+	mapInit : function() {
 		
 		//create the map
 		var vmap = new google.maps.Map(document.getElementById('map-canvas'), {
@@ -42,19 +41,19 @@ class MapView {
 		  mapTypeId : 'hybrid'
 		});
 		
-		MapView.vmap = vmap;
-	}
+		this.vmap = vmap;
+	},
 	
-	static move( y, x, zoom) {
+	move : function( y, x, zoom) {
 		const center = new google.maps.LatLng(y, x);
-		MapView.fnMoveZoom(zoom);
-		MapView.vmap.panTo(center);
-	}
+		this.fnMoveZoom(zoom);
+		this.vmap.panTo(center);
+	},
 
 
-	static fnMoveZoom( level ) {
-		 google.maps.event.addListener(MapView.vmap, 'zoom_changed', function () {
-	            var zoomChangeBoundsListener = google.maps.event.addListener(MapView.vmap, 'bounds_changed', function (event) {
+	fnMoveZoom : function( level ) {
+		 google.maps.event.addListener(this.vmap, 'zoom_changed', function () {
+	            var zoomChangeBoundsListener = google.maps.event.addListener(this.vmap, 'bounds_changed', function (event) {
 	                if (this.getZoom() > level && this.initialZoom == true) {
 	                    this.setZoom(level);
 	                    this.initialZoom = false;
@@ -62,10 +61,10 @@ class MapView {
 	                google.maps.event.removeListener(zoomChangeBoundsListener);
 	            });
 	        });
-	};
+	},
 	
 	//grid init
-	static gridInit() {
+	gridInit : function() {
 		$("#jgUploadList").jsGrid({
 			 height: "350px",
 		     width: "100%",
@@ -90,18 +89,18 @@ class MapView {
 			        { title : '등록자명', 			name: 'uploaderNm',		 	type: 'text',  align: 'left', 	width: 100 },
 			        { title : '등록일자', 			name: 'uploadDt',		 	type: 'text',  align: 'center', width: 150 },
 		        ],
-		     rowClick: function(args) { MapView.excelUploadRowClick(args); },
-		     onRefreshed : function(args) { MapView.refreshedGrid(args); }
+		     rowClick: function(args) { this.excelUploadRowClick(args); },
+		     onRefreshed : function(args) { this.refreshedGrid(args); }
 		  });
-	}
+	},
 	
 	/*
 	* e : 이벤트 객체
 	*/ 
-	static excelRetrieve ( ) {
+	excelRetrieve : function ( ) {
 		var url = "/admin/excelRetrieve";
 
-		MapView.excelKey  = '';
+		this.excelKey  = '';
 		var formData = {};
 		
         $.ajax({
@@ -109,34 +108,34 @@ class MapView {
             dataType: 'json', 
             data: formData,
             type: 'POST',
-            success: MapView.cbExcelRetrieveResult,
-            error  : MapView.cbExcelRetrieveError,
+            success: this.cbExcelRetrieveResult,
+            error  : this.cbExcelRetrieveError,
         });
-	}
-	//
-	static cbExcelRetrieveResult ( data ) {
+	}, 
+
+	cbExcelRetrieveResult : function( data ) {
 		$("#jgUploadList").jsGrid("option", "data", data.LIST);
 		$("#jgUploadList").jsGrid("option", "itemsCount", data.COUNT);
-	}
+	},
 	
-	static cbExcelRetrieveError( error ) {
+	cbExcelRetrieveError : function( error ) {
 		console.log("result error");
 		console.log( error );
-	}
+	},
 	
 	//그리드 아이템 선택시 web service 호출
-	static excelUploadRowClick( args ) {
-		MapView.excelKey = args.item.excelKey;
-		MapView.mapColor = args.item.mapColor;
+	excelUploadRowClick : function ( args ) {
+		this.excelKey = args.item.excelKey;
+		this.mapColor = args.item.mapColor;
 		
-		MapView.markerArray = [];
-		MapView.featureData = [];		
+		this.markerArray = [];
+		this.featureData = [];		
 		
-		MapView.excelDataRetrieve(MapView.excelKey);
-	}
+		this.excelDataRetrieve(this.excelKey);
+	},
 
 	//excelData retrieve
-	static excelDataRetrieve( excelKey ) {
+	excelDataRetrieve : function( excelKey ) {
 		var url = "/admin/excelDataRetrieveCount";
 		var sendData = {
 			excelKey : excelKey ,
@@ -148,28 +147,28 @@ class MapView {
 	            data: sendData,
 	            type: 'POST',
 	            async : false,
-	            success: MapView.cbExcelDataRetrieveResult,
-	            error  : MapView.cbExcelRetrieveError,
+	            success: this.cbExcelDataRetrieveResult,
+	            error  : this.cbExcelRetrieveError,
 	     });
 		 
-		 MapView.startNum = 1;
-		 MapView.pageSize = 1;
+		 this.startNum = 1;
+		 this.pageSize = 1;
 	
 		 
-	}
+	},
 
 	//그리드 아이템 선택시 web service 콜백함수
-	static cbExcelDataRetrieveResult( data ) {
+	cbExcelDataRetrieveResult : function( data ) {
 		
-		/*if ( MapView.vmap.data ) {
-			MapView.vmap.data.forEach(function(feature) {
-				MapView.vmap.data.remove(feature);
+		/*if ( this.vmap.data ) {
+			this.vmap.data.forEach(function(feature) {
+				this.vmap.data.remove(feature);
 			});
-			MapView.featureArray = null;
+			this.featureArray = null;
 		}
 		*/
 
-		MapView.featureArray = new Array();
+		this.featureArray = new Array();
 			
 			//폴리곤 데이터 그리기
 		var list = null;
@@ -185,7 +184,7 @@ class MapView {
 			
 			var url = "/admin/excelDataRetrieveByPaging";
 			var sendData = {
-				excelKey : MapView.excelKey ,
+				excelKey : this.excelKey ,
 				startNum : nStartNum,
 				pageSize : 20,
 				onlyData : "Y",
@@ -214,59 +213,59 @@ class MapView {
 				    			markerData.lng = ( list[nIdx].xPos != null && list[nIdx].xPos != '' ) ? Number(list[nIdx].xPos) : 0;
 				    			markerData.polygonData = polygonData;
 				    			
-				    			if ( MapView.markerArray.length <= dataTotalCnt ) MapView.markerArray.push(markerData);
+				    			if ( this.markerArray.length <= dataTotalCnt ) this.markerArray.push(markerData);
 			    			}
 		            	}
 		            	list = null;
 		            }
 		     });
 			 
-			 if ( dataTotalCnt == MapView.markerArray.length || MapView.markerArray.length > dataTotalCnt) break;
+			 if ( dataTotalCnt == this.markerArray.length || this.markerArray.length > dataTotalCnt) break;
 		}
 		
-		MapView.drawMapInfo();
-	}
+		this.drawMapInfo();
+	},
 	
 	
-	static drawMapInfo() {
+	drawMapInfo : function () {
 		console.log('drawMapInfo');
-		//console.log( MapView.markerArray);
+		//console.log( this.markerArray);
 
-		if (MapView.markerArray.length <= 0 ) return;
-		var list = MapView.markerArray;
+		if (this.markerArray.length <= 0 ) return;
+		var list = this.markerArray;
 		
 		var polygonData = null;
 		var feature  = null;
 		for ( var idx=0; idx < list.length; idx++ ) {
 			try {
 				polygonData = JSON.parse(list[idx].polygonData);
-				feature = MapView.vmap.data.addGeoJson(polygonData.featureCollection,{idPropertyName:"id_" + (idx + 1) });
-				MapView.featureData.push( feature );
+				feature = this.vmap.data.addGeoJson(polygonData.featureCollection,{idPropertyName:"id_" + (idx + 1) });
+				this.featureData.push( feature );
 			} catch ( e ) { }
 			
 			/*var marker = new MarkerWithLabel({
 				position: {lat: Number(list[idx].yPos), lng: Number(list[idx].xPos)},
-				map: MapView.vmap,
+				map: this.vmap,
 				icon: ' ',  
 				labelContent: list[idx].shortAddr,
 				labelClass: "label",
 				labelStyle: {opacity: 0.5},
 			});
 			
-			MapView.markerArray.push(marker);*/
+			this.markerArray.push(marker);*/
 		}	
 		
-		MapView.vmap.data.setStyle({
+		this.vmap.data.setStyle({
 			strokeColor: '#000000',
 			strokeWeight: 1,
 			strokeOpacity: 0.8,
-			fillColor: MapView.mapColor,
+			fillColor: this.mapColor,
 			fillOpacity: 0.5
 		});
-	}
+	}, 
 	
 	//화면 로드시 그리드 첫번째 아이템 자동 선택 
-	static refreshedGrid( args ) {
+	refreshedGrid : function ( args ) {
 		/**
 		if (args.grid.data.length) {
 	        var gridBody = $("#jgUploadList").find('.jsgrid-grid-body');

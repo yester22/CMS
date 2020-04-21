@@ -17,6 +17,8 @@
 <!-- jquery ui -->
 <link rel="stylesheet" href="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 
+<link rel="stylesheet" href="/resources/css/spinner.css">
+
 <!-- jQuery -->
 <script src="/resources/bootstrap/adminite/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -76,7 +78,6 @@
 <script type="text/javascript" src="/resources/js/common/pageMove.js"></script>
 <script type="text/javascript" src="/resources/js/common/ajax.js"></script>
 <script type="text/javascript" src="/resources/js/common/msgBox.js"></script>
- <!-- 
 <script type="text/javascript" src="/resources/js/common/commonUtil.js"></script>
-<script type="text/javascript" src="/resources/js/common/jsGridUtil.js"></script>
- -->
+ <script type="text/javascript" src="/resources/js/common/jsGridUtil.js"></script>
+ 
