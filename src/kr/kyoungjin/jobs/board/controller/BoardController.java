@@ -131,6 +131,7 @@ public class BoardController extends AbstractController {
 				result.put("title",   rtnList.getTitle());
 				result.put("body",   rtnList.getBody());
 				result.put("tag",   rtnList.getTag());
+				result.put("htmlYn",   rtnList.getHtmlYn());
 			}
 
 			result.put(JSONResult.RESULT, JSONResult.OK);

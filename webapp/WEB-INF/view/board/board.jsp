@@ -13,6 +13,10 @@
 		background-position: right center;
 	}
 </style>
+
+	<!-- summernote -->
+  <link rel="stylesheet" href="/resources/bootstrap/adminite//plugins/summernote/summernote-bs4.css">
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -123,16 +127,25 @@
 	                </div>
 	                <div class="form-group row">
 	                	<label for="boardContent" class="col-sm-2 col-form-label">내용</label>
-	                    <div class="mb-3">
-	                		<textarea class="textarea" name="boardContent" id="boardContent" value="" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+	                    <div class="col-sm-10">
+	                		<textarea class="textarea" name="boardContent" id="boardContent" value="" placeholder="Place some text here" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
 	              		</div>
 	                </div>
 	                <div class="form-group row">
 	                	<label for="pageBlockSize" class="col-sm-2 col-form-label">태그</label>
 	                    <div class="col-sm-10">
-	                    	<input type="text" name="boardTag" id="boardTag" value="" size="30" maxlength="11" class="form-control" placeholder="페이징 블락 사이즈를 입력해주세요" />
+	                    	<input type="text" name="boardTag" id="boardTag" value="" size="30" maxlength="11" class="form-control" placeholder="태그를 입력해주세요" />
 	                    </div>
 	                </div>
+	                <div class="form-group row">
+	                 	<label for="boardCd" class="col-sm-2 col-form-label">HTML 존재유무</label>
+	                    <div class="col-sm-10">
+	                    	<select class="form-control select2"  name="boardHtmlYn" id="boardHtmlYn" style="width: 100%;">
+                 				<option value="Y">존재함</option>
+                 				<option value="N">존재안함</option>
+                 			</select>
+	                    </div>
+					</div>
 				</div><!-- card body end -->
 				<div class="card-footer">
 					<button type="button" id="btnCancle" class="btn btn-primary float-right" style="margin-left: 5px;">취소</button>
@@ -146,5 +159,12 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
-<script type="text/javascript" src="/resources/js/cms/board/boardMng.js"></script>
+<!-- Summernote -->
+<script src="/resources/bootstrap/adminite/plugins/summernote/summernote-bs4.min.js"></script>
+<script>
+  $(function () {
+    // Summernote
+    $('.textarea').summernote()
+  })
+</script>
+<script type="text/javascript" src="/resources/js/cms/board/board.js"></script>

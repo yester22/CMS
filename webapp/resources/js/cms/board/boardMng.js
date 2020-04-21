@@ -45,9 +45,9 @@ $(document).ready(function(){
 		        { title : '게시판이름', 		name: 'boardNm',		type: 'text',  align: 'left', 	width: 200 },
 		        { title : '상태', 			name: 'useYn', 			type: 'text',  align: 'center', width: 100 },
 		        { title : '등록일', 			name: 'regDate',		type: 'text',  align: 'center', width: 150 },
-		        { title : '등록자', 			name: 'regId',			type: 'text',  align: 'center', width: 150 },
+		        { title : '등록자', 			name: 'regId',			type: 'text',  align: 'center', width: 100 },
 		        { title : '수정일', 			name: 'uptDate',		type: 'text',  align: 'center', width: 150 },
-		        { title : '수정자', 			name: 'uptId', 			type: 'text',  align: 'center', width: 150 }
+		        { title : '수정자', 			name: 'uptId', 			type: 'text',  align: 'center', width: 100 }
 		  ],
 		  rowClick: function(args) { BoardMngList.btnBoardMngRead(args); }
 	});

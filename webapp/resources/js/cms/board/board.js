@@ -43,10 +43,11 @@ $(document).ready(function(){
 	            { title : '순번', 			name: 'rownum', 		type: 'text',  align: 'center', width: 50  },
 	            { title : '게시판명', 			name: 'boardNm',		type: 'text',  align: 'center', width: 150 },
 		        { title : '게시물 제목', 		name: 'title',			type: 'text',  align: 'left', 	width: 200 },
+		        { title : 'HTML존재', 		name: 'htmlYn',			type: 'text',  align: 'center', width: 100 },
 		        { title : '등록일', 			name: 'regDate',		type: 'text',  align: 'center', width: 150 },
-		        { title : '등록자', 			name: 'regId',			type: 'text',  align: 'center', width: 150 },
+		        { title : '등록자', 			name: 'regId',			type: 'text',  align: 'center', width: 100 },
 		        { title : '수정일', 			name: 'uptDate',		type: 'text',  align: 'center', width: 150 },
-		        { title : '수정자', 			name: 'uptId', 			type: 'text',  align: 'center', width: 150 }
+		        { title : '수정자', 			name: 'uptId', 			type: 'text',  align: 'center', width: 100 }
 		  ],
 		  rowClick: function(args) { BoardList.btnBoardRead(args); }
 	});
@@ -75,7 +76,11 @@ class BoardList {
 	}
 
 	static cbBoardCodeReadResult( data ) {
-		alert(data.LIST);
+		var list = null;
+		list = data.LIST;
+		for(var i = 0;i < list.length;i++) {
+			alert(list[i].boardCd);
+		}
 	}
 
 	/*
@@ -184,6 +189,7 @@ class BoardList {
 		$("#boardTitle").val("");
 		$("#boardContent").val("");
 		$("#boardTag").val("");
+		$("#boardHtmlYn").val("Y");
 		$(".saveTextCg").text("등록");
 		$(".boardRegBox").show();
 
@@ -219,6 +225,7 @@ class BoardList {
         formData.append("boardTitle", $("#boardTitle").val());
         formData.append("boardContent", $("#boardContent").val());
         formData.append("boardTag", $("#boardTag").val());
+        formData.append("boardHtmlYn", $("#boardHtmlYn").val());
                 
         $.ajax({
             url: url,
@@ -252,6 +259,7 @@ class BoardList {
 		$("#boardTitle").val("");
 		$("#boardContent").val("");
 		$("#boardTag").val("");
+		$("#boardHtmlYn").val("Y");
 		$(".boardRegBox").hide();
 	}
 
@@ -281,6 +289,7 @@ class BoardList {
 		$("#boardTitle").val(data.title);
 		$("#boardContent").val(data.body);
 		$("#boardTag").val(data.tag);
+		$("#boardHtmlYn").val(data.htmlYn);
 		$(".saveTextCg").text("수정");
 		$(".boardRegBox").show();
 

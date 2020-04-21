@@ -57,6 +57,7 @@ public class BoardServiceImpl implements BoardService {
 		saveBoardUpload.setTitle(params.get("boardTitle").toString());
 		saveBoardUpload.setBody(params.get("boardContent").toString());
 		saveBoardUpload.setTag(params.get("boardTag").toString());
+		saveBoardUpload.setHtmlYn(params.get("boardHtmlYn").toString());
 
 		if("C".equals(boardSaveKey)) {
 			saveBoardUpload.setRegId(uploaderId);
