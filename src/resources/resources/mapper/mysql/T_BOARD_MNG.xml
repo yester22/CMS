@@ -82,7 +82,6 @@
 			, USE_YN
 			, REG_DATE
 			, REG_ID
-			, DEL_YN
 		)
 		VALUES(
 			  #{boardCd}
@@ -94,7 +93,6 @@
 			, #{useYn}  
 			, NOW()
 			, #{regId}
-			, 'N'
 		 )
 	</insert>
 
@@ -111,7 +109,7 @@
 	</select>
 
 	<update id="updateBoardMng" parameterType="BoardMngVo">
-		/** kr.kyoungjin.dataobject.dao.BoardMngDao.BoardMngVo */
+		/** kr.kyoungjin.dataobject.dao.BoardMngDao.updateBoardMng */
 		UPDATE T_BOARD_MNG
 		  SET BOARD_NM = #{boardNm}
 		    , LIST_ROW_CNT = #{listRowCnt}
@@ -123,29 +121,13 @@
 		    , UPT_ID = #{uptId}
 		WHERE BOARD_CD = #{boardCd}
 	</update>
-	
 
-	<select id="view" parameterType="BoardMngVo" resultType="BoardMngVo">
-		
+	<select id="selectBoardCode" parameterType="hashmap" resultType="BoardMngVo">
+		/** kr.kyoungjin.dataobject.dao.BoardMngDao.selectBoardCode  */
+		SELECT a.BOARD_CD,
+			   a.BOARD_NM
+		  FROM T_BOARD_MNG a
+		 WHERE a.USE_YN = 'Y'
+		   AND a.DEL_YN = 'N'
 	</select>
-	 
-	 <select id="count"  parameterType="BoardMngVo"  resultType="Integer">
-	 
-	 </select>
-	 
-	 <insert id="insert" parameterType="BoardMngVo" >
-	 	
-	 </insert>
-	 
-	 
-	 <update id="update" parameterType="BoardMngVo">
-	   
-	 </update>
-	 
-	 
-	 <delete id="delete" parameterType="BoardMngVo">
-	  
-	 </delete>
-	 
-	 
 </mapper>	

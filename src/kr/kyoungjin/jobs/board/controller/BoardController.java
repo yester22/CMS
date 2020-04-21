@@ -1,6 +1,8 @@
 package kr.kyoungjin.jobs.board.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,24 +18,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.kyoungjin.common.abstractObject.AbstractController;
 import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
-import kr.kyoungjin.dataobject.vo.BoardMngVo;
+import kr.kyoungjin.dataobject.vo.BoardVo;
 import kr.kyoungjin.dataobject.vo.MemberVo;
-import kr.kyoungjin.jobs.board.service.BoardMngService;
+import kr.kyoungjin.jobs.board.service.BoardService;
 import kr.kyoungjin.jobs.system.message.service.IMessageService;
 import net.sf.json.JSONObject;
 
 @CrossOrigin("*")
 @RestController
-public class BoardMngController extends AbstractController {
-	private Logger logger  = LoggerFactory.getLogger(BoardMngController.class);
+public class BoardController extends AbstractController {
+	private Logger logger  = LoggerFactory.getLogger(BoardController.class);
 	
 	@Autowired
-	private BoardMngService BoardMngService;
+	private BoardService BoardService;
 	
 	@Autowired
 	private IMessageService messageService;
@@ -45,12 +48,12 @@ public class BoardMngController extends AbstractController {
 	 * @return : JSONObject
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/admin/boardMngList", method = RequestMethod.POST)
-	public JSONObject boardMngList (@RequestParam Map<String,Object> params) {
+	@RequestMapping(value = "/admin/BoardList", method = RequestMethod.POST)
+	public JSONObject BoardList (@RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
 		
 		try {
-			Map<String,Object> rtnList = BoardMngService.getBoardMngList(params);
+			Map<String,Object> rtnList = BoardService.getBoardList(params);
 			if ( rtnList.get("LIST") != null ) {
 				result.put(JSONResult.LIST,   rtnList.get("LIST"));	
 			}
@@ -66,8 +69,8 @@ public class BoardMngController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/boardMngDelete", method = RequestMethod.POST)
-	public JSONObject boardMngDelete(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws Exception {
+	@RequestMapping(value = "/admin/BoardDelete", method = RequestMethod.POST)
+	public JSONObject BoardDelete(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws Exception {
 		JSONObject result = new JSONObject();
 		
 		String deleteData = params.get("deleteData").toString();
@@ -81,7 +84,7 @@ public class BoardMngController extends AbstractController {
 		}
 		
 		try {
-			BoardMngService.deleteBoardMng (params );
+			BoardService.deleteBoard (params );
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch(Exception e ) {
 			result.put(JSONResult.RESULT, JSONResult.ERROR);
@@ -90,8 +93,8 @@ public class BoardMngController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/boardMngReg", method = RequestMethod.POST)
-	public JSONObject boardMngReg (MultipartHttpServletRequest request , @RequestParam Map<String,Object> params) {
+	@RequestMapping(value = "/admin/BoardReg", method = RequestMethod.POST)
+	public JSONObject BoardReg (MultipartHttpServletRequest request , @RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
 		
 		try {
@@ -99,7 +102,7 @@ public class BoardMngController extends AbstractController {
 			List<String> uploadFilesId = new ArrayList<String>();
 			String boardId = "";
 
-			boardId = BoardMngService.insertBoardMng(params, sessionMemberInfo.getMemberId());
+			boardId = BoardService.insertBoard(params, sessionMemberInfo.getMemberId());
 			if (boardId != null && !"".equals(boardId) ) {
 				uploadFilesId.add(boardId);
 			}
@@ -114,42 +117,22 @@ public class BoardMngController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/boardMngRead", method = RequestMethod.POST)
-	public JSONObject boardMngRead (@RequestParam Map<String,Object> params) {
+	@RequestMapping(value = "/admin/BoardRead", method = RequestMethod.POST)
+	public JSONObject BoardRead (@RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
-		BoardMngVo rtnList = null;
+		BoardVo rtnList = null;
 		
 		try {
-			rtnList = BoardMngService.getBoardMngRead(params);
+			rtnList = BoardService.getBoardRead(params);
 			if ( rtnList != null ) {
 				System.out.println("rtnList=============="+rtnList);
 				result.put("boardCd",   rtnList.getBoardCd());
-				result.put("boardNm",   rtnList.getBoardNm());
-				result.put("listRowCnt",   rtnList.getListRowCnt());
-				result.put("listBlockCnt",   rtnList.getListBlockCnt());
-				result.put("titleSplitLen",   rtnList.getTitleSplitLen());
-				result.put("contentsSplitLen",   rtnList.getContentsSplitLen());
-				result.put("useYn",   rtnList.getUseYn());
+				result.put("boardSeq",   rtnList.getBoardSeq());
+				result.put("title",   rtnList.getTitle());
+				result.put("body",   rtnList.getBody());
+				result.put("tag",   rtnList.getTag());
 			}
 
-			result.put(JSONResult.RESULT, JSONResult.OK);
-		} catch( Exception e ) {
-			e.printStackTrace();
-			result.put(JSONResult.RESULT, JSONResult.ERROR);
-		}
-		return result;
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/admin/boardCodeRead", method = RequestMethod.POST)
-	public JSONObject boardCordRead (@RequestParam Map<String,Object> params) {
-		JSONObject result = new JSONObject();
-		
-		try {
-			Map<String,Object> rtnList = BoardMngService.getBoardCode(params);
-			if ( rtnList.get("LIST") != null ) {
-				result.put(JSONResult.LIST,   rtnList.get("LIST"));	
-			}
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch( Exception e ) {
 			e.printStackTrace();

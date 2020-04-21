@@ -4,30 +4,110 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kyoungjin.dataobject.dao.BoardDao">
 
-	<select id="list" parameterType="BoardVo" resultType="BoardVo">
-		
+	<sql id="commonBoard">
+	 	SELECT a.BOARD_CD,
+			   a.BOARD_SEQ,
+			   a.TAG,
+			   a.TITLE,
+			   a.BODY,
+			   a.DEL_YN,
+			   a.REG_ID,
+			   a.REG_DATE,
+			   a.UPT_ID,
+			   a.UPT_DATE
+	 	 FROM T_BOARD a
+		<include refid="commonBoardWhere"></include>
+	</sql>
+
+	<sql id="commonBoardWhere">
+		<where>
+			<if test='searchBoardCode != null and !"".equals(searchBoardCode)'>
+				AND a.BOARD_CD = #{searchBoardCode}
+			</if>
+			<if test='searchTitle != null and !"".equals(searchTitle)'>
+				AND a.TITLE like concat('%', concat(#{searchTitle}, '%'))
+			</if>
+			<if test='searchContent != null and !"".equals(searchContent)'>
+				AND a.BODY like concat('%', concat(#{searchContent}, '%'))
+			</if>
+	 	</where>
+	</sql>
+
+	<select id="selectBoardList" parameterType="hashmap" resultType="BoardVo">
+		/** kr.kyoungjin.dataobject.dao.BoardDao.selectBoardList  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonBoard"></include>
+				    )a 
+		) as b
 	</select>
-	 
-	<select id="view" parameterType="BoardVo" resultType="BoardVo">
-		
+
+	<select id="selectBoardListCount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.BoardDao.selectBoardListCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonBoard"></include>
+	      )a 
 	</select>
-	 
-	 <select id="count"  parameterType="BoardVo"  resultType="Integer">
-	 
-	 </select>
-	 
-	 <insert id="insert" parameterType="BoardVo" >
-	 	
-	 </insert>
-	 
-	 
-	 <update id="update" parameterType="BoardVo">
-	   
-	 </update>
-	 
-	 
-	 <delete id="delete" parameterType="BoardVo">
-	  
-	 </delete>
-	 
+
+	<delete id="deleteBoard" parameterType="hashmap">
+	 	UPDATE T_BOARD
+	 	  SET DEL_YN = 'Y'
+	 	 WHERE BOARD_SEQ IN
+	 	 	<foreach collection="deleteArray" item="item"  open="(" close=")" separator=",">
+				#{item.value}
+ 			</foreach>
+	</delete>
+
+	<insert id="insertBoard" parameterType="BoardVo">
+		/** kr.kyoungjin.dataobject.dao.BoardDao.insertBoard */
+		INSERT INTO T_BOARD (
+			  BOARD_CD
+			, TITLE
+			, BODY
+			, REG_ID
+			, REG_DATE
+			, TAG
+		)
+		VALUES(
+			  #{boardCd}
+			, #{title} 
+			, #{body} 
+			, #{regId}
+			, NOW()
+			, #{tag}
+		)
+		 
+		<selectKey keyProperty="BOARD_SEQ" resultType="Int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<select id="selectBoardRead" parameterType="BoardVo" resultType="BoardVo">
+	 	SELECT a.BOARD_CD,
+			   a.BOARD_SEQ,
+			   a.TITLE,
+			   a.BODY,
+			   a.TAG
+	 	 FROM T_BOARD a
+	 	WHERE BOARD_SEQ = #{boardSeq}
+	</select>
+
+	<update id="updateBoard" parameterType="BoardVo">
+		/** kr.kyoungjin.dataobject.dao.BoardDao.updateBoard */
+		UPDATE T_BOARD
+		  SET TITLE = #{title}
+		    , BODY = #{body}
+		    , TAG = #{tag}
+		    , UPT_ID = #{uptId}
+		    , UPT_DATE = NOW()
+		WHERE BOARD_SEQ = #{boardSeq}
+	</update>
 </mapper>	

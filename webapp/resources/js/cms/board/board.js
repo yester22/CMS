@@ -6,13 +6,13 @@
  */
 $(document).ready(function(){
 
-	BoardMngList.init();
+	BoardList.init();
 	
-	$("#btnSearch").bind("click", BoardMngList.btnBoardMng);
-	$("#btnDelete").bind("click", BoardMngList.btnDelete);
-	$("#btnCreat").bind("click", BoardMngList.btnBoardMngView);
-	$("#btnUpload").bind("click", BoardMngList.btnBoardMngReg);
-	$("#btnCancle").bind("click", BoardMngList.btnBoardMngCancle);
+	$("#btnSearch").bind("click", BoardList.btnBoard);
+	$("#btnDelete").bind("click", BoardList.btnDelete);
+	$("#btnCreat").bind("click", BoardList.btnBoardView);
+	$("#btnUpload").bind("click", BoardList.btnBoardReg);
+	$("#btnCancle").bind("click", BoardList.btnBoardCancle);
 	 
 	$("#jgDataList").jsGrid({
 		 height: "300px",
@@ -32,24 +32,23 @@ $(document).ready(function(){
 	     fields: [
 	    		{
 	                headerTemplate: function() {
-	                    return $("<input>").attr("type", "checkbox").on("change", BoardMngList.checkAllItem);
+	                    return $("<input>").attr("type", "checkbox").on("change", BoardList.checkAllItem);
 	                },
 	                itemTemplate: function(_, item) {
-	                    return $("<input>").attr("type", "checkbox").attr('name', 'boardData').attr('value', item.boardCd);
+	                    return $("<input>").attr("type", "checkbox").attr('name', 'boardData').attr('value', item.boardSeq);
 	                },
 	                align: "center",
 	                width: 50
 	            },
 	            { title : '순번', 			name: 'rownum', 		type: 'text',  align: 'center', width: 50  },
-	            { title : '게시판코드', 		name: 'boardCd',		type: 'text',  align: 'center', width: 100  },
-		        { title : '게시판이름', 		name: 'boardNm',		type: 'text',  align: 'left', 	width: 200 },
-		        { title : '상태', 			name: 'useYn', 			type: 'text',  align: 'center', width: 100 },
+	            { title : '게시판명', 			name: 'boardNm',		type: 'text',  align: 'center', width: 150 },
+		        { title : '게시물 제목', 		name: 'title',			type: 'text',  align: 'left', 	width: 200 },
 		        { title : '등록일', 			name: 'regDate',		type: 'text',  align: 'center', width: 150 },
 		        { title : '등록자', 			name: 'regId',			type: 'text',  align: 'center', width: 150 },
 		        { title : '수정일', 			name: 'uptDate',		type: 'text',  align: 'center', width: 150 },
 		        { title : '수정자', 			name: 'uptId', 			type: 'text',  align: 'center', width: 150 }
 		  ],
-		  rowClick: function(args) { BoardMngList.btnBoardMngRead(args); }
+		  rowClick: function(args) { BoardList.btnBoardRead(args); }
 	});
 });
 
@@ -58,43 +57,58 @@ $(document).ready(function(){
 * LOGIN 작업 클래스 
 */
 
-class BoardMngList {
+class BoardList {
 	
 	static init() {
-		this.boardCd = '';
+		this.boardSeq = '';
+
+		var url = "/admin/boardCodeRead";
+		var formData = {};
+		$.ajax({
+	            url: url,
+	            dataType: 'json', 
+	            data: formData,
+	            type: 'POST',
+	            success: BoardList.cbBoardCodeReadResult,
+	            error  : BoardList.cbBoardError,
+	    });
 	}
-	
+
+	static cbBoardCodeReadResult( data ) {
+		alert(data.LIST);
+	}
+
 	/*
 	* e : 이벤트 객체
 	*/ 
-	static btnBoardMng ( e ) {
+	static btnBoard ( e ) {
 		e.preventDefault();
-		var url = "/admin/boardMngList";
+		var url = "/admin/BoardList";
 		
-		$("#pageSize").val(BoardMngList.pageSize);
-		$("#currentPage").val(BoardMngList.currentPage);
-		$("#startNum").val(BoardMngList.startNum);
+		$("#pageSize").val(BoardList.pageSize);
+		$("#currentPage").val(BoardList.currentPage);
+		$("#startNum").val(BoardList.startNum);
 		
 		var formData = $("#searchForm").serialize();
 
-		BoardMngList.boardCd  = '';
+		BoardList.boardSeq  = '';
 		
         $.ajax({
             url: url,
             dataType: 'json', 
             data: formData,
             type: 'POST',
-            success: BoardMngList.cbBoardMngResult,
-            error  : BoardMngList.cbBoardMngError,
+            success: BoardList.cbBoardResult,
+            error  : BoardList.cbBoardError,
         });
 	}
 	//
-	static cbBoardMngResult ( data ) {
+	static cbBoardResult ( data ) {
 		$("#jgDataList").jsGrid("option", "data", data.LIST);
 		$("#jgDataList").jsGrid("option", "itemsCount", data.COUNT);
 	}
 	
-	static cbBoardMngError( error ) {
+	static cbBoardError( error ) {
 		console.log("result error");
 		console.log( error );
 	}
@@ -105,8 +119,8 @@ class BoardMngList {
 	}
 
 	static btnDelete(e) {
-		if ( BoardMngList.boardCd == '') {
-			msgBox.alert("게시판을 선택 후 삭제하세요");
+		if ( BoardList.boardSeq == '') {
+			msgBox.alert("게시물을 선택 후 삭제하세요");
 			return false;
 		};
 		
@@ -128,13 +142,13 @@ class BoardMngList {
 			return false;
 		}
 		
-		var title = "게시판 삭제 확인";
-		var msg = '게시판을 삭제하시겠습니까?';
+		var title = "게시물 삭제 확인";
+		var msg = '게시물을 삭제하시겠습니까?';
 		msgBox.confirm (title, msg, function() {
-			var url = "/admin/boardMngDelete";
+			var url = "/admin/boardDelete";
 			var sendData = {
 				deleteData : checkVal ,
-				boardCd : BoardMngList.boardCd
+				boardSeq : BoardList.boardSeq
 			}			
 
 			 $.ajax({
@@ -142,37 +156,34 @@ class BoardMngList {
 		            dataType: 'json', 
 		            data: sendData,
 		            type: 'POST',
-		            success: BoardMngList.cbBoardMngDeleteResult,
-		            error  : BoardMngList.cbBoardMngError,
+		            success: BoardList.cbBoardDeleteResult,
+		            error  : BoardList.cbBoardError,
 		     });
 		});
 	}
 
 	//삭제후 실행되는 콜백함수 
-	static cbBoardMngDeleteResult(data) {
+	static cbBoardDeleteResult(data) {
 		if ( data.RESULT == "OK") {
 			msgBox.alert('데이터가 삭제되었습니다');
 			
 			var args = {
 				item : {
-					boardCd : BoardMngList.boardCd	
+					boardSeq : BoardList.boardSeq	
 				}		
 			};
 			
-			BoardMngList.btnBoardMng(args);
+			BoardList.btnBoard(args);
 		}
 	}
 
-	static btnBoardMngView() {
-		$(".titleTextCg").text("게시판 등록");
+	static btnBoardView() {
+		$(".titleTextCg").text("게시물 등록");
 		$("#boardSaveKey").val("C");
-		$("#boardCode").val("");
-		$("#boardName").val("");
-		$("#listSize").val("");
-		$("#pageBlockSize").val("");
-		$("#titleLength").val("");
-		$("#contentLength").val("");
-		$("#useStates").val("Y");
+		$("#boardCord").val("");
+		$("#boardTitle").val("");
+		$("#boardContent").val("");
+		$("#boardTag").val("");
 		$(".saveTextCg").text("등록");
 		$(".boardRegBox").show();
 
@@ -180,40 +191,34 @@ class BoardMngList {
 		$("html body").animate({scrollTop:offset.top},2000);
 	}
 
-	static btnBoardMngReg ( e ) {
-		if($("#boardName").val() == "") {
-			alert("게시판이름을 등록하세요.");
-			$("#boardName").focus();
+	static btnBoardReg ( e ) {
+		if($("#boardCord").val() == "") {
+			alert("게시판 명을 선택하세요.");
+			$("#boardCord").focus();
 			return false;
-		} else if($("#listSize").val() == "") {
-			alert("리스트 목록 사이즈를 등록하세요.");
-			$("#listSize").focus();
+		} else if($("#boardTitle").val() == "") {
+			alert("제목을 등록하세요.");
+			$("#boardTitle").focus();
 			return false;
-		} else if($("#pageBlockSize").val() == "") {
-			alert("페이징 블락 사이즈를 등록하세요.");
-			$("#pageBlockSize").focus();
+		} else if($("#boardContent").val() == "") {
+			alert("내용을 등록하세요.");
+			$("#boardContent").focus();
 			return false;
-		} else if($("#titleLength").val() == "") {
-			alert("제목길이를 등록하세요.");
-			$("#titleLength").focus();
-			return false;
-		} else if($("#contentLength").val() == "") {
-			alert("내용길이를 등록하세요.");
-			$("#contentLength").focus();
+		} else if($("#boardTag").val() == "") {
+			alert("태그를 등록하세요.");
+			$("#boardTag").focus();
 			return false;
 		}
 		e.preventDefault();
-		var url = "/admin/boardMngReg";
+		var url = "/admin/boardReg";
 		var form = $("#uploadForm")[0];
         var formData = new FormData(  form );
         formData.append("boardSaveKey", $("#boardSaveKey").val());
         formData.append("boardCode", $("#boardCode").val());
-        formData.append("boardName", $("#boardName").val());
-        formData.append("listSize", $("#listSize").val());
-        formData.append("pageBlockSize", $("#pageBlockSize").val());
-        formData.append("titleLength", $("#titleLength").val());
-        formData.append("contentLength", $("#contentLength").val());
-        formData.append("useStates", $("#useStates").val());
+        formData.append("boardSeq", $("#boardSeq").val());
+        formData.append("boardTitle", $("#boardTitle").val());
+        formData.append("boardContent", $("#boardContent").val());
+        formData.append("boardTag", $("#boardTag").val());
                 
         $.ajax({
             url: url,
@@ -221,12 +226,12 @@ class BoardMngList {
             contentType: false,
             data: formData,
             type: 'POST',
-            success: BoardMngList.cbBoardMngRegResult,
-            error  : BoardMngList.cbBoardMngError,
+            success: BoardList.cbBoardRegResult,
+            error  : BoardList.cbBoardError,
         });
 	}
 
-	static cbBoardMngRegResult ( data ) {
+	static cbBoardRegResult ( data ) {
 		if ( data != null ) {
 			if ( data.RESULT == "OK" ) {
 				var title = "";
@@ -241,24 +246,21 @@ class BoardMngList {
 		}
 	}
 
-	static btnBoardMngCancle() {
+	static btnBoardCancle() {
 		$("#boardSaveKey").val("C");
-		$("#boardCode").val("");
-		$("#boardName").val("");
-		$("#listSize").val("");
-		$("#pageBlockSize").val("");
-		$("#titleLength").val("");
-		$("#contentLength").val("");
-		$("#useStates").val("Y");
+		$("#boardCord").val("");
+		$("#boardTitle").val("");
+		$("#boardContent").val("");
+		$("#boardTag").val("");
 		$(".boardRegBox").hide();
 	}
 
-	static btnBoardMngRead( args ) {
-		BoardMngList.boardCd = args.item.boardCd;
+	static btnBoardRead( args ) {
+		BoardList.boardSeq = args.item.boardSeq;
 		
-		var url = "/admin/boardMngRead";
+		var url = "/admin/boardRead";
 		var sendData = {
-			boardCd : args.item.boardCd
+			boardSeq : args.item.boardSeq
 		};
 		
 		$.ajax({
@@ -266,21 +268,19 @@ class BoardMngList {
 	            dataType: 'json', 
 	            data: sendData,
 	            type: 'POST',
-	            success: BoardMngList.cbBoardMngReadResult,
-	            error  : BoardMngList.cbBoardMngError,
+	            success: BoardList.cbBoardReadResult,
+	            error  : BoardList.cbBoardError,
 	    });
 	}
 
-	static cbBoardMngReadResult( data ) {
-		$(".titleTextCg").text("게시판 수정");
+	static cbBoardReadResult( data ) {
+		$(".titleTextCg").text("게시물 수정");
 		$("#boardSaveKey").val("E");
-		$("#boardCode").val(data.boardCd);
-		$("#boardName").val(data.boardNm);
-		$("#listSize").val(data.listRowCnt);
-		$("#pageBlockSize").val(data.listBlockCnt);
-		$("#titleLength").val(data.titleSplitLen);
-		$("#contentLength").val(data.contentsSplitLen);
-		$("#useStates").val(data.useYn);
+		$("#boardCord").val(data.boardCd);
+		$("#boardSeq").val(data.boardSeq);
+		$("#boardTitle").val(data.title);
+		$("#boardContent").val(data.body);
+		$("#boardTag").val(data.tag);
 		$(".saveTextCg").text("수정");
 		$(".boardRegBox").show();
 

@@ -51,6 +51,7 @@ public class BoardMngServiceImpl implements BoardMngService {
 	public String insertBoardMng(Map<String,Object> params , String uploaderId) throws Exception {
 
 		String sNewBoardKey = BoardMngDao.selectNewBoardKey();
+		String boardSaveKey = params.get("boardSaveKey").toString();
 		
 		BoardMngVo saveBoardUpload = new BoardMngVo();
 		saveBoardUpload.setBoardNm(params.get("boardName").toString());
@@ -60,7 +61,7 @@ public class BoardMngServiceImpl implements BoardMngService {
 		saveBoardUpload.setContentsSplitLen(params.get("contentLength").toString());
 		saveBoardUpload.setUseYn(params.get("useStates").toString());
 
-		if("C".equals(params.get("boardSaveKey").toString())) {
+		if("C".equals(boardSaveKey)) {
 			saveBoardUpload.setBoardCd(sNewBoardKey);
 			saveBoardUpload.setRegId(uploaderId);
 			
@@ -72,7 +73,7 @@ public class BoardMngServiceImpl implements BoardMngService {
 			BoardMngDao.updateBoardMng(saveBoardUpload);
 		}
 
-		return sNewBoardKey;
+		return boardSaveKey;
 	}
 
 	@Override
@@ -80,5 +81,13 @@ public class BoardMngServiceImpl implements BoardMngService {
 		BoardMngVo paramObj = new BoardMngVo();
 		paramObj.setBoardCd(params.get("boardCd").toString());
 		return BoardMngDao.selectBoardMngRead(paramObj);
+	}
+
+	@Override
+	public Map<String, Object> getBoardCode(Map<String, Object> param) throws Exception {
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("LIST",  BoardMngDao.selectBoardCode(param));
+		
+		return returnMap;
 	}
 }
