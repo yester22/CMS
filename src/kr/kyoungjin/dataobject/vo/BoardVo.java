@@ -17,6 +17,8 @@ public class BoardVo  extends AbstractVo  {
 	private String uptDate;
 	private String uptId;
 
+	private long   rownum;
+
 	public String getBoardCd() {
 		return boardCd;
 	}
@@ -94,5 +96,11 @@ public class BoardVo  extends AbstractVo  {
 	}
 	public void setUptId(String uptId) {
 		this.uptId = uptId;
+	}
+	public long getRownum() {
+		return rownum;
+	}
+	public void setRownum(long rownum) {
+		this.rownum = rownum;
 	}
 }

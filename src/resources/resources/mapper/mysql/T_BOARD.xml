@@ -72,6 +72,7 @@
 		/** kr.kyoungjin.dataobject.dao.BoardDao.insertBoard */
 		INSERT INTO T_BOARD (
 			  BOARD_CD
+			, BOARD_SEQ
 			, TITLE
 			, BODY
 			, REG_ID
@@ -81,17 +82,14 @@
 		)
 		VALUES(
 			  #{boardCd}
-			, #{title} 
+			, (SELECT IFNULL(MAX(BOARD_SEQ) + 1, 1) FROM T_BOARD b)
+			, #{title}
 			, #{body} 
 			, #{regId}
 			, NOW()
 			, #{tag}
 			, #{htmlYn}
 		)
-		 
-		<selectKey keyProperty="BOARD_SEQ" resultType="Int" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
 	</insert>
 
 	<select id="selectBoardRead" parameterType="BoardVo" resultType="BoardVo">

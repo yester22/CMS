@@ -42,7 +42,6 @@ $(document).ready(function(){
 	                width: 50
 	            },
 	            { title : '순번', 			name: 'rownum', 		type: 'text',  align: 'center', width: 50  },
-	            { title : '게시판명', 			name: 'boardNm',		type: 'text',  align: 'center', width: 150 },
 		        { title : '게시물 제목', 		name: 'title',			type: 'text',  align: 'left', 	width: 200 },
 		        { title : 'HTML존재', 		name: 'htmlYn',			type: 'text',  align: 'center', width: 100 },
 		        { title : '등록일', 			name: 'regDate',		type: 'text',  align: 'center', width: 150 },
@@ -81,7 +80,7 @@ var BoardList = {
 			var list = data.LIST;
 			for(var i = 0;i < list.length;i++) {
 				$("#searchBoardCode").append("<option value='"+list[i].boardCd+"'>"+list[i].boardNm+"</option>");
-				$("#boardCord").append("<option value='"+list[i].boardCd+"'>"+list[i].boardNm+"</option>");
+				$("#boardCode").append("<option value='"+list[i].boardCd+"'>"+list[i].boardNm+"</option>");
 			}
 		}
 	},
@@ -99,7 +98,7 @@ var BoardList = {
 		$('#cover-spin').show(0);
 
 		e.preventDefault();
-		var url = "/admin/BoardList";
+		var url = "/admin/boardList";
 		
 		$("#pageSize").val(BoardList.pageSize);
 		$("#currentPage").val(BoardList.currentPage);
@@ -204,7 +203,7 @@ var BoardList = {
 		$(".titleTextCg").text("게시물 등록");
 		$("#boardSaveKey").val("C");
 		$("#boardSeq").val("");
-		$("#boardCord").val("");
+		$("#boardCode").val("");
 		$("#boardTitle").val("");
 		$("#boardContent").val("");
 		$("#boardTag").val("");
@@ -212,13 +211,13 @@ var BoardList = {
 		$(".saveTextCg").text("등록");
 		$(".boardRegBox").show();
 
-		setTimeout(cbBoardTimeSet, 500);
+		setTimeout(BoardList.cbBoardTimeSet, 500);
 	},
 
 	btnBoardReg : function ( e ) {
-		if($("#boardCord").val() == "") {
+		if($("#boardCode").val() == "") {
 			alert("게시판 명을 선택하세요.");
-			$("#boardCord").focus();
+			$("#boardCode").focus();
 			return false;
 		} else if($("#boardTitle").val() == "") {
 			alert("제목을 등록하세요.");
@@ -278,7 +277,7 @@ var BoardList = {
 	btnBoardCancle : function () {
 		$("#boardSaveKey").val("C");
 		$("#boardSeq").val("");
-		$("#boardCord").val("");
+		$("#boardCode").val("");
 		$("#boardTitle").val("");
 		$("#boardContent").val("");
 		$("#boardTag").val("");
@@ -310,7 +309,7 @@ var BoardList = {
 		$(".titleTextCg").text("게시물 수정");
 		$("#boardSaveKey").val("E");
 		$("#boardSeq").val(data.boardSeq);
-		$("#boardCord").val(data.boardCd);
+		$("#boardCode").val(data.boardCd);
 		$("#boardTitle").val(data.title);
 		$("#boardContent").val(data.body);
 		$("#boardTag").val(data.tag);
@@ -318,7 +317,7 @@ var BoardList = {
 		$(".saveTextCg").text("수정");
 		$(".boardRegBox").show();
 
-		setTimeout(cbBoardTimeSet, 500);
+		setTimeout(BoardList.cbBoardTimeSet, 500);
 
 		$('#cover-spin').hide();
 	},
@@ -329,7 +328,7 @@ var BoardList = {
 	},
 
 	inputBoardTag : function ( e ) {
-		e.preventDefault();
+		//e.preventDefault();
 		var re = /[\{\}\[\]\/?.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 		var temp = $(this).val();
 		if(re.test(temp)) {

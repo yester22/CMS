@@ -57,11 +57,11 @@
 						
 						<table class="col-lg-12">
 							<colgroup>
-								<col width="5%" />
+								<col width="8%" />
+								<col width="15%" />
+								<col width="14%" />
 								<col width="20%" />
-								<col width="10%" />
-								<col width="20%" />
-								<col width="10%" />
+								<col width="14%" />
 								<col width="20%" />
 								<col width="*" />
 							</colgroup>
@@ -73,9 +73,9 @@
 											<option value="">선택하세요</option>
 										</select>
 									</td>
-									<th><label for="searchTitle">게시물 제목</label></th>
+									<th style="text-align:center !important;"><label for="searchTitle">게시물 제목</label></th>
 									<td><input type="text" name="searchTitle" id="searchTitle" size="30" maxlength="30" class="form-control form-control-sm" placeholder="게시물 제목을 입력해주세요" /></td>
-									<th><label for="searchTitle">게시물 내용</label></th>
+									<th style="text-align:center !important;"><label for="searchTitle">게시물 내용</label></th>
 									<td><input type="text" name="searchContent" id="searchContent" size="30" maxlength="30" class="form-control form-control-sm" placeholder="게시물 내용을 입력해주세요" /></td>
 									<td style="text-align:right;">
 										<input type="button" id="btnSearch" class="btn btn-primary" value="검색">			
@@ -114,7 +114,7 @@
 					<div class="form-group row">
 	                 	<label for="boardCd" class="col-sm-2 col-form-label">게시판 명</label>
 	                    <div class="col-sm-10">
-	                    	<select class="form-control select2"  name="boardCord" id="boardCord" style="width: 100%;">
+	                    	<select class="form-control select2"  name="boardCode" id="boardCode" style="width: 100%;">
                  				<option value="">선택하세요</option>
                  			</select>
 	                    </div>
@@ -128,13 +128,13 @@
 	                <div class="form-group row">
 	                	<label for="boardContent" class="col-sm-2 col-form-label">내용</label>
 	                    <div class="col-sm-10">
-	                		<textarea class="textarea" name="boardContent" id="boardContent" value="" placeholder="Place some text here" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+	                		<textarea class="textarea" name="boardContent" id="boardContent" placeholder="Place some text here" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
 	              		</div>
 	                </div>
 	                <div class="form-group row">
 	                	<label for="pageBlockSize" class="col-sm-2 col-form-label">태그</label>
 	                    <div class="col-sm-10">
-	                    	<input type="text" name="boardTag" id="boardTag" value="" size="30" maxlength="11" class="form-control" placeholder="태그를 입력해주세요.태그는 쉼표로 구분합니다." />
+	                    	<input type="text" name="boardTag" id="boardTag" value="" size="30" maxlength="30" class="form-control" placeholder="태그를 입력해주세요.태그는 쉼표로 구분합니다." />
 	                    </div>
 	                </div>
 	                <div class="form-group row">

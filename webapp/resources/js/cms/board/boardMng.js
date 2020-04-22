@@ -185,7 +185,7 @@ var BoardMngList = {
 		$(".saveTextCg").text("등록");
 		$(".boardRegBox").show();
 
-		setTimeout(cbBoardTimeSet, 500);
+		setTimeout(BoardMngList.cbBoardTimeSet, 500);
 	},
 
 	btnBoardMngReg : function ( e ) {
@@ -298,7 +298,7 @@ var BoardMngList = {
 		$(".saveTextCg").text("수정");
 		$(".boardRegBox").show();
 
-		setTimeout(cbBoardTimeSet, 500);
+		setTimeout(BoardMngList.cbBoardTimeSet, 500);
 
 		$('#cover-spin').hide();
 	},

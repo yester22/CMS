@@ -76,7 +76,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVo getBoardRead(Map<String, Object> params)  throws Exception {
 		BoardVo paramObj = new BoardVo();
-		paramObj.setBoardCd(params.get("boardCd").toString());
+		paramObj.setBoardSeq(params.get("boardSeq").toString());
 		return BoardDao.selectBoardRead(paramObj);
 	}
 }

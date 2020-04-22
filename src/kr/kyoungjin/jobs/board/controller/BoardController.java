@@ -48,7 +48,7 @@ public class BoardController extends AbstractController {
 	 * @return : JSONObject
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/admin/BoardList", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/boardList", method = RequestMethod.POST)
 	public JSONObject BoardList (@RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
 		
@@ -69,7 +69,7 @@ public class BoardController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/BoardDelete", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/boardDelete", method = RequestMethod.POST)
 	public JSONObject BoardDelete(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws Exception {
 		JSONObject result = new JSONObject();
 		
@@ -93,7 +93,7 @@ public class BoardController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/BoardReg", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/boardReg", method = RequestMethod.POST)
 	public JSONObject BoardReg (MultipartHttpServletRequest request , @RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
 		
@@ -117,7 +117,7 @@ public class BoardController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/BoardRead", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/boardRead", method = RequestMethod.POST)
 	public JSONObject BoardRead (@RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
 		BoardVo rtnList = null;
