@@ -58,16 +58,18 @@ $(document).ready(function(){
 * LOGIN 작업 클래스 
 */
 
-class BoardMngList {
+var BoardMngList = {
 	
-	static init() {
+	init : function () {
 		this.boardCd = '';
-	}
+	},
 	
 	/*
 	* e : 이벤트 객체
 	*/ 
-	static btnBoardMng ( e ) {
+	btnBoardMng : function ( e ) {
+		$('#cover-spin').show(0);
+
 		e.preventDefault();
 		var url = "/admin/boardMngList";
 		
@@ -87,24 +89,28 @@ class BoardMngList {
             success: BoardMngList.cbBoardMngResult,
             error  : BoardMngList.cbBoardMngError,
         });
-	}
+	},
 	//
-	static cbBoardMngResult ( data ) {
+	cbBoardMngResult : function ( data ) {
 		$("#jgDataList").jsGrid("option", "data", data.LIST);
 		$("#jgDataList").jsGrid("option", "itemsCount", data.COUNT);
-	}
+		
+		$('#cover-spin').hide();
+	},
 	
-	static cbBoardMngError( error ) {
+	cbBoardMngError : function ( error ) {
 		console.log("result error");
 		console.log( error );
-	}
+
+		$('#cover-spin').hide();
+	},
 	
 	//그리드 전체 선택시
-	static checkAllItem() {
+	checkAllItem : function () {
 		console.log( $(this).val() );
-	}
+	},
 
-	static btnDelete(e) {
+	btnDelete : function ( e ) {
 		if ( BoardMngList.boardCd == '') {
 			msgBox.alert("게시판을 선택 후 삭제하세요");
 			return false;
@@ -131,6 +137,8 @@ class BoardMngList {
 		var title = "게시판 삭제 확인";
 		var msg = '게시판을 삭제하시겠습니까?';
 		msgBox.confirm (title, msg, function() {
+			$('#cover-spin').show(0);
+
 			var url = "/admin/boardMngDelete";
 			var sendData = {
 				deleteData : checkVal ,
@@ -146,10 +154,10 @@ class BoardMngList {
 		            error  : BoardMngList.cbBoardMngError,
 		     });
 		});
-	}
+	},
 
 	//삭제후 실행되는 콜백함수 
-	static cbBoardMngDeleteResult(data) {
+	cbBoardMngDeleteResult : function ( data ) {
 		if ( data.RESULT == "OK") {
 			msgBox.alert('데이터가 삭제되었습니다');
 			
@@ -161,9 +169,10 @@ class BoardMngList {
 			
 			BoardMngList.btnBoardMng(args);
 		}
-	}
+		$('#cover-spin').hide();
+	},
 
-	static btnBoardMngView() {
+	btnBoardMngView : function () {
 		$(".titleTextCg").text("게시판 등록");
 		$("#boardSaveKey").val("C");
 		$("#boardCode").val("");
@@ -176,11 +185,10 @@ class BoardMngList {
 		$(".saveTextCg").text("등록");
 		$(".boardRegBox").show();
 
-		var offset = $("#saveArea").offset();
-		$("html body").animate({scrollTop:offset.top},2000);
-	}
+		setTimeout(cbBoardTimeSet, 500);
+	},
 
-	static btnBoardMngReg ( e ) {
+	btnBoardMngReg : function ( e ) {
 		if($("#boardName").val() == "") {
 			alert("게시판이름을 등록하세요.");
 			$("#boardName").focus();
@@ -202,6 +210,9 @@ class BoardMngList {
 			$("#contentLength").focus();
 			return false;
 		}
+
+		$('#cover-spin').show(0);
+
 		e.preventDefault();
 		var url = "/admin/boardMngReg";
 		var form = $("#uploadForm")[0];
@@ -224,9 +235,9 @@ class BoardMngList {
             success: BoardMngList.cbBoardMngRegResult,
             error  : BoardMngList.cbBoardMngError,
         });
-	}
+	},
 
-	static cbBoardMngRegResult ( data ) {
+	cbBoardMngRegResult : function ( data ) {
 		if ( data != null ) {
 			if ( data.RESULT == "OK" ) {
 				var title = "";
@@ -239,9 +250,10 @@ class BoardMngList {
 				location.reload();
 			}
 		}
-	}
+		$('#cover-spin').hide();
+	},
 
-	static btnBoardMngCancle() {
+	btnBoardMngCancle : function () {
 		$("#boardSaveKey").val("C");
 		$("#boardCode").val("");
 		$("#boardName").val("");
@@ -251,9 +263,11 @@ class BoardMngList {
 		$("#contentLength").val("");
 		$("#useStates").val("Y");
 		$(".boardRegBox").hide();
-	}
+	},
 
-	static btnBoardMngRead( args ) {
+	btnBoardMngRead : function ( args ) {
+		$('#cover-spin').show(0);
+
 		BoardMngList.boardCd = args.item.boardCd;
 		
 		var url = "/admin/boardMngRead";
@@ -269,9 +283,9 @@ class BoardMngList {
 	            success: BoardMngList.cbBoardMngReadResult,
 	            error  : BoardMngList.cbBoardMngError,
 	    });
-	}
+	},
 
-	static cbBoardMngReadResult( data ) {
+	cbBoardMngReadResult : function ( data ) {
 		$(".titleTextCg").text("게시판 수정");
 		$("#boardSaveKey").val("E");
 		$("#boardCode").val(data.boardCd);
@@ -284,6 +298,12 @@ class BoardMngList {
 		$(".saveTextCg").text("수정");
 		$(".boardRegBox").show();
 
+		setTimeout(cbBoardTimeSet, 500);
+
+		$('#cover-spin').hide();
+	},
+
+	cbBoardTimeSet : function () {
 		var offset = $("#saveArea").offset();
 		$("html body").animate({scrollTop:offset.top},2000);
 	}

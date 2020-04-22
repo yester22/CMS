@@ -13,6 +13,7 @@ $(document).ready(function(){
 	$("#btnCreat").bind("click", BoardList.btnBoardView);
 	$("#btnUpload").bind("click", BoardList.btnBoardReg);
 	$("#btnCancle").bind("click", BoardList.btnBoardCancle);
+	$("#boardTag").bind("keypress", BoardList.inputBoardTag);
 	 
 	$("#jgDataList").jsGrid({
 		 height: "300px",
@@ -58,9 +59,9 @@ $(document).ready(function(){
 * LOGIN 작업 클래스 
 */
 
-class BoardList {
+var BoardList = {
 	
-	static init() {
+	init : function() {
 		this.boardSeq = '';
 
 		var url = "/admin/boardCodeRead";
@@ -73,20 +74,30 @@ class BoardList {
 	            success: BoardList.cbBoardCodeReadResult,
 	            error  : BoardList.cbBoardError,
 	    });
-	}
+	},
 
-	static cbBoardCodeReadResult( data ) {
-		var list = null;
-		list = data.LIST;
-		for(var i = 0;i < list.length;i++) {
-			alert(list[i].boardCd);
+	cbBoardCodeReadResult : function ( data ) {
+		if(data != null) {
+			var list = data.LIST;
+			for(var i = 0;i < list.length;i++) {
+				$("#searchBoardCode").append("<option value='"+list[i].boardCd+"'>"+list[i].boardNm+"</option>");
+				$("#boardCord").append("<option value='"+list[i].boardCd+"'>"+list[i].boardNm+"</option>");
+			}
 		}
-	}
+	},
 
 	/*
 	* e : 이벤트 객체
 	*/ 
-	static btnBoard ( e ) {
+	btnBoard : function ( e ) {
+		if($("#searchBoardCode").val() == "") {
+			alert("게시판을 선택해 주세요.");
+			$("#searchBoardCode").focus();
+			return false;
+		}
+
+		$('#cover-spin').show(0);
+
 		e.preventDefault();
 		var url = "/admin/BoardList";
 		
@@ -106,24 +117,28 @@ class BoardList {
             success: BoardList.cbBoardResult,
             error  : BoardList.cbBoardError,
         });
-	}
+	},
 	//
-	static cbBoardResult ( data ) {
+	cbBoardResult : function ( data ) {
 		$("#jgDataList").jsGrid("option", "data", data.LIST);
 		$("#jgDataList").jsGrid("option", "itemsCount", data.COUNT);
-	}
+
+		$('#cover-spin').hide();
+	},
 	
-	static cbBoardError( error ) {
+	cbBoardError : function ( error ) {
 		console.log("result error");
 		console.log( error );
-	}
+		
+		$('#cover-spin').hide();
+	},
 	
 	//그리드 전체 선택시
-	static checkAllItem() {
+	checkAllItem  : function () {
 		console.log( $(this).val() );
-	}
+	},
 
-	static btnDelete(e) {
+	btnDelete : function ( e ) {
 		if ( BoardList.boardSeq == '') {
 			msgBox.alert("게시물을 선택 후 삭제하세요");
 			return false;
@@ -146,10 +161,12 @@ class BoardList {
 			msgBox.alert("체크된 데이터 건수가 존재하지 않습니다");
 			return false;
 		}
-		
+
 		var title = "게시물 삭제 확인";
 		var msg = '게시물을 삭제하시겠습니까?';
 		msgBox.confirm (title, msg, function() {
+			$('#cover-spin').show(0);
+
 			var url = "/admin/boardDelete";
 			var sendData = {
 				deleteData : checkVal ,
@@ -165,10 +182,10 @@ class BoardList {
 		            error  : BoardList.cbBoardError,
 		     });
 		});
-	}
+	},
 
 	//삭제후 실행되는 콜백함수 
-	static cbBoardDeleteResult(data) {
+	cbBoardDeleteResult : function ( data ) {
 		if ( data.RESULT == "OK") {
 			msgBox.alert('데이터가 삭제되었습니다');
 			
@@ -180,11 +197,13 @@ class BoardList {
 			
 			BoardList.btnBoard(args);
 		}
-	}
+		$('#cover-spin').hide();
+	},
 
-	static btnBoardView() {
+	btnBoardView : function () {
 		$(".titleTextCg").text("게시물 등록");
 		$("#boardSaveKey").val("C");
+		$("#boardSeq").val("");
 		$("#boardCord").val("");
 		$("#boardTitle").val("");
 		$("#boardContent").val("");
@@ -193,11 +212,10 @@ class BoardList {
 		$(".saveTextCg").text("등록");
 		$(".boardRegBox").show();
 
-		var offset = $("#saveArea").offset();
-		$("html body").animate({scrollTop:offset.top},2000);
-	}
+		setTimeout(cbBoardTimeSet, 500);
+	},
 
-	static btnBoardReg ( e ) {
+	btnBoardReg : function ( e ) {
 		if($("#boardCord").val() == "") {
 			alert("게시판 명을 선택하세요.");
 			$("#boardCord").focus();
@@ -215,6 +233,9 @@ class BoardList {
 			$("#boardTag").focus();
 			return false;
 		}
+
+		$('#cover-spin').show(0);
+
 		e.preventDefault();
 		var url = "/admin/boardReg";
 		var form = $("#uploadForm")[0];
@@ -236,9 +257,9 @@ class BoardList {
             success: BoardList.cbBoardRegResult,
             error  : BoardList.cbBoardError,
         });
-	}
+	},
 
-	static cbBoardRegResult ( data ) {
+	cbBoardRegResult : function ( data ) {
 		if ( data != null ) {
 			if ( data.RESULT == "OK" ) {
 				var title = "";
@@ -251,19 +272,23 @@ class BoardList {
 				location.reload();
 			}
 		}
-	}
+		$('#cover-spin').hide();
+	},
 
-	static btnBoardCancle() {
+	btnBoardCancle : function () {
 		$("#boardSaveKey").val("C");
+		$("#boardSeq").val("");
 		$("#boardCord").val("");
 		$("#boardTitle").val("");
 		$("#boardContent").val("");
 		$("#boardTag").val("");
 		$("#boardHtmlYn").val("Y");
 		$(".boardRegBox").hide();
-	}
+	},
 
-	static btnBoardRead( args ) {
+	btnBoardRead : function ( args ) {
+		$('#cover-spin').show(0);
+
 		BoardList.boardSeq = args.item.boardSeq;
 		
 		var url = "/admin/boardRead";
@@ -279,13 +304,13 @@ class BoardList {
 	            success: BoardList.cbBoardReadResult,
 	            error  : BoardList.cbBoardError,
 	    });
-	}
+	},
 
-	static cbBoardReadResult( data ) {
+	cbBoardReadResult : function ( data ) {
 		$(".titleTextCg").text("게시물 수정");
 		$("#boardSaveKey").val("E");
-		$("#boardCord").val(data.boardCd);
 		$("#boardSeq").val(data.boardSeq);
+		$("#boardCord").val(data.boardCd);
 		$("#boardTitle").val(data.title);
 		$("#boardContent").val(data.body);
 		$("#boardTag").val(data.tag);
@@ -293,7 +318,22 @@ class BoardList {
 		$(".saveTextCg").text("수정");
 		$(".boardRegBox").show();
 
+		setTimeout(cbBoardTimeSet, 500);
+
+		$('#cover-spin').hide();
+	},
+
+	cbBoardTimeSet : function () {
 		var offset = $("#saveArea").offset();
 		$("html body").animate({scrollTop:offset.top},2000);
+	},
+
+	inputBoardTag : function ( e ) {
+		e.preventDefault();
+		var re = /[\{\}\[\]\/?.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+		var temp = $(this).val();
+		if(re.test(temp)) {
+			$(this).val(temp.replace(re,""));
+		}
 	}
 }

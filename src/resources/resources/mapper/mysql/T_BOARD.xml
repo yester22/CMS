@@ -31,6 +31,7 @@
 			<if test='searchContent != null and !"".equals(searchContent)'>
 				AND a.BODY like concat('%', concat(#{searchContent}, '%'))
 			</if>
+			AND a.DEL_YN = 'N'
 	 	</where>
 	</sql>
 

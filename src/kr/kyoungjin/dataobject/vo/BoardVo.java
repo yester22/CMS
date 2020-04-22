@@ -10,8 +10,12 @@ public class BoardVo  extends AbstractVo  {
 	private String title; 
 	private String tag; 
 	private String body; 
-	private String htmlYn; 
-	private String delYn; 
+	private String htmlYn;
+	private String delYn;
+	private String regDate;
+	private String regId;
+	private String uptDate;
+	private String uptId;
 
 	public String getBoardCd() {
 		return boardCd;
@@ -67,6 +71,28 @@ public class BoardVo  extends AbstractVo  {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
-	
-	
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	public String getRegId() {
+		return regId;
+	}
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+	public String getUptDate() {
+		return uptDate;
+	}
+	public void setUptDate(String uptDate) {
+		this.uptDate = uptDate;
+	}
+	public String getUptId() {
+		return uptId;
+	}
+	public void setUptId(String uptId) {
+		this.uptId = uptId;
+	}
 }

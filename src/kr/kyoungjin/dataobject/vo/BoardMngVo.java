@@ -82,7 +82,6 @@ public class BoardMngVo extends AbstractVo {
 	public void setUptDate(String uptDate) {
 		this.uptDate = uptDate;
 	}
-
 	public String getUptId() {
 		return uptId;
 	}

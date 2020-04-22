@@ -57,8 +57,8 @@
 						
 						<table class="col-lg-12">
 							<colgroup>
-								<col width="10%" />
-								<col width="15%" />
+								<col width="5%" />
+								<col width="20%" />
 								<col width="10%" />
 								<col width="20%" />
 								<col width="10%" />
@@ -134,7 +134,7 @@
 	                <div class="form-group row">
 	                	<label for="pageBlockSize" class="col-sm-2 col-form-label">태그</label>
 	                    <div class="col-sm-10">
-	                    	<input type="text" name="boardTag" id="boardTag" value="" size="30" maxlength="11" class="form-control" placeholder="태그를 입력해주세요" />
+	                    	<input type="text" name="boardTag" id="boardTag" value="" size="30" maxlength="11" class="form-control" placeholder="태그를 입력해주세요.태그는 쉼표로 구분합니다." />
 	                    </div>
 	                </div>
 	                <div class="form-group row">
