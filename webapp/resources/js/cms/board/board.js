@@ -311,7 +311,7 @@ var BoardList = {
 		$("#boardSeq").val(data.boardSeq);
 		$("#boardCode").val(data.boardCd);
 		$("#boardTitle").val(data.title);
-		$("#boardContent").val(data.body);
+		$("#boardContent").html(data.body);
 		$("#boardTag").val(data.tag);
 		$("#boardHtmlYn").val(data.htmlYn);
 		$(".saveTextCg").text("수정");
