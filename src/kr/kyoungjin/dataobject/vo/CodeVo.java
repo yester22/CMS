@@ -6,7 +6,9 @@ public class CodeVo  extends AbstractVo {
 
 	private String codeGrp; 
 	private String code; 
-	private String codeNm; 
+	private String codeNm;
+	private String upperCdKey;
+	private String orderSeq;
 	private String tmp1; 
 	private String tmp2; 
 	private String tmp3; 
@@ -14,7 +16,8 @@ public class CodeVo  extends AbstractVo {
 	private String tmp5; 
 	private String useYn; 
 	private String delYn;
-	
+	private String regId;
+	private String regDate;
 	
 	public String getCodeGrp() {
 		return codeGrp;
@@ -33,6 +36,18 @@ public class CodeVo  extends AbstractVo {
 	}
 	public void setCodeNm(String codeNm) {
 		this.codeNm = codeNm;
+	}
+	public String getUpperCdKey() {
+		return upperCdKey;
+	}
+	public void setUpperCdKey(String upperCdKey) {
+		this.upperCdKey = upperCdKey;
+	}
+	public String getOrderSeq() {
+		return orderSeq;
+	}
+	public void setOrderSeq(String orderSeq) {
+		this.orderSeq = orderSeq;
 	}
 	public String getTmp1() {
 		return tmp1;
@@ -76,8 +91,16 @@ public class CodeVo  extends AbstractVo {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
-	
-	
-	
-	
+	public String getRegId() {
+		return regId;
+	}
+	public void setRegId(String regId) {
+		this.regId = regId;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
 }

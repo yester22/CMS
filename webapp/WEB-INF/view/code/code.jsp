@@ -14,9 +14,6 @@
 	}
 </style>
 
-	<!-- summernote -->
-  <link rel="stylesheet" href="/resources/bootstrap/adminite//plugins/summernote/summernote-bs4.css">
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -24,13 +21,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>게시물 관리</h1>
+            <h1>코드 관리</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
             	<li class="breadcrumb-item"><a href="#">Home</a></li>
 				<li class="breadcrumb-item"><a href="#">공통코드</a></li>
-				<li class="breadcrumb-item active">게시물 관리</li>
+				<li class="breadcrumb-item active">코드 관리</li>
             </ol>
           </div>
         </div>
@@ -57,26 +54,22 @@
 						
 						<table class="col-lg-12">
 							<colgroup>
-								<col width="8%" />
 								<col width="15%" />
-								<col width="14%" />
 								<col width="20%" />
-								<col width="14%" />
 								<col width="20%" />
+								<col width="25%" />
 								<col width="*" />
 							</colgroup>
 							<tbody>
 								<tr>
-									<th><label for="searchBoardCode">게시판 명</label></th>
+									<th><label for="searchCodeKey">코드</label></th>
 									<td>
-										<select name="searchBoardCode" id="searchBoardCode" class="form-control form-control-sm">
+										<select name="searchCodeKey" id="searchCodeKey" class="form-control form-control-sm">
 											<option value="">선택하세요</option>
 										</select>
 									</td>
-									<th style="text-align:center !important;"><label for="searchTitle">게시물 제목</label></th>
-									<td><input type="text" name="searchTitle" id="searchTitle" size="30" maxlength="30" class="form-control form-control-sm" placeholder="게시물 제목을 입력해주세요" /></td>
-									<th style="text-align:center !important;"><label for="searchTitle">게시물 내용</label></th>
-									<td><input type="text" name="searchContent" id="searchContent" size="30" maxlength="30" class="form-control form-control-sm" placeholder="게시물 내용을 입력해주세요" /></td>
+									<th style="text-align:center !important;"><label for="searchCodeName">코드 명</label></th>
+									<td><input type="text" name="searchCodeName" id="searchCodeName" size="30" maxlength="30" class="form-control form-control-sm" placeholder="게시물 제목을 입력해주세요" /></td>
 									<td style="text-align:right;">
 										<input type="button" id="btnSearch" class="btn btn-primary" value="검색">			
 									</td>
@@ -89,7 +82,7 @@
         <!-- /.card -->
 		 <div class="card card-default">
         	<div class="card-header">
-            	<h3 class="card-title">게시물 List</h3>
+            	<h3 class="card-title">코드 List</h3>
             	<div class="card-tools" style="margin-top:15px;">
             		<button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
         		</div>
@@ -108,41 +101,32 @@
 				<h3 class="card-title titleTextCg"></h3>
 			</div>
 			<form id="uploadForm" method="post" enctype="multipart/form-data" class="form-horizontal">
-				<input type="hidden" name="boardSaveKey" id="boardSaveKey" value="C" />
-				<input type="hidden" name="boardSeq" id="boardSeq" value="" />
+				<input type="hidden" name="codeSaveKey" id="codeSaveKey" value="C" />
 				<div class="card-body">
 					<div class="form-group row">
-	                 	<label for="boardCode" class="col-sm-2 col-form-label">게시판 명</label>
+	                 	<label for="codeKey" class="col-sm-2 col-form-label">코드</label>
 	                    <div class="col-sm-10">
-	                    	<select class="form-control select2"  name="boardCode" id="boardCode" style="width: 100%;">
-                 				<option value="">선택하세요</option>
-                 			</select>
+	                    	<input type="text" name="codeKey" id="codeKey" value="" size="30" maxlength="30" class="form-control" placeholder="코드를 입력해주세요" />
 	                    </div>
 					</div>
 					<div class="form-group row">
-	                	<label for="boardTitle" class="col-sm-2 col-form-label">제목</label>
+	                	<label for="codeName" class="col-sm-2 col-form-label">코드 명</label>
 	                    <div class="col-sm-10">
-	                    	<input type="text" name="boardTitle" id="boardTitle" value="" size="30" maxlength="50" class="form-control" placeholder="게시판이름을 입력해주세요" />
+	                    	<input type="text" name="codeName" id="codeName" value="" size="30" maxlength="30" class="form-control" placeholder="코드명을 입력해주세요" />
 	                    </div>
 	                </div>
 	                <div class="form-group row">
-	                	<label for="boardContent" class="col-sm-2 col-form-label">내용</label>
+	                	<label for="sortNum" class="col-sm-2 col-form-label">순번</label>
 	                    <div class="col-sm-10">
-	                		<textarea class="textarea" name="boardContent" id="boardContent" placeholder="Place some text here" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-	              		</div>
-	                </div>
-	                <div class="form-group row">
-	                	<label for="boardTag" class="col-sm-2 col-form-label">태그</label>
-	                    <div class="col-sm-10">
-	                    	<input type="text" name="boardTag" id="boardTag" value="" size="30" maxlength="50" class="form-control" placeholder="태그를 입력해주세요.태그는 쉼표로 구분합니다." />
+	                    	<input type="number" name="sortNum" id="sortNum" value="" size="30" maxlength="30" class="form-control" placeholder="순번 입력해주세요." />
 	                    </div>
 	                </div>
 	                <div class="form-group row">
-	                 	<label for="boardHtmlYn" class="col-sm-2 col-form-label">HTML 존재유무</label>
+	                 	<label for="codeUseYn" class="col-sm-2 col-form-label">사용 유무</label>
 	                    <div class="col-sm-10">
-	                    	<select class="form-control select2"  name="boardHtmlYn" id="boardHtmlYn" style="width: 100%;">
-                 				<option value="Y">존재함</option>
-                 				<option value="N">존재안함</option>
+	                    	<select class="form-control select2"  name="codeUseYn" id="codeUseYn" style="width: 100%;">
+                 				<option value="Y">사용함</option>
+                 				<option value="N">사용안함</option>
                  			</select>
 	                    </div>
 					</div>
@@ -159,12 +143,5 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-<!-- Summernote -->
-<script src="/resources/bootstrap/adminite/plugins/summernote/summernote-bs4.min.js"></script>
-<script>
-  $(function () {
-    // Summernote
-    $('.textarea').summernote()
-  })
-</script>
-<script type="text/javascript" src="/resources/js/cms/board/board.js"></script>
+
+<script type="text/javascript" src="/resources/js/cms/code/code.js"></script>
