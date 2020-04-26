@@ -77,7 +77,7 @@
 					</div><!-- card body end -->
 					<div class="card-footer">
                   		<button type="button" id="btnTemplateDownload" class="btn btn-info">양식 다운로드</button>
-                  		<button type="button" id="btnUpload" class="btn btn-primary float-right">업로드</button>
+                  		<button type="button" id="btnUpload" class="btn btn-primary float-right" click="ExcelUpload.btnExcelUploade()">업로드</button>
                 	</div><!-- card footer end -->
 				</form>
 			</div>
@@ -89,7 +89,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <p class=text-info">* 업로드 이후, 데이터 생성 및 국토부 서비스를 이용한 정보 업데이트로 인해 바로 사용할 수 없습니다</p>
+                <p class="text-info">* 업로드 이후, 데이터 생성 및 국토부 서비스를 이용한 정보 업데이트로 인해 바로 사용할 수 없습니다</p>
                 <p class="text-primary">&nbsp;-&nbsp;국토부 토지대장 정보 확인 및 공간정보 플래폼에서 업로드된 데이터의 공간정보 획득을 위한 시간이 소요 됩니다</p>
                 <p class="text-primary">&nbsp;-&nbsp;해당 데이터들의 각 상태 완료시 공지로 표기 되오니 공지 확인 부탁드립니다</p>
               </div>
