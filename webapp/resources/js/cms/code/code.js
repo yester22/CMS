@@ -13,7 +13,7 @@ $(document).ready(function(){
 	$("#btnCreat").bind("click", CodeList.btnCodeView);
 	$("#btnUpload").bind("click", CodeList.btnCodeReg);
 	$("#btnCancle").bind("click", CodeList.btnCodeCancle);
-	$("#codeKey").bind("keypress", CodeList.inputBoardTag);
+	$("#codeKey").bind("keypress", CodeList.inputCodeKey);
 	 
 	$("#jgDataList").jsGrid({
 		 height: "300px",
@@ -36,7 +36,7 @@ $(document).ready(function(){
 	                    return $("<input>").attr("type", "checkbox").on("change", CodeList.checkAllItem);
 	                },
 	                itemTemplate: function(_, item) {
-	                    return $("<input>").attr("type", "checkbox").attr('name', 'boardData').attr('value', item.codeSeq);
+	                    return $("<input>").attr("type", "checkbox").attr('name', 'codeData').attr('value', item.code);
 	                },
 	                align: "center",
 	                width: 50
@@ -64,23 +64,23 @@ var CodeList = {
 	init : function() {
 		this.codeSeq = '';
 
-		var url = "/admin/CodeKeyRead";
+		var url = "/admin/codeKeyRead";
 		var formData = {};
 		$.ajax({
 	            url: url,
 	            dataType: 'json', 
 	            data: formData,
 	            type: 'POST',
-	            success: CodeList.cbBoardCodeReadResult,
-	            error  : CodeList.cbBoardError,
+	            success: CodeList.cbCodeKeyReadResult,
+	            error  : CodeList.cbCodeError,
 	    });
 	},
 
-	cbBoardCodeReadResult : function ( data ) {
+	cbCodeKeyReadResult : function ( data ) {
 		if(data != null) {
 			var list = data.LIST;
 			for(var i = 0;i < list.length;i++) {
-				$("#searchBoardCode").append("<option value='"+list[i].boardCd+"'>"+list[i].boardNm+"</option>");
+				$("#upperCode").append("<option value='"+list[i].code+"'>"+list[i].codeNm+"</option>");
 			}
 		}
 	},
@@ -89,16 +89,10 @@ var CodeList = {
 	* e : 이벤트 객체
 	*/ 
 	btnCode : function ( e ) {
-		if($("#searchBoardCode").val() == "") {
-			alert("게시판을 선택해 주세요.");
-			$("#searchBoardCode").focus();
-			return false;
-		}
-
 		$('#cover-spin').show(0);
 
 		e.preventDefault();
-		var url = "/admin/CodeList";
+		var url = "/admin/codeList";
 		
 		$("#pageSize").val(CodeList.pageSize);
 		$("#currentPage").val(CodeList.currentPage);
@@ -113,19 +107,19 @@ var CodeList = {
             dataType: 'json', 
             data: formData,
             type: 'POST',
-            success: CodeList.cbBoardResult,
-            error  : CodeList.cbBoardError,
+            success: CodeList.cbCodeResult,
+            error  : CodeList.cbCodeError,
         });
 	},
 	//
-	cbBoardResult : function ( data ) {
+	cbCodeResult : function ( data ) {
 		$("#jgDataList").jsGrid("option", "data", data.LIST);
 		$("#jgDataList").jsGrid("option", "itemsCount", data.COUNT);
 
 		$('#cover-spin').hide();
 	},
 	
-	cbBoardError : function ( error ) {
+	cbCodeError : function ( error ) {
 		console.log("result error");
 		console.log( error );
 		
@@ -139,12 +133,12 @@ var CodeList = {
 
 	btnDelete : function ( e ) {
 		if ( CodeList.codeSeq == '') {
-			msgBox.alert("게시물을 선택 후 삭제하세요");
+			msgBox.alert("코드를 선택 후 삭제하세요");
 			return false;
 		};
 		
 		var checkVal = '';
-		$('input:checkbox[name="boardData"]').each(function(index, item) {
+		$('input:checkbox[name="codeData"]').each(function(index, item) {
 			if(this.checked){
 				checkVal = checkVal + ',' + this.value;
 			}
@@ -161,12 +155,12 @@ var CodeList = {
 			return false;
 		}
 
-		var title = "게시물 삭제 확인";
-		var msg = '게시물을 삭제하시겠습니까?';
+		var title = "코드 삭제 확인";
+		var msg = '코드를 삭제하시겠습니까?';
 		msgBox.confirm (title, msg, function() {
 			$('#cover-spin').show(0);
 
-			var url = "/admin/boardDelete";
+			var url = "/admin/codeDelete";
 			var sendData = {
 				deleteData : checkVal ,
 				codeSeq : CodeList.codeSeq
@@ -177,14 +171,14 @@ var CodeList = {
 		            dataType: 'json', 
 		            data: sendData,
 		            type: 'POST',
-		            success: CodeList.cbBoardDeleteResult,
-		            error  : CodeList.cbBoardError,
+		            success: CodeList.cbCodeDeleteResult,
+		            error  : CodeList.cbCodeError,
 		     });
 		});
 	},
 
 	//삭제후 실행되는 콜백함수 
-	cbBoardDeleteResult : function ( data ) {
+	cbCodeDeleteResult : function ( data ) {
 		if ( data.RESULT == "OK") {
 			msgBox.alert('데이터가 삭제되었습니다');
 			
@@ -200,52 +194,46 @@ var CodeList = {
 	},
 
 	btnCodeView : function () {
-		$(".titleTextCg").text("게시물 등록");
-		$("#boardSaveKey").val("C");
-		$("#codeSeq").val("");
-		$("#boardCode").val("");
-		$("#boardTitle").val("");
-		$("#boardContent").val("");
-		$("#boardTag").val("");
-		$("#boardHtmlYn").val("Y");
+		$(".titleTextCg").text("코드 등록");
+		$("#codeSaveKey").val("C");
+		$("#codeKey").val("");
+		$("#upperCode").val("#");
+		$("#codeName").val("");
+		$("#sortNum").val("");
+		$("#codeUseYn").val("Y");
 		$(".saveTextCg").text("등록");
-		$(".boardRegBox").show();
+		$("#saveArea").show();
 
-		setTimeout(CodeList.cbBoardTimeSet, 500);
+		setTimeout(CodeList.cbCodeTimeSet, 500);
 	},
 
 	btnCodeReg : function ( e ) {
-		if($("#boardCode").val() == "") {
-			alert("게시판 명을 선택하세요.");
-			$("#boardCode").focus();
+		if($("#codeKey").val() == "") {
+			alert("코드를 입력하세요.");
+			$("#codeKey").focus();
 			return false;
-		} else if($("#boardTitle").val() == "") {
-			alert("제목을 등록하세요.");
-			$("#boardTitle").focus();
+		} else if($("#codeName").val() == "") {
+			alert("코드명을 입력하세요.");
+			$("#codeName").focus();
 			return false;
-		} else if($("#boardContent").val() == "") {
-			alert("내용을 등록하세요.");
-			$("#boardContent").focus();
-			return false;
-		} else if($("#boardTag").val() == "") {
-			alert("태그를 등록하세요.");
-			$("#boardTag").focus();
+		} else if($("#sortNum").val() == "") {
+			alert("순번을 입력하세요.");
+			$("#sortNum").focus();
 			return false;
 		}
 
 		$('#cover-spin').show(0);
 
 		e.preventDefault();
-		var url = "/admin/boardReg";
+		var url = "/admin/codeReg";
 		var form = $("#uploadForm")[0];
         var formData = new FormData(  form );
-        formData.append("boardSaveKey", $("#boardSaveKey").val());
-        formData.append("boardCode", $("#boardCode").val());
-        formData.append("codeSeq", $("#codeSeq").val());
-        formData.append("boardTitle", $("#boardTitle").val());
-        formData.append("boardContent", $("#boardContent").val());
-        formData.append("boardTag", $("#boardTag").val());
-        formData.append("boardHtmlYn", $("#boardHtmlYn").val());
+        formData.append("codeSaveKey", $("#codeSaveKey").val());
+        formData.append("codeKey", $("#codeKey").val());
+        formData.append("upperCode", $("#upperCode").val());
+        formData.append("codeName", $("#codeName").val());
+        formData.append("sortNum", $("#sortNum").val());
+        formData.append("codeUseYn", $("#codeUseYn").val());
                 
         $.ajax({
             url: url,
@@ -253,36 +241,41 @@ var CodeList = {
             contentType: false,
             data: formData,
             type: 'POST',
-            success: CodeList.cbBoardRegResult,
-            error  : CodeList.cbBoardError,
+            success: CodeList.cbCodeRegResult,
+            error  : CodeList.cbCodeError,
         });
 	},
 
-	cbBoardRegResult : function ( data ) {
+	cbCodeRegResult : function ( data ) {
 		if ( data != null ) {
 			if ( data.RESULT == "OK" ) {
-				var title = "";
-				if(data.boardIds == "C") {
-					title = "게시물 등록";
+				if(data.boardIds == "R") {
+					alert("이미 등록된 코드입니다.");
+					$("#codeKey").focus();
+					return false;
 				} else {
-					title = "게시물 수정";
+					var title = "";
+					if(data.boardIds == "C") {
+						title = "게시물 등록";
+					} else {
+						title = "게시물 수정";
+					}
+					alert(title+"을 완료 하였습니다.");
+					location.reload();
 				}
-				alert(title+"을 완료 하였습니다.");
-				location.reload();
 			}
 		}
 		$('#cover-spin').hide();
 	},
 
 	btnCodeCancle : function () {
-		$("#boardSaveKey").val("C");
-		$("#codeSeq").val("");
-		$("#boardCode").val("");
-		$("#boardTitle").val("");
-		$("#boardContent").val("");
-		$("#boardTag").val("");
-		$("#boardHtmlYn").val("Y");
-		$(".boardRegBox").hide();
+		$("#codeSaveKey").val("C");
+		$("#codeKey").val("");
+		$("#upperCode").val("#");
+		$("#codeName").val("");
+		$("#sortNum").val("");
+		$("#codeUseYn").val("Y");
+		$("#saveArea").hide();
 	},
 
 	btnCodeRead : function ( args ) {
@@ -290,7 +283,7 @@ var CodeList = {
 
 		CodeList.codeSeq = args.item.codeSeq;
 		
-		var url = "/admin/boardRead";
+		var url = "/admin/codeRead";
 		var sendData = {
 			codeSeq : args.item.codeSeq
 		};
@@ -300,39 +293,41 @@ var CodeList = {
 	            dataType: 'json', 
 	            data: sendData,
 	            type: 'POST',
-	            success: CodeList.cbBoardReadResult,
-	            error  : CodeList.cbBoardError,
+	            success: CodeList.cbCodeReadResult,
+	            error  : CodeList.cbCodeError,
 	    });
 	},
 
-	cbBoardReadResult : function ( data ) {
-		$(".titleTextCg").text("게시물 수정");
-		$("#boardSaveKey").val("E");
-		$("#codeSeq").val(data.codeSeq);
-		$("#boardCode").val(data.boardCd);
-		$("#boardTitle").val(data.title);
-		$("#boardContent").html(data.body);
-		$("#boardTag").val(data.tag);
-		$("#boardHtmlYn").val(data.htmlYn);
+	cbCodeReadResult : function ( data ) {
+		$(".titleTextCg").text("코드 수정");
+		$("#codeSaveKey").val("E");
+		$("#codeKey").val(data.code);
+		$("#upperCode").val(data.upperCdKey);
+		$("#codeName").val(data.codeNm);
+		$("#sortNum").val(data.orderSeq);
+		$("#codeUseYn").val(data.useYn);
 		$(".saveTextCg").text("수정");
-		$(".boardRegBox").show();
+		$("#saveArea").show();
 
-		setTimeout(CodeList.cbBoardTimeSet, 500);
+		setTimeout(CodeList.cbCodeTimeSet, 500);
 
 		$('#cover-spin').hide();
 	},
 
-	cbBoardTimeSet : function () {
+	cbCodeTimeSet : function () {
 		var offset = $("#saveArea").offset();
 		$("html body").animate({scrollTop:offset.top},2000);
 	},
 
-	inputBoardTag : function ( e ) {
+	inputCodeKey : function ( e ) {
 		//e.preventDefault();
-		var re = /[\{\}\[\]\/?.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+		var re = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+		var re2 = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g;
 		var temp = $(this).val();
 		if(re.test(temp)) {
 			$(this).val(temp.replace(re,""));
+		} else if(re2.test(temp)) {
+			$(this).val(temp.replace(re2,""));
 		}
 	}
 }

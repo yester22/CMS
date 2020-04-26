@@ -209,7 +209,7 @@ var BoardList = {
 		$("#boardTag").val("");
 		$("#boardHtmlYn").val("Y");
 		$(".saveTextCg").text("등록");
-		$(".boardRegBox").show();
+		$("#saveArea").show();
 
 		setTimeout(BoardList.cbBoardTimeSet, 500);
 	},
@@ -282,7 +282,7 @@ var BoardList = {
 		$("#boardContent").val("");
 		$("#boardTag").val("");
 		$("#boardHtmlYn").val("Y");
-		$(".boardRegBox").hide();
+		$("#saveArea").hide();
 	},
 
 	btnBoardRead : function ( args ) {
@@ -311,11 +311,11 @@ var BoardList = {
 		$("#boardSeq").val(data.boardSeq);
 		$("#boardCode").val(data.boardCd);
 		$("#boardTitle").val(data.title);
-		$("#boardContent").html(data.body);
+		$("#boardContent").text(data.body);
 		$("#boardTag").val(data.tag);
 		$("#boardHtmlYn").val(data.htmlYn);
 		$(".saveTextCg").text("수정");
-		$(".boardRegBox").show();
+		$("#saveArea").show();
 
 		setTimeout(BoardList.cbBoardTimeSet, 500);
 

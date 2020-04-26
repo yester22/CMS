@@ -48,35 +48,31 @@
         
 	        <div class="card-body">
 				<form id="searchForm" method="post">
-						<input type="hidden" name="pageSize" 	id="pageSize" 	value="" />
-						<input type="hidden" name="currentPage" id="currentPage" value="" />
-						<input type="hidden" name="startNum" 	id="startNum" 	value="" />
-						
-						<table class="col-lg-12">
-							<colgroup>
-								<col width="15%" />
-								<col width="20%" />
-								<col width="20%" />
-								<col width="25%" />
-								<col width="*" />
-							</colgroup>
-							<tbody>
-								<tr>
-									<th><label for="searchCodeKey">코드</label></th>
-									<td>
-										<select name="searchCodeKey" id="searchCodeKey" class="form-control form-control-sm">
-											<option value="">선택하세요</option>
-										</select>
-									</td>
-									<th style="text-align:center !important;"><label for="searchCodeName">코드 명</label></th>
-									<td><input type="text" name="searchCodeName" id="searchCodeName" size="30" maxlength="30" class="form-control form-control-sm" placeholder="게시물 제목을 입력해주세요" /></td>
-									<td style="text-align:right;">
-										<input type="button" id="btnSearch" class="btn btn-primary" value="검색">			
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
+					<input type="hidden" name="pageSize" 	id="pageSize" 	value="" />
+					<input type="hidden" name="currentPage" id="currentPage" value="" />
+					<input type="hidden" name="startNum" 	id="startNum" 	value="" />
+					
+					<table class="col-lg-12">
+						<colgroup>
+							<col width="15%" />
+							<col width="20%" />
+							<col width="20%" />
+							<col width="25%" />
+							<col width="*" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<th><label for="searchCodeKey">코드</label></th>
+								<td><input type="text" name="searchCodeKey" id="searchCodeKey" size="30" maxlength="30" class="form-control form-control-sm" placeholder="코드를 입력해주세요" /></td>
+								<th style="text-align:center !important;"><label for="searchCodeName">코드 명</label></th>
+								<td><input type="text" name="searchCodeName" id="searchCodeName" size="30" maxlength="30" class="form-control form-control-sm" placeholder="코드명을 입력해주세요" /></td>
+								<td style="text-align:right;">
+									<input type="button" id="btnSearch" class="btn btn-primary" value="검색">			
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
 	        </div>
         </div>
         <!-- /.card -->
@@ -115,6 +111,14 @@
 	                    	<input type="text" name="codeName" id="codeName" value="" size="30" maxlength="30" class="form-control" placeholder="코드명을 입력해주세요" />
 	                    </div>
 	                </div>
+					<div class="form-group row">
+	                 	<label for="upperCode" class="col-sm-2 col-form-label">상위코드</label>
+	                    <div class="col-sm-10">
+	                    	<select class="form-control select2"  name="upperCode" id="upperCode" style="width: 100%;">
+                 				<option value="#">선택하세요</option>
+                 			</select>
+	                    </div>
+					</div>
 	                <div class="form-group row">
 	                	<label for="sortNum" class="col-sm-2 col-form-label">순번</label>
 	                    <div class="col-sm-10">

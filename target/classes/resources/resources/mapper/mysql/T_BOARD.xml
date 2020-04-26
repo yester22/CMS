@@ -10,6 +10,7 @@
 			   a.TAG,
 			   a.TITLE,
 			   a.BODY,
+			   a.HTML_YN,
 			   a.DEL_YN,
 			   a.REG_ID,
 			   a.REG_DATE,
@@ -30,6 +31,7 @@
 			<if test='searchContent != null and !"".equals(searchContent)'>
 				AND a.BODY like concat('%', concat(#{searchContent}, '%'))
 			</if>
+			AND a.DEL_YN = 'N'
 	 	</where>
 	</sql>
 
@@ -70,24 +72,24 @@
 		/** kr.kyoungjin.dataobject.dao.BoardDao.insertBoard */
 		INSERT INTO T_BOARD (
 			  BOARD_CD
+			, BOARD_SEQ
 			, TITLE
 			, BODY
 			, REG_ID
 			, REG_DATE
 			, TAG
+			, HTML_YN
 		)
 		VALUES(
 			  #{boardCd}
-			, #{title} 
+			, (SELECT IFNULL(MAX(BOARD_SEQ) + 1, 1) FROM T_BOARD b)
+			, #{title}
 			, #{body} 
 			, #{regId}
 			, NOW()
 			, #{tag}
+			, #{htmlYn}
 		)
-		 
-		<selectKey keyProperty="BOARD_SEQ" resultType="Int" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
 	</insert>
 
 	<select id="selectBoardRead" parameterType="BoardVo" resultType="BoardVo">
@@ -95,7 +97,8 @@
 			   a.BOARD_SEQ,
 			   a.TITLE,
 			   a.BODY,
-			   a.TAG
+			   a.TAG,
+			   a.HTML_YN
 	 	 FROM T_BOARD a
 	 	WHERE BOARD_SEQ = #{boardSeq}
 	</select>
@@ -106,6 +109,7 @@
 		  SET TITLE = #{title}
 		    , BODY = #{body}
 		    , TAG = #{tag}
+		    , HTML_YN = #{htmlYn}
 		    , UPT_ID = #{uptId}
 		    , UPT_DATE = NOW()
 		WHERE BOARD_SEQ = #{boardSeq}

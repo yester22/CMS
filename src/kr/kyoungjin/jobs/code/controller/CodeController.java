@@ -1,8 +1,6 @@
-package kr.kyoungjin.jobs.board.controller;
+package kr.kyoungjin.jobs.code.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,35 +10,31 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.kyoungjin.common.abstractObject.AbstractController;
 import kr.kyoungjin.common.abstractObject.ConstantNames;
 import kr.kyoungjin.common.abstractObject.JSONResult;
 import kr.kyoungjin.dataobject.vo.BoardVo;
+import kr.kyoungjin.dataobject.vo.CodeVo;
 import kr.kyoungjin.dataobject.vo.MemberVo;
-import kr.kyoungjin.jobs.board.service.BoardService;
+import kr.kyoungjin.jobs.code.service.CodeService;
 import kr.kyoungjin.jobs.system.message.service.IMessageService;
 import net.sf.json.JSONObject;
 
-@CrossOrigin("*")
-@RestController
-public class BoardController extends AbstractController {
-	private Logger logger  = LoggerFactory.getLogger(BoardController.class);
-	
+public class CodeController extends AbstractController {
+	private Logger logger  = LoggerFactory.getLogger(CodeController.class);
+
 	@Autowired
-	private BoardService BoardService;
-	
+	private CodeService CodeService;
+
 	@Autowired
 	private IMessageService messageService;
-	
+
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 4. 18.
@@ -53,7 +47,7 @@ public class BoardController extends AbstractController {
 		JSONObject result = new JSONObject();
 		
 		try {
-			Map<String,Object> rtnList = BoardService.getBoardList(params);
+			Map<String,Object> rtnList = CodeService.getCodeList(params);
 			if ( rtnList.get("LIST") != null ) {
 				result.put(JSONResult.LIST,   rtnList.get("LIST"));	
 			}
@@ -69,8 +63,8 @@ public class BoardController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/boardDelete", method = RequestMethod.POST)
-	public JSONObject boardDelete(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws Exception {
+	@RequestMapping(value = "/admin/codeDelete", method = RequestMethod.POST)
+	public JSONObject codeDelete(HttpServletRequest request ,HttpServletResponse response, @RequestParam Map<String, Object> params ) throws Exception {
 		JSONObject result = new JSONObject();
 		
 		String deleteData = params.get("deleteData").toString();
@@ -84,7 +78,7 @@ public class BoardController extends AbstractController {
 		}
 		
 		try {
-			BoardService.deleteBoard (params );
+			CodeService.deleteCode (params );
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch(Exception e ) {
 			result.put(JSONResult.RESULT, JSONResult.ERROR);
@@ -93,21 +87,21 @@ public class BoardController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/boardReg", method = RequestMethod.POST)
-	public JSONObject boardReg (MultipartHttpServletRequest request , @RequestParam Map<String,Object> params) {
+	@RequestMapping(value = "/admin/codeReg", method = RequestMethod.POST)
+	public JSONObject BoardReg (MultipartHttpServletRequest request , @RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
 		
 		try {
 			MemberVo sessionMemberInfo = (MemberVo)request.getSession().getAttribute(ConstantNames.SESSION_USER_INFO);
 			List<String> uploadFilesId = new ArrayList<String>();
-			String boardId = "";
+			String codeId = "";
 
-			boardId = BoardService.insertBoard(params, sessionMemberInfo.getMemberId());
-			if (boardId != null && !"".equals(boardId) ) {
-				uploadFilesId.add(boardId);
+			codeId = CodeService.insertCode(params, sessionMemberInfo.getMemberId());
+			if (codeId != null && !"".equals(codeId) ) {
+				uploadFilesId.add(codeId);
 			}
 
-			result.put("boardIds", uploadFilesId);
+			result.put("codeIds", uploadFilesId);
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch( Exception e ) {
 			e.printStackTrace();
@@ -117,23 +111,40 @@ public class BoardController extends AbstractController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/admin/boardRead", method = RequestMethod.POST)
-	public JSONObject boardRead (@RequestParam Map<String,Object> params) {
+	@RequestMapping(value = "/admin/codeRead", method = RequestMethod.POST)
+	public JSONObject codeRead (@RequestParam Map<String,Object> params) {
 		JSONObject result = new JSONObject();
-		BoardVo rtnList = null;
+		CodeVo rtnList = null;
 		
 		try {
-			rtnList = BoardService.getBoardRead(params);
+			rtnList = CodeService.getCodeRead(params);
 			if ( rtnList != null ) {
 				System.out.println("rtnList=============="+rtnList);
-				result.put("boardCd",   rtnList.getBoardCd());
-				result.put("boardSeq",   rtnList.getBoardSeq());
-				result.put("title",   rtnList.getTitle());
-				result.put("body",   rtnList.getBody());
-				result.put("tag",   rtnList.getTag());
-				result.put("htmlYn",   rtnList.getHtmlYn());
+				result.put("code",   rtnList.getCode());
+				result.put("codeNm",   rtnList.getCodeNm());
+				result.put("upperCdKey",   rtnList.getUpperCdKey());
+				result.put("orderSeq",   rtnList.getOrderSeq());
+				result.put("useYn",   rtnList.getUseYn());
 			}
 
+			result.put(JSONResult.RESULT, JSONResult.OK);
+		} catch( Exception e ) {
+			e.printStackTrace();
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/admin/codeKeyRead", method = RequestMethod.POST)
+	public JSONObject codeKeyRead (@RequestParam Map<String,Object> params) {
+		JSONObject result = new JSONObject();
+		
+		try {
+			Map<String,Object> rtnList = CodeService.getCodeKeyRead(params);
+			if ( rtnList.get("LIST") != null ) {
+				result.put(JSONResult.LIST,   rtnList.get("LIST"));	
+			}
 			result.put(JSONResult.RESULT, JSONResult.OK);
 		} catch( Exception e ) {
 			e.printStackTrace();

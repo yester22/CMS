@@ -43,7 +43,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int deleteBoard(Map<String, Object> params) throws Exception {
 		return BoardDao.deleteBoard(params);
-		
 	}
 
 	@Override

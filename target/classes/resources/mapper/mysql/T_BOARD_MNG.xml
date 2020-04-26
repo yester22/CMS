@@ -25,6 +25,7 @@
 			<if test='searchTitle != null and !"".equals(searchTitle)'>
 				AND a.BOARD_NM like concat('%', concat(#{searchTitle}, '%'))
 			</if>
+			AND a.DEL_YN = 'N'
 	 	</where>
 	</sql>
 

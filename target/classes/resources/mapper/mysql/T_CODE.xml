@@ -4,30 +4,118 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kyoungjin.dataobject.dao.CodeDao">
 	
-	<select id="list" parameterType="CodeVo" resultType="CodeVo">
-		
+	<select id="selectCodeKeyRead" parameterType="hashmap" resultType="CodeVo">
+		/** kr.kyoungjin.dataobject.dao.CodeDao.selectCodeKeyRead  */
+		SELECT a.CD_KEY,
+			   a.CD_NAME
+		  FROM T_CODE a
+		 WHERE a.USE_YN = 'Y'
+		   AND a.DEL_YN = 'N'
 	</select>
-	 
-	<select id="view" parameterType="CodeVo" resultType="CodeVo">
-		
+
+	<sql id="commonCode">
+	 	SELECT a.CD_KEY,
+			   a.CD_NAME,
+			   a.UPPER_CD_KEY,
+			   a.ORDER_SEQ,
+			   a.USE_YN,
+			   a.REG_MEMBER,
+			   a.REG_DATE
+	 	 FROM T_CODE a
+		<include refid="commonCodeWhere"></include>
+	</sql>
+
+	<sql id="commonCodeWhere">
+		<where>
+			<if test='searchCodeKey != null and !"".equals(searchCodeKey)'>
+				AND a.CD_KEY like concat('%', concat(#{searchCodeKey}, '%'))
+			</if>
+			<if test='searchCodeName != null and !"".equals(searchCodeName)'>
+				AND a.CD_NAME like concat('%', concat(#{searchCodeName}, '%'))
+			</if>
+			AND a.DEL_YN = 'N'
+	 	</where>
+	</sql>
+
+	<select id="selectCodeList" parameterType="hashmap" resultType="CodeVo">
+		/** kr.kyoungjin.dataobject.dao.CodeDao.selectCodeList  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonCode"></include>
+				    )a 
+		) as b
 	</select>
-	 
-	 <select id="count"  parameterType="CodeVo"  resultType="Integer">
-	 
-	 </select>
-	 
-	 <insert id="insert" parameterType="CodeVo" >
-	 	
-	 </insert>
-	 
-	 
-	 <update id="update" parameterType="CodeVo">
-	   
-	 </update>
-	 
-	 
-	 <delete id="delete" parameterType="CodeVo">
-	  
-	 </delete>
-	 
-</mapper>	
+
+	<select id="selectCodeListCount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.CodeDao.selectCodeListCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonCode"></include>
+	      )a 
+	</select>
+
+	<delete id="deleteCode" parameterType="hashmap">
+	 	UPDATE T_CODE
+	 	  SET DEL_YN = 'Y'
+	 	 WHERE CD_KEY IN
+	 	 	<foreach collection="deleteArray" item="item"  open="(" close=")" separator=",">
+				#{item.value}
+ 			</foreach>
+	</delete>
+
+	<insert id="insertCode" parameterType="CodeVo">
+		/** kr.kyoungjin.dataobject.dao.CodeDao.insertCode */
+		INSERT INTO T_CODE (
+			  CD_KEY
+			, CD_NAME
+			, UPPER_CD_KEY
+			, ORDER_SEQ
+			, USE_YN
+			, REG_MEMBER
+			, REG_DATE
+		)
+		VALUES(
+			  #{code}
+			, #{codeNm}
+			, #{upperCdKey} 
+			, #{orderSeq}
+			, #{useYn}
+			, #{regId}
+			, NOW()
+		)
+	</insert>
+
+	<update id="updateCode" parameterType="CodeVo">
+		/** kr.kyoungjin.dataobject.dao.CodeDao.updateCode */
+		UPDATE T_CODE
+		  SET CD_KEY = #{code}
+		    , CD_NAME = #{codeNm}
+		    , UPPER_CD_KEY = #{upperCdKey}
+		    , ORDER_SEQ = #{orderSeq}
+		    , USE_YN = #{useYn}
+		WHERE CD_KEY = #{code}
+	</update>
+
+	<select id="selectCodeRead" parameterType="CodeVo" resultType="CodeVo">
+	 	SELECT a.CD_KEY,
+			   a.CD_NAME,
+			   a.UPPER_CD_KEY,
+			   a.ORDER_SEQ,
+			   a.USE_YN
+	 	 FROM T_CODE a
+	 	WHERE CD_KEY = #{code}
+	</select>
+
+	<select id="selectCodeKey" parameterType="CodeVo" resultType="Integer">
+		SELECT COUNT(1) AS CNT
+		  FROM T_CODE a
+	     WHERE a.CD_KEY = #{code}
+	</select>
+</mapper>

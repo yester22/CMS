@@ -11,7 +11,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 3. 20.
-	 * @Method Name : selectExcelUploaInfo
+	 * @Method Name : selectBoardMngList
 	 * @return : List<BoardMngVo>
 	 */
 	public List<BoardMngVo> selectBoardMngList(Map<String, Object> param) throws Exception;
@@ -20,7 +20,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yeste
 	 * @Date : 2020. 3. 25.
-	 * @Method Name : selectExcelUploaInfoCount
+	 * @Method Name : selectBoardMngListCount
 	 * @return : Long
 	 */
 	public Long selectBoardMngListCount(Map<String, Object> param) throws Exception;
@@ -28,7 +28,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yester21`
 	 * @Date : 2020. 4. 10.
-	 * @Method Name : deleteExcelData
+	 * @Method Name : deleteBoardMng
 	 * @return : int
 	 */
 	public int deleteBoardMng(Map<String, Object> params)  throws Exception;
@@ -36,7 +36,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 3. 20.
-	 * @Method Name : selectExcelKey
+	 * @Method Name : selectNewBoardKey
 	 * @return : String
 	 */
 	public String selectNewBoardKey() throws Exception;
@@ -44,7 +44,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 3. 20.
-	 * @Method Name : insertExcelUploaInfo
+	 * @Method Name : insertBoardMng
 	 * @return : void
 	 */
 	public void insertBoardMng(BoardMngVo vo) throws Exception;
@@ -52,7 +52,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 4. 10.
-	 * @Method Name : selectExcelInfoData
+	 * @Method Name : selectBoardMngRead
 	 * @return : void
 	 */
 	public BoardMngVo selectBoardMngRead(BoardMngVo params)  throws Exception;
@@ -60,7 +60,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yeste
 	 * @Date : 2020. 3. 23.
-	 * @Method Name : updateExcelUploaInfo
+	 * @Method Name : updateBoardMng
 	 * @return : void
 	 */
 	public void updateBoardMng(BoardMngVo saveBoardUpload) throws Exception;
@@ -68,7 +68,7 @@ public interface BoardMngDao {
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 3. 20.
-	 * @Method Name : selectExcelUploaInfo
+	 * @Method Name : selectBoardCode
 	 * @return : List<BoardMngVo>
 	 */
 	public List<BoardMngVo> selectBoardCode(Map<String, Object> param) throws Exception;

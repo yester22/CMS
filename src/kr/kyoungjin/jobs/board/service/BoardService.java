@@ -8,16 +8,16 @@ public interface BoardService {
 	/**
 	 * @Author : yeste21
 	 * @Date : 2020. 3. 25.
-	 * @Method Name : getExcelUploadList
-	 * @return : List<ExcelUploadVo>
+	 * @Method Name : getBoardList
+	 * @return : List<BoardVo>
 	 */
 	public Map<String, Object> getBoardList(Map<String,Object> param) throws Exception;
 
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 4. 10.
-	 * @Method Name : deleteExcelData
-	 * @return : void
+	 * @Method Name : deleteBoard
+	 * @return : int
 	 */
 	public int deleteBoard(Map<String, Object> params)   throws Exception;
 
@@ -26,8 +26,8 @@ public interface BoardService {
 	/**
 	 * @Author : yester21
 	 * @Date : 2020. 4. 10.
-	 * @Method Name : getExcelUploadInfo
-	 * @return : ExcelUploadVo
+	 * @Method Name : getBoardRead
+	 * @return : BoardVo
 	 */
 	public BoardVo getBoardRead(Map<String, Object> params)  throws Exception;
 }
