@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kyoungjin.common.abstractObject.AbstractService;
+import kr.kyoungjin.dataobject.dao.AppServiceDao;
 import kr.kyoungjin.dataobject.dao.ExcelDao;
 import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
 import kr.kyoungjin.jobs.app.service.AppService;
@@ -18,43 +19,21 @@ public class AppServiceImpl extends AbstractService implements AppService {
 	private Logger logger  = LoggerFactory.getLogger(AppServiceImpl.class);
 	
 	@Autowired
-	private ExcelDao excelDao;
+	private AppServiceDao appServiceDao;
+
 
 	@Override
-	public List<ExcelUploadVo> excelListByPaging(Map<String, Object> param) throws Exception {
-		if ( !authAccess(param) ) return null;
-		
-		
-		
-		return null;
-		
-		
+	public List<Map<String, Object>> selectUpmyundongList(Map<String, Object> param) throws Exception {
+		return appServiceDao.selectUpmyundongList(param);
 	}
-	
-	
+
 	@Override
-	public List<ExcelUploadVo> excelDataByPaging(Map<String, Object> param) throws Exception {
-		return null;
-		
+	public List<Map<String, Object>> selectAddrressList(Map<String, Object> param) throws Exception {
+		return appServiceDao.selectAddrressList(param);
 	}
-	
-	
-	
-	/** 파라미터 입력처리 확인
-	 * @Author : yeste
-	 * @Date : 2020. 4. 19.
-	 * @Method Name : authAccess
-	 * @return : boolean
-	 */
-	private boolean authAccess(Map<String, Object> param) throws Exception {
-		String tokenValue = (String)param.get("TOKEN_VALUE");
-		boolean bAuth = true;
-		if ( tokenValue == null || "".equals(tokenValue) ) {
-			return false;
-		} else {
-			
-		}
-		return bAuth;
+
+	@Override
+	public int updateJobControll(Map<String, Object> param) throws Exception {
+		return updateJobControll(param);
 	}
-	
 }

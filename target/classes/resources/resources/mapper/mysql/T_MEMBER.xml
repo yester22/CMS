@@ -3,9 +3,25 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kyoungjin.dataobject.dao.MemberDao">
-
-	<select id="list" parameterType="MemberVo" resultType="MemberVo">
-		/** kr.kyoungjin.dataobject.dao.MemberDao.list() */
+	 
+	<sql id="commonWhere">
+		<where>
+			<if test='searchType != null and !"".equals(searchType)'>
+			
+				<if test='"name".equals(searcjType)'>
+					AND member_nm LIKE concat('%', #{searchkeyword},'%')
+				</if>
+			</if>
+			
+			<if test='searchUseYn != null and !"".equals(searchUseYn)'>
+				AND USE_YN = #{searchUseYn}
+			</if>
+			
+		</where>
+	</sql> 
+	 
+	 <sql id="commonMember" >
+	 	/** kr.kyoungjin.dataobject.dao.MemberDao.list() */
 		SELECT  member_id 
 			  , member_type 			  
 			  , member_nm 
@@ -14,13 +30,36 @@
 			  , last_logout_dt
 			  , chk_id_code
 			  , chk_pw_code
+			  , use_yn
 			  , IFNULL(login_fail_cnt, 0) login_fail_cnt
    		  FROM  T_MEMBER
- 		 <where>
- 		 	<if test="memberType != null and memberType != ''">
- 		 		AND member_type = #{memberType}
- 		 	</if>
- 		 </where> 
+   		  
+	 	  <include refid="commonWhere"></include>
+	 </sql>
+
+	 <select id="selectMembercount" parameterType="hashmap"  resultType="long">
+	    /** kr.kyoungjin.dataobject.dao.ExcelDao.selectExcelUploaInfoCount  */
+	    SELECT COUNT(1) CNT	
+	      FROM (
+			<include refid="commonMember"></include>
+	      )a 
+	 </select>
+
+	 
+	 <select id="list" parameterType="hashmap" resultType="MemberVo">
+		/** kr.kyoungjin.dataobject.dao.MemberDao.list  */
+		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+				    	<include refid="commonMember"></include>
+				    )a 
+		) as b
 	</select>
 	 
 	 

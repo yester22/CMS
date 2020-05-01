@@ -7,20 +7,8 @@ import kr.kyoungjin.dataobject.vo.ExcelUploadVo;
 
 public interface AppService {
 
-	/**
-	 * @Author : yester21
-	 * @Date : 2020. 4. 19.
-	 * @Method Name : excelListByPaging
-	 * @return : List<ExcelUploadVo>
-	 */
-	public List<ExcelUploadVo> excelListByPaging(Map<String,Object> param ) throws Exception;
-
-	/**
-	 * @Author : yester21
-	 * @Date : 2020. 4. 19.
-	 * @Method Name : excelDataByPaging
-	 * @return : List<ExcelUploadVo>
-	 */
-	public List<ExcelUploadVo> excelDataByPaging(Map<String, Object> param) throws Exception;
+	public List<Map<String,Object>> selectUpmyundongList(Map<String,Object> param ) throws Exception;
+	public List<Map<String,Object>> selectAddrressList(Map<String,Object> param ) throws Exception;
+	public int updateJobControll(Map<String,Object> param ) throws Exception;
 	
 }

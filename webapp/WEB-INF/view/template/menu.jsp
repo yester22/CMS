@@ -89,6 +89,12 @@
 							<p>게시물 관리</p>
 						</a>
 					</li>
+					<li class="nav-item">
+						<a href="#" onclick="javascript:pageMove.goPost('member/memberList')" class="nav-link"> 
+							<i class="far fa-circle nav-icon"></i>
+							<p>회원 관리</p>
+						</a>
+					</li>
 				</ul>
 			</li>
 			<!-- 

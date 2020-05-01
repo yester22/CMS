@@ -1,6 +1,10 @@
 package kr.kyoungjin.jobs.member.service.impl;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -76,6 +80,17 @@ public class MemberServiceImpl extends AbstractService implements IMemberService
 			throw new Exception(e);
 		}
 		return 0;
+	}
+
+	/**
+	 *사용자 목록 가져오기
+	 */
+	@Override
+	public Map<String,Object> getMemberList(Map<String, Object> param) throws Exception {
+		Map<String,Object> rtnMap = new HashMap<String,Object>();
+		rtnMap.put("LIST", memberDao.list(param));
+		rtnMap.put("COUNT", memberDao.selectMembercount(param));
+		return rtnMap;
 	}
 
 }

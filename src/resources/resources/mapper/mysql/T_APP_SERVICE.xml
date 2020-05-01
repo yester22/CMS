@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.AppServiceDao">
+	
+	<select id="selectUpmyundongList" parameterType="hashmap" resultType="hashmap">
+		/**  kr.kyoungjin.dataobject.dao.AppServiceDao.selectUpmyundongList */
+		SELECT B.SIDO, B.SIGUNGU, B.UPMYUNDONG, A.EXCEL_KEY, COUNT(1) CNT 
+	  	  FROM T_JOB_BINDING A
+	 	 INNER JOIN T_EXCEL_UPLOAD_DATA B ON A.EXCEL_KEY = B.EXCEL_KEY AND A.DATA_SEQ = B.DATA_SEQ
+	 	 WHERE 1=1 
+	 	   AND A.MEMBER_ID = #{memberId}
+	 	 GROUP BY B.SIDO, B.SIGUNGU, B.UPMYUNDONG, A.EXCEL_KEY 
+	 	 ORDER BY CNT DESC
+	</select>
+	
+	
+	
+	<select id="selectAddrList" parameterType="hashmap" resultType="hashmap">
+		/**  kr.kyoungjin.dataobject.dao.AppServiceDao.selectAddrList */
+		SELECT B.EXCEL_KEY, B.DATA_SEQ, B.UPMYUNDONG, B.RI, IF(B.MOUNTAIN_YN = 'Y', '산','') MOUNTAIN, 
+		   B.BUNJI, B.BUBUNJI, B.POLIGON_DATA 
+		 FROM T_JOB_BINDING A 
+		 INNER JOIN T_EXCEL_UPLOAD_DATA B ON A.EXCEL_KEY = B.EXCEL_KEY AND A.DATA_SEQ = B.DATA_SEQ
+		 WHERE UPMYUNDONG = #{upmyundong}
+		   AND A.MEMBER_ID = #{memberId}
+		    
+		    <![CDATA[ 	    	
+		    	AND B.POLIGON_DATA IS NOT NULL AND B.POLIGON_DATA <> ''
+		    ]]>
+		     
+		 LIMIT #{startNum}, #{pageSize}   
+	
+	</select>
+	
+	
+	
+	<update id="updateJobControll" parameterType="hashmap">
+		/**  kr.kyoungjin.dataobject.dao.AppServiceDao.updateJob */
+		UPDATE T_JOB_BINDING
+		  SET COMPLETE_YN = #{completeYn}
+		WHERE MEMBER_ID = #{memberId}
+		  AND EXCEL_KEY = #{excelKey}
+		  AND DATA_SEQ = #{dataSeq}
+	</update>
+	
+	
+</mapper>

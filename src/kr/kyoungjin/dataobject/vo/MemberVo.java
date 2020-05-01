@@ -18,6 +18,8 @@ public class MemberVo  extends AbstractVo {
 	private String chkPwCode;
 	private Integer loginFailCnt;
 	
+	private long rownum;
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Date lastLoginDt;
@@ -127,6 +129,16 @@ public class MemberVo  extends AbstractVo {
 
 	public void setLoginFailCnt(Integer loginFailCnt) {
 		this.loginFailCnt = loginFailCnt;
+	}
+
+
+	public long getRownum() {
+		return rownum;
+	}
+
+
+	public void setRownum(long rownum) {
+		this.rownum = rownum;
 	}
 	
 	
