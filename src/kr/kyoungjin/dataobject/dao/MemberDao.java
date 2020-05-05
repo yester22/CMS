@@ -17,4 +17,5 @@ public interface MemberDao {
 	public int  delete(MemberVo memberVo)  throws Exception;
 	public int  count(MemberVo memberVo)  throws Exception;
 	public int  updateFailCount(MemberVo memberVo)  throws Exception;
+	public MemberVo selectMember(Map<String, Object> params)   throws Exception;
 }

@@ -10,5 +10,9 @@ public interface IMemberService {
 	public MemberVo view (MemberVo memberVo) throws Exception ;
 	public int updateLoginFail(LoginTryVo loginTryVo) throws Exception ;
 	public int updateLoginSuccess(LoginTryVo loginTryVo) throws Exception ;
-	public Map<String,Object> getMemberList(Map<String, Object> param)  throws Exception ;
+	public List<MemberVo> getMemberList(Map<String, Object> param)  throws Exception ;
+	public long getMemberListCount(Map<String, Object> param) throws Exception;
+	public MemberVo getMember(Map<String, Object> params)  throws Exception;
+	public int getCount(Map<String, Object> params) throws Exception;
+	public int saveMember(Map<String,Object> params) throws Exception;
 }

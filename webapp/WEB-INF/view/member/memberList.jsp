@@ -36,6 +36,8 @@
 						<input type="hidden" name="pageSize" 	id="pageSize" 	value="" />
 						<input type="hidden" name="currentPage" id="currentPage" value="" />
 						<input type="hidden" name="startNum" 	id="startNum" 	value="" />
+						<input type="hidden" id="csrfToken" 	value="${_csrf.token}"/>
+						<input type="hidden" id="csrfHeader" 	value="${_csrf.headerName}"/>
 						
 						<table class="col-lg-12">
 							<colgroup>
@@ -61,8 +63,8 @@
 									<td>
 										<select id="searchUseYn" name="searchUseYn" class="form-control">
 											<option value="" selected>선택</option>
-											<option value="Y" selected>사용</option>
-											<option value="N" selected>사용불가</option>
+											<option value="Y" >사용</option>
+											<option value="N" >사용불가</option>
 										</select>
 									</td>
 									<td style="text-align:right;">
@@ -79,8 +81,8 @@
 	          	<div id="memberList"></div>
 	        </div>
 	         <div class="card-footer">
-				<button type="button" id="btnDelete" class="btn btn-info">삭제</button>
-        		<button type="button" id="btnExcelDownload" class="btn btn-primary float-right">등록</button>
+				<button type="button" id="btnDelete"  class="btn btn-info">삭제</button>
+        		<button type="button" id="btnUserAdd" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalMember">등록 </button>
         	</div><!-- card footer end -->
 		</div>
         <!-- /.card -->
@@ -90,5 +92,62 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <!-- Modal -->
+<div class="modal modal-center fade" id="modalMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-center modal-80size" role="document">
+    <div class="modal-content modal-80size">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">사용자 상세정보</h4>
+        <button type="button" id="btnCloseHeader" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form id="modalInputHome">
+        	 <div class="form-group row">
+		      	<label for="memberNm" class="col-sm-2 col-form-label">사용자명</label>
+		        <div class="col-sm-10">
+		        	<input type="text" name="memberNm" id="memberNm" size="30" maxlength="30" class="form-control" placeholder="사용자명" />
+		        </div>
+		     </div>
+		     <div class="form-group row">
+		      	<label for="memberId" class="col-sm-2 col-form-label">사용자 계정</label>
+		        <div class="col-sm-10">
+  					<input type="text" class="form-control" id="memberId" name="memberId" placeholder="사용자명" aria-label="사용자명" aria-describedby="basic-addon2" style="float:left;width:86%;">
+  					<div class="input-group-append">
+    					<button id="chkIdConfirm" class="btn btn-outline-secondary" type="button">ID확인</button>
+  					</div>
+				</div>
+		     </div>
+		     <div class="form-group row">
+		      	<label for="memberType" class="col-sm-2 col-form-label">사용자 타입</label>
+		        <div class="col-sm-10">
+		        	<select id="memberType" name="memberType" class="form-control">
+		        		<option value="">선 택</option>
+		        		<option value="ADMIN">관리자</option>
+		        		<option value="CHARGER">방제 담당자</option>
+		        	</select>
+		        </div>
+		     </div>
+		     <div id="divPassWd" class="form-group row">
+		      	<label for="pwd" class="col-sm-2 col-form-label">암호</label>
+		        <div class="col-sm-10">
+		        	<input type="password" class="form-control" id="memberPw" name="pwd" placeholder="암호" aria-label="암호" aria-describedby="basic-addon2" />
+		        </div>
+		     </div>
+		     <div id="divPassWdCf" class="form-group row">
+		      	<label for="memberPwConfirm" class="col-sm-2 col-form-label">암호 재확인</label>
+		        <div class="col-sm-10">
+		        	<input type="password" class="form-control" id="memberPwConfirm" name="memberPwConfirm" placeholder="암호 재입력" aria-label="암호 재입력" aria-describedby="basic-addon2" />
+		        </div>
+		     </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" id="btnModalSave" class="btn btn-primary">저장</button>
+        <button type="button" id="btnClose" class="btn btn-default">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+  
 <script type="text/javascript" src="/resources/js/cms/member/member.js"></script>

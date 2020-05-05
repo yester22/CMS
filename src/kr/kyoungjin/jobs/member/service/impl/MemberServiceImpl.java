@@ -86,11 +86,54 @@ public class MemberServiceImpl extends AbstractService implements IMemberService
 	 *사용자 목록 가져오기
 	 */
 	@Override
-	public Map<String,Object> getMemberList(Map<String, Object> param) throws Exception {
-		Map<String,Object> rtnMap = new HashMap<String,Object>();
-		rtnMap.put("LIST", memberDao.list(param));
-		rtnMap.put("COUNT", memberDao.selectMembercount(param));
-		return rtnMap;
+	public List<MemberVo> getMemberList(Map<String, Object> param) throws Exception {
+		return memberDao.list(param);
 	}
 
+	@Override
+	public long getMemberListCount(Map<String, Object> param) throws Exception {
+		return memberDao.selectMembercount(param);
+	}
+
+	@Override
+	public MemberVo getMember(Map<String, Object> params) throws Exception {
+		return memberDao.selectMember(params);
+	}
+
+	@Override
+	public int getCount(Map<String, Object> params) throws Exception {
+		MemberVo paramVo = new MemberVo();
+		paramVo.setMemberId(params.get("memberId").toString());
+		return memberDao.count(paramVo);
+	}
+
+	@Override
+	public int saveMember(Map<String, Object> params) throws Exception {
+
+		MemberVo writeInfo = new MemberVo();
+		writeInfo.setMemberId(params.get("memberId").toString());
+		writeInfo.setMemberNm(params.get("memberNm").toString());
+		writeInfo.setMemberType(params.get("memberType").toString());
+		writeInfo.setRegId( params.get("regId").toString() );
+		writeInfo.setChkPwCode("");
+		writeInfo.setChkIdCode("");
+		writeInfo.setLastLoginDt(null);
+		writeInfo.setLastLogoutDt(null);
+		
+		String regType = params.get("mode").toString();
+		if (regType == null || regType.equals("")) return 0;
+		
+		int nRtnVal = 0;
+		if (regType.equals("REG")) {
+			writeInfo.setPwd(params.get("encriptionMemberPw").toString());
+			this.memberDao.insert(writeInfo);
+			nRtnVal = 1;
+		}else {
+			writeInfo.setUptId( params.get("regId").toString() );
+			nRtnVal = this.memberDao.update(writeInfo);	
+		}
+
+		return nRtnVal;
+	}
+	
 }

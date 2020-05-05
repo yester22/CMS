@@ -23,7 +23,8 @@
 	 <sql id="commonMember" >
 	 	/** kr.kyoungjin.dataobject.dao.MemberDao.list() */
 		SELECT  member_id 
-			  , member_type 			  
+			  , member_type
+			  , (select CD_NAME from t_code where UPPER_CD_KEY = 'MEMBER_TYPE' AND CD_KEY = a.member_TYPE) member_type_nm 			  
 			  , member_nm 
 			  , pwd	
 			  , last_login_dt
@@ -31,8 +32,13 @@
 			  , chk_id_code
 			  , chk_pw_code
 			  , use_yn
+			  , IF(use_yn = 'Y', '사용', '사용불가') use_yn_nm
 			  , IFNULL(login_fail_cnt, 0) login_fail_cnt
-   		  FROM  T_MEMBER
+			  , DATE_FORMAT(reg_date, '%Y-%m-%d') reg_date
+			  , DATE_FORMAT(upt_date, '%Y-%m-%d') upt_date
+			  , reg_member
+			  , upt_member
+   		  FROM  T_MEMBER a
    		  
 	 	  <include refid="commonWhere"></include>
 	 </sql>
@@ -45,6 +51,8 @@
 	      )a 
 	 </select>
 
+	
+	
 	 
 	 <select id="list" parameterType="hashmap" resultType="MemberVo">
 		/** kr.kyoungjin.dataobject.dao.MemberDao.list  */
@@ -66,17 +74,47 @@
 	 <select id="view" parameterType="MemberVo" resultType="MemberVo">
 		/** kr.kyoungjin.dataobject.dao.MemberDao.view() */
 		SELECT  member_id 
-			  , member_type 
-			  , member_nm
-			  , pwd
+			  , member_type
+			  , (select CD_NAME from t_code where UPPER_CD_KEY = 'MEMBER_TYPE' AND CD_KEY = a.member_TYPE) member_type_nm 			  
+			  , member_nm 
+			  , pwd	
 			  , last_login_dt
 			  , last_logout_dt
 			  , chk_id_code
 			  , chk_pw_code
+			  , use_yn
+			  , IF(use_yn = 'Y', '사용', '사용불가') use_yn_nm
 			  , IFNULL(login_fail_cnt, 0) login_fail_cnt
-   		  FROM  T_MEMBER
+			  , DATE_FORMAT(reg_date, '%Y-%m-%d') reg_date
+			  , DATE_FORMAT(upt_date, '%Y-%m-%d') upt_date
+			  , reg_member
+			  , upt_member
+   		  FROM  T_MEMBER a
  		 WHERE  member_id = #{memberId}
  		  
+	</select>
+	 
+	 
+	 <select id="selectMember" parameterType="hashMap" resultType="MemberVo">
+		/** kr.kyoungjin.dataobject.dao.MemberDao.view() */
+		SELECT  member_id 
+			  , member_type
+			  , (select CD_NAME from t_code where UPPER_CD_KEY = 'MEMBER_TYPE' AND CD_KEY = a.member_TYPE) member_type_nm 			  
+			  , member_nm 
+			  , pwd	
+			  , last_login_dt
+			  , last_logout_dt
+			  , chk_id_code
+			  , chk_pw_code
+			  , use_yn
+			  , IF(use_yn = 'Y', '사용', '사용불가') use_yn_nm
+			  , IFNULL(login_fail_cnt, 0) login_fail_cnt
+			  , DATE_FORMAT(reg_date, '%Y-%m-%d') reg_date
+			  , DATE_FORMAT(upt_date, '%Y-%m-%d') upt_date
+			  , reg_member
+			  , upt_member
+   		  FROM  T_MEMBER a
+ 		 WHERE  member_id = #{memberId}
 	</select>
 	 
 	  
@@ -124,7 +162,7 @@
 	   /** kr.kyoungjin.dataobject.dao.MemberDao.update() */
 	   UPDATE 	T_MEMBER 
 		  SET 	upt_date = NOW()	
-			    <if test="uptId != null and uptId != ''">, upt_id = #{uptId}</if>  
+			    <if test="uptMember != null and uptMember != ''">, upt_member = #{uptMember}</if>  
 				<if test="memberType != null and memberType != ''">, member_type =  #{memberType}</if>
 				<if test="memberNm != null and memberNm != ''">, member_nm =  #{memberNm}</if>
 				<if test="pwd != null and pwd != ''">, pwd =  #{pwd}</if>
@@ -132,7 +170,7 @@
 				<if test="lastLogoutDt != null and lastLogoutDt != ''">, last_logout_dt =  NOW() </if>
 				<if test="chkIdCode != null and chkIdCode != ''">, chk_id_code = #{chkIdCode} </if>
 				<if test="chkPwCode != null and chkPwCode != ''">, chk_pw_code = #{chkPwCode}  </if>
-				<if test="loginFailCnt > -1">, login_fail_cnt = ${loginFailCnt}  </if>
+				<if test="loginFailCnt != null and loginFailCnt > -1">, login_fail_cnt = ${loginFailCnt}  </if>
 		  WHERE member_id = #{memberId}
 	 </update>
 	 
@@ -150,5 +188,7 @@
 		   SET 	login_fail_cnt = IFNULL(login_fail_cnt, 0) + 1 
 		 WHERE  member_id = #{memberId}
 	 </update>
+	 
+
 	 
 </mapper>	

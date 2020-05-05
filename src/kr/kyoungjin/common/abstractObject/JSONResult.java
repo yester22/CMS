@@ -24,5 +24,7 @@ public class JSONResult {
 	public final static String LIST = new String("LIST");
 
 	public static final Object COUNT = new String("COUNT");
+	
+	public static final Object OBJECT = new String("OBJECT");
 
 }

@@ -7,6 +7,9 @@ public class AbstractVo {
 	protected String uptId;
 	protected long   startNum;
 	protected long   pageSize;
+	protected String regMember;
+	protected String uptMember;
+	
 	
 	public String getRegDate() {
 		return regDate;
@@ -43,6 +46,18 @@ public class AbstractVo {
 	}
 	public void setPageSize(long pageSize) {
 		this.pageSize = pageSize;
+	}
+	public String getRegMember() {
+		return regMember;
+	}
+	public void setRegMember(String regMember) {
+		this.regMember = regMember;
+	}
+	public String getUptMember() {
+		return uptMember;
+	}
+	public void setUptMember(String uptMember) {
+		this.uptMember = uptMember;
 	}
 	
 	

@@ -13,11 +13,13 @@ public class MemberVo  extends AbstractVo {
 	private String memberNm;
 	private String memberId;
 	private String memberType;
+	private String memberTypeNm;
 	private String pwd;
 	private String chkIdCode;
 	private String chkPwCode;
 	private Integer loginFailCnt;
-	
+	private String useYn;
+	private String useYnNm;
 	private long rownum;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -139,6 +141,36 @@ public class MemberVo  extends AbstractVo {
 
 	public void setRownum(long rownum) {
 		this.rownum = rownum;
+	}
+
+
+	public String getMemberTypeNm() {
+		return memberTypeNm;
+	}
+
+
+	public void setMemberTypeNm(String memberTypeNm) {
+		this.memberTypeNm = memberTypeNm;
+	}
+
+
+	public String getUseYn() {
+		return useYn;
+	}
+
+
+	public void setUseYn(String useYn) {
+		this.useYn = useYn;
+	}
+
+
+	public String getUseYnNm() {
+		return useYnNm;
+	}
+
+
+	public void setUseYnNm(String useYnNm) {
+		this.useYnNm = useYnNm;
 	}
 	
 	

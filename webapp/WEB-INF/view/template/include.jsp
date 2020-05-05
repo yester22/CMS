@@ -18,6 +18,8 @@
 <link rel="stylesheet" href="/resources/js/lib/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 
 <link rel="stylesheet" href="/resources/css/spinner.css">
+<link rel="stylesheet" href="/resources/css/dronmngsystem.css">
+
 
 <!-- jQuery -->
 <script src="/resources/bootstrap/adminite/plugins/jquery/jquery.min.js"></script>

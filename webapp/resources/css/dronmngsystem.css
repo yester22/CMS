@@ -1,0 +1,36 @@
+@charset "EUC-KR";
+.modal-dialog.modal-80size {
+	  width: 700px;
+	  height: 80%;
+	  margin: 0;
+	  padding: 0;
+	}
+	
+	.modal-content.modal-80size {
+	  height: auto;
+	  min-height: 80%;
+	  width: 700px;
+	}
+	
+	.modal.modal-center {
+	  text-align: center;
+	}
+	
+	@media screen and (min-width: 768px) { 
+	  .modal.modal-center:before {
+	    display: inline-block;
+	    vertical-align: middle;
+	    content: " ";
+	    height: 100%;
+	  }
+	}
+	
+	.modal-dialog.modal-center {
+	  display: inline-block;
+	  text-align: left;
+	  vertical-align: middle; 
+	}
+	
+	.innerPopup {
+  		 z-index: 2222;
+	}
