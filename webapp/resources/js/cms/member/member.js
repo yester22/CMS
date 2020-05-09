@@ -15,6 +15,7 @@ $(document).ready(function(){
 	$("#btnUserAdd").bind("click", MemberList.openDialog);
 	$("#btnCloseHeader").bind("click", MemberList.closeDialog);
 	$("#btnClose").bind("click", MemberList.closeDialog);
+	$("#btnDelete").bind("click", MemberList.deleteMember);
 	
 	$("#modalMember").draggable({
 	      handle: ".modal-header"
@@ -41,7 +42,7 @@ var MemberList  = {
 	gridInit : function () {
 		
 		$("#memberList").jsGrid({
-			 height: "300px",
+			 height: "500px",
 		     width: "100%",
 		     paging: true,
 		     sorting: false,
@@ -61,7 +62,7 @@ var MemberList  = {
 		                    return $("<input>").attr("type", "checkbox").on("change", this.checkAllItem);
 		                },
 		                itemTemplate: function(_, item) {
-		                    return $("<input>").attr("type", "checkbox").attr('name', 'excelData').attr('value', item.dataSeq);
+		                    return $("<input>").attr("type", "checkbox").attr('name', 'excelData').attr('value', item.memberId);
 		                },
 		                align: "center",
 		                width: 50
@@ -125,7 +126,6 @@ var MemberList  = {
 	},
 	//row double click
 	gridRowDblClick : function(item, itemIndex, event) {
-		console.log(item.item.memberId);
 		
 		if ( item.item.memberId == null ) return false;
 		MemberList.mode = 'UPT';
@@ -141,8 +141,6 @@ var MemberList  = {
             data: data,
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",  
             success: function(data) {
-            	console.log(data);
-            	
             	
             	var memberVal = data.OBJECT;
             	if ( memberVal != null) {
@@ -167,7 +165,6 @@ var MemberList  = {
 	
 	//사용자 버튼 추가 완료처리
 	btnSave : function() {
-		console.log('save button clicked');
 		if ( MemberList.mode == "REG") {
 			if( ! MemberList.idCheckPressed ) {
 				msgBox.alert('ID 가능 체크 버튼을 클릭하세요');
@@ -182,7 +179,8 @@ var MemberList  = {
 			'memberId'   : $("#memberId").val(),
 			'memberType' : $("#memberType").val(),
 			'memberPw'   : $("#memberPw").val(),
-			'mode'   : MemberList.mode,
+			'useYn'  	 : $("#useYn").val(),
+			'mode'   	 : MemberList.mode,
 		}
 		
 		$.ajax({
@@ -254,12 +252,11 @@ var MemberList  = {
             data: formData,
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",  
             success: function(data) {
-            	console.log(data);
             	var count = data.COUNT;
             	if (count == 0 ) {
             		msgBox.alert('사용하실수 있는 아이디입니다');
             		$("#memberId").attr('readonly', true);
-            		this.idCheckPressed = true;
+            		MemberList.idCheckPressed = true;
             	} else {
             		msgBox.alert('사용할 수 없는 아이디 입니다');
             		return false;
@@ -287,10 +284,59 @@ var MemberList  = {
 		// 형식에 맞는 경우 true 리턴
 		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 		return regExp.test(asValue); 	
+	},
+	//사용자 삭제처리
+	deleteMember : function() {
+		var checkedVal = '';
+		$('input:checkbox[name="excelData"]').each(function() {
+			if( this.checked ) {
+				checkedVal += this.value + ",";
+				
+			}
+		});
+		
+		if (checkedVal=='') {
+			msgBox.alert('삭제할 대상이 없습니다. 체크 후 선택하세요');
+			return false;
+		}
+		
+		var title = '삭제확인';
+		var msg = '삭제하시겠습니까?'
+		
+		msgBox.confirm (title, msg, MemberList.deleteMemberFunc); 
+	}, 
+	deleteMemberFunc : function() {
+		$('#cover-spin').show();
+		
+		var checkedVal = '';
+		$('input:checkbox[name="excelData"]').each(function() {
+			if( this.checked ) {
+				checkedVal += this.value + ",";
+				
+			}
+		});
+		
+		var url = "/admin/memberDelete";
+		var sendData = {
+			memberList : checkedVal ,
+		}			
+
+		 $.ajax({
+	            url: url,
+	            dataType: 'json', 
+	            data: sendData,
+	            type: 'POST',
+	            success: MemberList.cbDeleteMemberResult,
+	            error  : MemberList.cbMemberRetrieveError,
+	     });
+	},
+	
+	//삭제후 콜백 함수
+	cbDeleteMemberResult : function(data) {
+		$('#cover-spin').hide();
+		
+		msgBox.alert('삭제가 완료되었습니다');
+		MemberList.btnSearch();		
 	}
 
-
-
-	
-	
 }

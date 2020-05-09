@@ -114,11 +114,12 @@ public class MemberServiceImpl extends AbstractService implements IMemberService
 		writeInfo.setMemberId(params.get("memberId").toString());
 		writeInfo.setMemberNm(params.get("memberNm").toString());
 		writeInfo.setMemberType(params.get("memberType").toString());
-		writeInfo.setRegId( params.get("regId").toString() );
+		writeInfo.setRegMember( params.get("regMember").toString() );
 		writeInfo.setChkPwCode("");
 		writeInfo.setChkIdCode("");
 		writeInfo.setLastLoginDt(null);
 		writeInfo.setLastLogoutDt(null);
+		writeInfo.setUseYn(params.get("useYn").toString());
 		
 		String regType = params.get("mode").toString();
 		if (regType == null || regType.equals("")) return 0;
@@ -129,11 +130,23 @@ public class MemberServiceImpl extends AbstractService implements IMemberService
 			this.memberDao.insert(writeInfo);
 			nRtnVal = 1;
 		}else {
-			writeInfo.setUptId( params.get("regId").toString() );
+			writeInfo.setUptId( params.get("regMember").toString() );
 			nRtnVal = this.memberDao.update(writeInfo);	
 		}
 
 		return nRtnVal;
+	}
+
+	@Override
+	public int deleteMember(Map<String, Object> params) throws Exception {
+		
+		String memberList = params.get("memberList").toString();
+		if ( memberList != null ) {
+			params.put("memberList", memberList.split(","));
+		} else {
+			return 0;
+		}
+		return (this.memberDao.deleteMemberList(params));
 	}
 	
 }

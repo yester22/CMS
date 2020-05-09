@@ -139,6 +139,16 @@
 		        	<input type="password" class="form-control" id="memberPwConfirm" name="memberPwConfirm" placeholder="암호 재입력" aria-label="암호 재입력" aria-describedby="basic-addon2" />
 		        </div>
 		     </div>
+		     <div class="form-group row">
+		      	<label for="memberType" class="col-sm-2 col-form-label">사용</label>
+		        <div class="col-sm-10">
+		        	<select id="useYn" name="useYn" class="form-control">
+		        		<option value="Y">사용</option>
+		        		<option value="N">사용불가</option>
+		        	</select>
+		        </div>
+		     </div>
+		     
         </form>
       </div>
       <div class="modal-footer">

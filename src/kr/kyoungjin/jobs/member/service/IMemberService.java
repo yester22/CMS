@@ -15,4 +15,5 @@ public interface IMemberService {
 	public MemberVo getMember(Map<String, Object> params)  throws Exception;
 	public int getCount(Map<String, Object> params) throws Exception;
 	public int saveMember(Map<String,Object> params) throws Exception;
+	public int deleteMember(Map<String, Object> params) throws Exception;
 }

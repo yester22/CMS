@@ -52,7 +52,17 @@
 	 </select>
 
 	
-	
+	<update id="deleteMemberList" parameterType="hashmap" >
+		/** kr.kyoungjin.dataobject.dao.ExcelDao.deleteMemberList  */
+		UPDATE T_MEMBER
+		  SET  USE_YN = 'N'
+		WHERE MEMBER_ID IN 
+		
+		 <foreach collection="memberList" item="item" separator="," index="index" open="(" close=")">
+        	#{item}
+    	</foreach>
+	</update>
+	 
 	 
 	 <select id="list" parameterType="hashmap" resultType="MemberVo">
 		/** kr.kyoungjin.dataobject.dao.MemberDao.list  */
@@ -138,7 +148,7 @@
 			login_fail_cnt,
 			chk_id_code, 
 			chk_pw_code, 
-			reg_id, 
+			reg_member, 
 			reg_date
 		)
 		VALUES
@@ -170,7 +180,8 @@
 				<if test="lastLogoutDt != null and lastLogoutDt != ''">, last_logout_dt =  NOW() </if>
 				<if test="chkIdCode != null and chkIdCode != ''">, chk_id_code = #{chkIdCode} </if>
 				<if test="chkPwCode != null and chkPwCode != ''">, chk_pw_code = #{chkPwCode}  </if>
-				<if test="loginFailCnt != null and loginFailCnt > -1">, login_fail_cnt = ${loginFailCnt}  </if>
+				<if test="loginFailCnt != null and loginFailCnt > -1">, login_fail_cnt = #{loginFailCnt}  </if>
+				<if test='useYn != null and useYn != ""'>, USE_YN = #{useYn}  </if>
 		  WHERE member_id = #{memberId}
 	 </update>
 	 

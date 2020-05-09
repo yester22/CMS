@@ -33,7 +33,8 @@ var msgBox = {
 			    	text : confirmMsg ,
 			    	"id" : "btnOk" ,
 			    	click : function() {
-			    	  callback();
+			    		 $( this ).dialog( "close" );
+			    		callback();
 			       }
 			    }, 
 			    {
@@ -57,6 +58,7 @@ var msgBox = {
 		alert : function ( msg ) {
 			
 			//document.body.innerHTML = document.body.innerHTML + '<div id="DIV_ABSTRACT_MESSAGE"><span id="SPAN_ABSTRACT_TITLE"></span><span id="SPAN_ABSTRACT_MESSAGE"></span></div>';
+
 			var Title = Message.getMsg ('CFM0000001');
 			var alertIcon = '&nbsp;';
 			$("#SPAN_ABSTRACT_MESSAGE" ).html ( alertIcon +  msg );

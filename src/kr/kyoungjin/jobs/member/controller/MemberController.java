@@ -148,7 +148,7 @@ public class MemberController extends AbstractController{
 		
 		try {
 			MemberVo sesMember = (MemberVo)session.getAttribute(ConstantNames.SESSION_USER_INFO);
-			params.put("regId", sesMember.getMemberId());
+			params.put("regMember", sesMember.getMemberId());
 			
 			if ( params.get("memberPw") != null ) {
 				String memberPw = (String)params.get("memberPw");
@@ -167,5 +167,32 @@ public class MemberController extends AbstractController{
 		}
 		return result.toString();
 	}
+
 	
+	/**
+	 * @Author : yester21
+	 * @Date : 2020. 4. 18.
+	 * @Method Name : excelRetrieve
+	 * @return : JSONObject
+	 */
+	@ResponseBody	
+	@RequestMapping(value = "/admin/memberDelete", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json; charset=utf8")
+	public String memberDelete (HttpServletRequest request ,HttpServletResponse response, HttpSession session, @RequestParam Map<String,Object> params) {
+		JSONObject result = new JSONObject();
+		
+		try {
+			MemberVo sesMember = (MemberVo)session.getAttribute(ConstantNames.SESSION_USER_INFO);
+			params.put("uptMember", sesMember.getMemberId());
+			
+			int nSuccess = this.memberService.deleteMember(params);
+			if ( nSuccess > 0 ) result.put(JSONResult.RESULT, JSONResult.OK);
+			else result.put(JSONResult.RESULT, JSONResult.FAIL);
+			
+		} catch( Exception e ) {
+			e.printStackTrace();
+			result.put(JSONResult.RESULT, JSONResult.ERROR);
+		}
+		return result.toString();
+	}
+
 }
