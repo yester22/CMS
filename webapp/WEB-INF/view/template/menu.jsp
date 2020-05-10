@@ -55,6 +55,12 @@
 							<p>데이터 조회</p>
 						</a>
 					</li>
+					<li class="nav-item">
+						<a href="#" onclick="javascript:pageMove.goPost('excel/jobassign')" class="nav-link">
+							<i class="far fa-circle nav-icon"></i>
+							<p>작업 배정</p>
+						</a>
+					</li>
 				</ul>
 			</li>
 			<li class="nav-item has-treeview">
@@ -73,7 +79,7 @@
 			</li>
 			<li class="nav-item has-treeview">
 				<a href="#" class="nav-link">
-					<i class="nav-icon fas fa-th"></i>
+					<i class="nav-icon fas fa-plus-square"></i>
 					<p>	공통코드 <i class="right fas fa-angle-left"></i></p>
 				</a>
 				<ul class="nav nav-treeview">
