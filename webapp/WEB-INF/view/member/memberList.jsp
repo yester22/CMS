@@ -92,7 +92,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <!-- Modal -->
+<!-- Modal -->
 <div class="modal modal-center fade" id="modalMember" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-center modal-80size" role="document">
     <div class="modal-content modal-80size">
