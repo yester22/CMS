@@ -40,7 +40,7 @@
 <!-- search form -->
 <!-- Modal -->
 <div class="modal modal-center fade" id="modalExcelSelect" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-center modal-80size" role="document">
+  <div class="modal-dialog modal-center modal-100size" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myModalLabel">데이터 선택</h4>

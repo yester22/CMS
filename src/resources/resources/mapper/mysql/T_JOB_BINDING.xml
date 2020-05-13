@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kyoungjin.dataobject.dao.JobBindingDao">
+	
+	<select id="selectExcelList" parameterType="hashMap" resultType="ExcelUploadVo">
+  		SELECT 
+	  			b.*
+		 FROM (
+				SELECT 
+				    	@RNUM:=@RNUM+1 AS ROWNUM , 
+				    	a.*
+				 FROM 
+				    (SELECT @RNUM:=0) R, 
+				    (
+						SELECT A.EXCEL_KEY,
+						       A.TITLE,
+						       A.DATA_COUNT,
+						       A.UPLOADER,
+						       A.LOCATION_CODE,
+						       (SELECT CD_NAME FROM T_CODE WHERE UPPER_CD_KEY = 'LOCATION' AND CD_KEY = A.LOCATION_CODE ) LOCATION_CODE_NAME,
+						       A.PHYSICAL_PATH,
+						       A.ORIGINAL_FILE_NAME,
+						       A.SAVED_FILE_NAME,
+						       A.USE_YN,
+						       A.UPLOAD_DT,
+						       A.VALID_COMPLETE_YN,
+						       A.STATUS_CODE,
+						       A.MAP_COLOR,
+						       A.COMPLETE_YN,
+						       A.ASSIGN_COMPLETE_YN
+						  FROM T_EXCEL_UPLOAD A 
+						 WHERE ASSIGN_COMPLETE_YN = 'N'
+				  		   AND COMPLETE_YN = 'N'
+				    )a 
+			) as b
+	</select>
+	 
+</mapper>	

@@ -48,10 +48,10 @@ var JobAssign = {
 		     pageLastText: "L",
 		     data: [],
 		     fields: [
-		            { title : '순번', 	name: 'rownum', 		type: 'text',  align: 'center', width: 50  },
-			        { title : '엑셀키', 	name: 'excelKey',		type: 'text',  align: 'left', 	width: 200 },
-			        { title : '엑셀명', 	name: 'excelName', 		type: 'text',  align: 'left', 	width: 150 },
-			        { title : '지역명', 	name: 'locationNm', 	type: 'text',  align: 'left', 	width: 150 },
+		            { title : '순번', 	name: 'rownum', 			type: 'text',  align: 'center', width: 50  },
+			        { title : '엑셀키', 	name: 'excelKey',			type: 'text',  align: 'left', 	width: 200 },
+			        { title : '엑셀명', 	name: 'title', 				type: 'text',  align: 'left', 	width: 150 },
+			        { title : '지역명', 	name: 'locationCodeName', 	type: 'text',  align: 'left', 	width: 150 },
 		        ],
 		     rowDoubleClick : JobAssign.excelSelect,
 		 });
@@ -60,6 +60,7 @@ var JobAssign = {
 	//search form open
 	searchExcelOpen : function() {
 		JobAssign.searchExcelListInit();
+		JobAssign.searchExcelData();
 		$("#btnOpenDialog").trigger("click");
 		
 	},
@@ -74,5 +75,29 @@ var JobAssign = {
 		$("#chkIdConfirm").bind("click", MemberList.btnIdCheck);
 		$("btnClose").trigger("click");
 			
-	}, 
+	},
+	//search
+	searchExcelData : function() {
+		var url = "/admin/notAssignExcelList";
+		var sendData = { };
+
+		 $.ajax({
+	            url: url,
+	            dataType: 'json', 
+	            data: sendData,
+	            type: 'POST',
+	            success: JobAssign.cbExcelDataRetrieve,
+	            error  : JobAssign.cbExcelDataError,
+	     });
+	},
+	//data retrieve ended!!
+	cbExcelDataRetrieve : function(data) {
+		$("#excelSelectList").jsGrid("option", "data", data.LIST);
+	},
+	//error
+	cbExcelDataError  : function(error) {
+		
+	},
+	
+	
 }
