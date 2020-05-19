@@ -35,7 +35,28 @@
 				</div>
       		</div>
       	</div>
+      	
+    
+      	<div style="height:100px;">
+      		<div class="row" style="height:400px;">
+	      		<div class="col-md-6">
+		      		<div class="card card-default">
+		    			<div class="card-body">
+		    				카드 왼쪽
+		    			</div>
+		    		</div>
+			    </div>
+			    <div class="col-md-6">
+		      		<div class="card card-default">
+		    			<div class="card-body">
+		    				카드 오른쪽
+		    			</div>
+		    		</div>
+		    	</div>
+		    </div>
+      	</div>
     </section>
+    
 </div>	
 <!-- search form -->
 <!-- Modal -->
