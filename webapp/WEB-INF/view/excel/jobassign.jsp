@@ -38,7 +38,7 @@
       	
     
       	<div style="height:100px;">
-      		<div class="row" style="height:400px;">
+      		<div class="row">
 	      		<div class="col-md-6">
 		      		<div class="card card-default">
 		    			<div class="card-body">
