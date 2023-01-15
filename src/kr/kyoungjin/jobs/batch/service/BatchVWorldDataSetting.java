@@ -532,7 +532,9 @@ public class BatchVWorldDataSetting {
 	
 						    //데이터 insert 처리
 						    getAddrCourtdongPolygonDao().insertPolygonData(item);
-					    	
+
+							System.out.println("test");
+
 					    	//메모리 해제 시키기
 					    	result = null;
 					    	res = null;
